@@ -87,7 +87,7 @@ const DailyDistribution = ({ distribution }: DailyDistributionProps) => {
 			{lengths.map((length, index) => (
 				<div
 					key={index}
-					className="flex flex-col items-center justify-end"
+					className="flex flex-col items-center justify-end gap-2"
 				>
 					<div
 						className="w-5 bg-red-900 rounded-2xl"
