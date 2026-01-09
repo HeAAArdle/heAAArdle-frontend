@@ -9,16 +9,25 @@ type LeaderboardFilterProps = {
 
 const LeaderboardFilter = ({ currFilter, onClick }: LeaderboardFilterProps) => {
 	const filters: FilterType[] = ["Daily", "Weekly", "Monthly", "All-time"];
+	const activeIndex = filters.indexOf(currFilter);
 	return (
-		<div className="flex gap-2 h-10 items-center p-1 bg-gray-300 rounded-lg">
-			{filters.map((filter, index) => (
-				<span
+		<div className="relative flex h-10 p-1 bg-gray-300 rounded-lg">
+			<div
+				className="absolute inset-1 flex transition-transform duration-300 ease-out w-32"
+				style={{
+					transform: `translateX(${activeIndex * 100}%)`,
+				}}
+			>
+				<div className="flex-1 bg-white rounded-lg" />
+			</div>
+			{filters.map((filter) => (
+				<button
 					onClick={() => onClick(filter)}
-					className={`${currFilter === filter ? "bg-gray-50" : ""} flex h-full items-center rounded-lg px-6 cursor-pointer transition`}
-					key={index}
+					className="relative z-10 w-32 flex-1 rounded-lg text-sm font-medium"
+					key={filter}
 				>
 					{filter}
-				</span>
+				</button>
 			))}
 		</div>
 	);
