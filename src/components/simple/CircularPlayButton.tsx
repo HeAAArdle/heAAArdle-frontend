@@ -60,9 +60,9 @@ const CircularPlayButton = ({
 				style={{ width: iconSize, height: iconSize }}
 			>
 				{isPlaying ? (
-					<PauseIcon className="w-full h-full" />
+					<PauseIcon className="w-full h-full hover:text-primary-800" />
 				) : (
-					<PlayIcon className="w-full h-full" />
+					<PlayIcon className="w-full h-full hover:text-primary-800" />
 				)}
 			</div>
 		</div>

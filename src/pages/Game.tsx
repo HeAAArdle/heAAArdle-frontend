@@ -4,7 +4,7 @@ import GuessInput from "../components/simple/GuessInput";
 import GuessHistory from "../components/simple/GuessHistory";
 import TextInput from "../components/simple/TextInput";
 import Button from "../components/simple/Button";
-import StatsOriginal from "../components/simple/StatsOriginal";
+import StatsOriginal from "../components/simple/Statistics";
 
 const Game = () => {
 	const [text, setText] = useState("");
@@ -40,6 +40,16 @@ const Game = () => {
 				gamesPlayed={69}
 				winCount={67}
 				winRate={97}
+				type="original"
+			/>
+			<StatsOriginal
+				currentStreak={67}
+				longestStreak={67}
+				gamesPlayed={69}
+				winCount={67}
+				winRate={97}
+				type="daily"
+				distribution={[1, 2, 10, 4, 5, 6, 7]}
 			/>
 		</div>
 	);
