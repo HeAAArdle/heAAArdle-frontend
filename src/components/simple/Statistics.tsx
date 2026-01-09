@@ -1,4 +1,4 @@
-import Fire from "../../icons/Fire";
+import Fire from "../../icons/FireIcon";
 
 type StatType = "original" | "daily";
 

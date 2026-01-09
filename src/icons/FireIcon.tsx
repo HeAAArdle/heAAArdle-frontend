@@ -1,8 +1,8 @@
-type FireProps = {
+type FireIconProps = {
 	className?: string;
 };
 
-const Fire = ({ className = "" }: FireProps) => {
+const FireIcon = ({ className = "" }: FireIconProps) => {
 	return (
 		<svg
 			// width={size}
@@ -20,4 +20,4 @@ const Fire = ({ className = "" }: FireProps) => {
 	);
 };
 
-export default Fire;
+export default FireIcon;

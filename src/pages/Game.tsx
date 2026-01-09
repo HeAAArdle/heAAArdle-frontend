@@ -5,6 +5,8 @@ import GuessHistory from "../components/simple/GuessHistory";
 import TextInput from "../components/simple/TextInput";
 import Button from "../components/simple/Button";
 import StatsOriginal from "../components/simple/Statistics";
+import HelpIcon from "../icons/HelpIcon";
+import LeaderboardFilter from "../components/simple/LeaderboardFilter";
 
 const Game = () => {
 	const [text, setText] = useState("");
@@ -19,7 +21,7 @@ const Game = () => {
 	};
 
 	return (
-		<div>
+		<div className="flex flex-wrap">
 			<MusicPlayer />
 			{text}
 			<GuessInput value={text} onChange={handleText} />
@@ -51,6 +53,8 @@ const Game = () => {
 				type="daily"
 				distribution={[1, 2, 10, 4, 5, 6, 7]}
 			/>
+			<HelpIcon className="h-4 w-4" />
+			<LeaderboardFilter />
 		</div>
 	);
 };
