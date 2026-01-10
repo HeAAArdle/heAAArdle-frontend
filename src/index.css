@@ -102,3 +102,14 @@
 	--color-fail-900: #3c0c0c;
 	--color-fail-950: #260606;
 }
+
+/* for Background */
+
+.star {
+	position: absolute;
+	background: white;
+	border-radius: 50%;
+	opacity: 0.8;
+	/* animation: twinkle var(--duration, 3s) infinite ease-in-out; */
+	will-change: transform, opacity;
+}

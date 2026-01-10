@@ -4,12 +4,14 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Leaderboard from "./pages/Leaderboard";
 import NavigationBar from "./components/compound/NavigationBar";
+import Background from "./components/simple/Background";
 
 function App() {
 	return (
-		<div className="h-screen w-full overflow-hidden">
-			<NavigationBar />
-			<div className="ml-28 h-full">
+		<div className="relative h-screen w-full flex flex-col">
+			<Background className="absolute w-screen h-screen z-[-1]" />
+			<div className="h-full">
+				<NavigationBar />
 				<Routes>
 					{/* TODO: Game is different how to know which is which smth */}
 					<Route path="/" element={<Game />} />

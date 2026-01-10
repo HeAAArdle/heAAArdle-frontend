@@ -1,8 +1,6 @@
-type AppIconProps = {
-	className?: string;
-};
+import type { IconProps } from "../types";
 
-const AppIcon = ({ className = "" }: AppIconProps) => {
+const AppIcon = ({ className = "" }: IconProps) => {
 	return (
 		<svg
 			// width="64"

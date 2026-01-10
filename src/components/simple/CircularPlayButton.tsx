@@ -1,5 +1,5 @@
-import PlayIcon from "~icons/icon-park-outline/play-one";
-import PauseIcon from "~icons/icon-park-outline/pause";
+import PauseIcon from "../../icons/PauseIcon";
+import PlayIcon from "../../icons/PlayIcon";
 
 type CircularPlayButtonProps = {
 	percentage: number;
@@ -13,8 +13,8 @@ type CircularPlayButtonProps = {
 const CircularPlayButton = ({
 	percentage,
 	isPlaying,
-	size = 100,
-	strokeWidth = 8,
+	size = 96,
+	strokeWidth = 4,
 	color,
 	trackColor,
 }: CircularPlayButtonProps) => {
@@ -22,7 +22,7 @@ const CircularPlayButton = ({
 	const circumference = 2 * Math.PI * radius;
 	const offset = circumference * (1 - percentage / 100);
 
-	const iconSize = size / 2;
+	const iconSize = size * 0.85;
 
 	return (
 		<div
@@ -31,14 +31,14 @@ const CircularPlayButton = ({
 		>
 			<svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
 				{/* Track circle */}
-				<circle
+				{/* <circle
 					cx={size / 2}
 					cy={size / 2}
 					r={radius}
 					className={`${trackColor} stroke-current`}
 					strokeWidth={strokeWidth}
 					fill="none"
-				/>
+				/> */}
 				{/* Progress circle */}
 				<circle
 					cx={size / 2}
@@ -60,9 +60,9 @@ const CircularPlayButton = ({
 				style={{ width: iconSize, height: iconSize }}
 			>
 				{isPlaying ? (
-					<PauseIcon className="w-full h-full hover:text-primary-800" />
+					<PauseIcon className="w-full h-full text-primary-500 hover:text-accent-500" />
 				) : (
-					<PlayIcon className="w-full h-full hover:text-primary-800" />
+					<PlayIcon className="w-full h-full text-primary-500 hover:text-accent-500" />
 				)}
 			</div>
 		</div>

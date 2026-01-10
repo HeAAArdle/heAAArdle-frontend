@@ -7,6 +7,8 @@ import Button from "../components/simple/Button";
 import StatsOriginal from "../components/simple/Statistics";
 import HelpIcon from "../icons/HelpIcon";
 import LeaderboardFilter from "../components/simple/LeaderboardFilter";
+import PauseIcon from "../icons/PauseIcon";
+import PlayIcon from "../icons/PlayIcon";
 
 const Game = () => {
 	const [text, setText] = useState("");
@@ -21,12 +23,9 @@ const Game = () => {
 	};
 
 	return (
-		<div className="h-full flex flex-col space-y-4 bg-primary-950 items-center justify-center">
+		<div className="h-full flex flex-col space-y-4 items-center justify-center">
 			<MusicPlayer />
-			<Button text="Skip" type="primary" />
 			<Button text="Skip" type="secondary" />
-			<Button text="Skip" type="destructive" />
-			<Button text="Skip" type="cancel" />
 			<div className="w-132 space-y-4">
 				<GuessHistory result={"incorrect"} text={"Taylor Swift"} />
 				<GuessHistory result={"incorrect"} text={"Taylor Swift"} />

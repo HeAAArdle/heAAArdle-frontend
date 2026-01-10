@@ -34,7 +34,7 @@ const MusicPlayer = () => {
 					size={96}
 					isPlaying={isPlaying}
 					percentage={percentage}
-					color="text-gray-900"
+					color="text-primary-500"
 					trackColor="text-gray-400"
 				/>
 			</button>

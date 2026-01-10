@@ -1,8 +1,6 @@
-type FireIconProps = {
-	className?: string;
-};
+import type { IconProps } from "../types";
 
-const FireIcon = ({ className = "" }: FireIconProps) => {
+const FireIcon = ({ className = "" }: IconProps) => {
 	return (
 		<svg
 			// width={size}
