@@ -11,9 +11,9 @@ const GuessInput = ({ value, onChange }: GuessInputProps) => {
 				value={value}
 				placeholder="Type your guess.."
 				onChange={(e) => onChange(e.target.value)}
-				className="h-12 w-full outline-none lato-regular text-neutral-700"
+				className="h-12 w-full outline-none lato-regular text-lg text-neutral-700"
 			/>
-			<button className="h-full px-3 py-2 bg-primary-300 hover:bg-primary-500 rounded-[5px] flex items-center justify-center lato-bold text-neutral-950 text-[16px]">
+			<button className="h-full px-3 py-2 bg-primary-300 hover:bg-primary-500 rounded-sm flex items-center justify-center lato-bold text-neutral-950 text-[16px]">
 				Guess
 			</button>
 		</div>
