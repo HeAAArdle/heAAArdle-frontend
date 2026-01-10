@@ -23,7 +23,7 @@ const Button = ({ text, onClick, type }: ButtonProps) => {
 	// NOTES: not sure pa how to implement the width (since nagbabago depende sa usecase)
 	return (
 		<button
-			className={`px-10 rounded-4xl text-xl lato-bold ${buttonClasses}`}
+			className={`px-10 rounded-4xl text-xl lato-bold cursor-pointer ${buttonClasses}`}
 			onClick={onClick}
 		>
 			{text}
