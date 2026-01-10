@@ -1,4 +1,4 @@
-type ButtonType = "primary" | "secondary" | "destructive";
+type ButtonType = "primary" | "secondary" | "destructive" | "cancel";
 
 type ButtonProps = {
 	text: string;

@@ -21,40 +21,17 @@ const Game = () => {
 	};
 
 	return (
-		<div className="flex flex-wrap">
+		<div className="h-full flex flex-col space-y-4 bg-primary-950 items-center justify-center">
 			<MusicPlayer />
-			{text}
-			<GuessInput value={text} onChange={handleText} />
-			<GuessHistory result={"correct"} text={"Ed Sheeran"} />
-			<GuessHistory result={"incorrect"} text={"Taylor Swift"} />
-			<TextInput
-				value={random}
-				onChange={onChangeTemp}
-				placeholder="Password"
-			/>
-			<Button text="Button" type="primary" />
-			<Button text="Button" type="secondary" />
-			<Button text="Button" type="destructive" />
-
-			<StatsOriginal
-				currentStreak={67}
-				longestStreak={67}
-				gamesPlayed={69}
-				winCount={67}
-				winRate={97}
-				type="original"
-			/>
-			<StatsOriginal
-				currentStreak={67}
-				longestStreak={67}
-				gamesPlayed={69}
-				winCount={67}
-				winRate={97}
-				type="daily"
-				distribution={[1, 2, 10, 4, 5, 6, 7]}
-			/>
-			<HelpIcon className="h-4 w-4" />
-			<LeaderboardFilter />
+			<Button text="Skip" />
+			<div className="w-132 space-y-4">
+				<GuessHistory result={"incorrect"} text={"Taylor Swift"} />
+				<GuessHistory result={"incorrect"} text={"Taylor Swift"} />
+				<GuessHistory result={"correct"} text={"Ed Sheeran"} />
+				<GuessInput value={text} onChange={handleText} />
+				<GuessHistory result={"unanswered"} />
+				<GuessHistory result={"unanswered"} />
+			</div>
 		</div>
 	);
 };

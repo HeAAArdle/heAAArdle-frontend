@@ -2,24 +2,24 @@ type GuessResult = "correct" | "incorrect" | "unanswered";
 
 type GuessHistoryProps = {
 	result: GuessResult;
-	text: string;
+	text?: string;
 };
 
 const GuessHistory = ({ result, text }: GuessHistoryProps) => {
-	const bgColor = (() => {
+	const [borderColor, fontColor] = (() => {
 		switch (result) {
 			case "correct":
-				return "bg-green-400";
+				return ["border-success-700", "text-success-500"];
 			case "incorrect":
-				return "bg-red-400";
+				return ["border-fail-700", "text-fail-500"];
 			default:
-				return "bg-gray-400";
+				return ["border-neutral-800", "text-black"];
 		}
 	})();
 
 	return (
 		<div
-			className={`flex items-center border-2 p-4 rounded-[10px] h-16 w-96 ${bgColor} lato-regular`}
+			className={`flex items-center p-1 pl-3 rounded-lg h-12 w-full bg-neutral-800 border-2 lato-regular text-[16px] ${fontColor} ${borderColor}`}
 		>
 			{text}
 		</div>

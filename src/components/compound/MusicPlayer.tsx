@@ -31,14 +31,13 @@ const MusicPlayer = () => {
 			<audio ref={audioRef} src={music} />
 			<button onClick={handleClick}>
 				<CircularPlayButton
-					size={64}
+					size={96}
 					isPlaying={isPlaying}
 					percentage={percentage}
 					color="text-gray-900"
 					trackColor="text-gray-400"
 				/>
 			</button>
-			{percentage}
 		</div>
 	);
 };

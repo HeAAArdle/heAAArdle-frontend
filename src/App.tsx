@@ -7,9 +7,9 @@ import NavigationBar from "./components/compound/NavigationBar";
 
 function App() {
 	return (
-		<div>
+		<div className="h-screen w-full overflow-hidden">
 			<NavigationBar />
-			<div className="ml-28 w-full">
+			<div className="ml-28 h-full">
 				<Routes>
 					{/* TODO: Game is different how to know which is which smth */}
 					<Route path="/" element={<Game />} />
