@@ -23,7 +23,10 @@ const Game = () => {
 	return (
 		<div className="h-full flex flex-col space-y-4 bg-primary-950 items-center justify-center">
 			<MusicPlayer />
-			<Button text="Skip" />
+			<Button text="Skip" type="primary" />
+			<Button text="Skip" type="secondary" />
+			<Button text="Skip" type="destructive" />
+			<Button text="Skip" type="cancel" />
 			<div className="w-132 space-y-4">
 				<GuessHistory result={"incorrect"} text={"Taylor Swift"} />
 				<GuessHistory result={"incorrect"} text={"Taylor Swift"} />
