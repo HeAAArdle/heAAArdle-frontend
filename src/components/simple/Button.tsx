@@ -4,9 +4,10 @@ type ButtonProps = {
 	text: string;
 	onClick: () => null;
 	type: ButtonType;
+	full?: boolean;
 };
 
-const Button = ({ text, onClick, type }: ButtonProps) => {
+const Button = ({ text, onClick, type, full = false }: ButtonProps) => {
 	const buttonClasses = (() => {
 		switch (type) {
 			case "primary":
@@ -23,7 +24,7 @@ const Button = ({ text, onClick, type }: ButtonProps) => {
 	// NOTES: not sure pa how to implement the width (since nagbabago depende sa usecase)
 	return (
 		<button
-			className={`px-10 rounded-4xl text-xl lato-bold cursor-pointer ${buttonClasses}`}
+			className={`px-10 rounded-4xl text-xl lato-bold cursor-pointer ${buttonClasses} ${full ? "w-full" : ""}`}
 			onClick={onClick}
 		>
 			{text}
