@@ -5,6 +5,7 @@ import SignIn from "./pages/SignIn";
 import Leaderboard from "./pages/Leaderboard";
 import NavigationBar from "./components/compound/NavigationBar";
 import Background from "./components/simple/Background";
+import Test from "./pages/Test";
 
 function App() {
 	return (
@@ -18,6 +19,7 @@ function App() {
 					<Route path="/login" element={<Login />} />
 					<Route path="/signup" element={<SignIn />} />
 					<Route path="/leaderboards" element={<Leaderboard />} />
+					<Route path="/test" element={<Test />} />
 				</Routes>
 			</div>
 		</div>

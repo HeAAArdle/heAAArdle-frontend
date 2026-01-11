@@ -2,6 +2,7 @@ import { useState } from "react";
 import Button from "../components/simple/Button";
 import TextInput from "../components/simple/TextInput";
 import SignInIcon from "../icons/SignInIcon";
+import PasswordInput from "../components/simple/PasswordInput";
 
 const SignIn = () => {
 	const [username, setUsername] = useState("");
@@ -25,12 +26,11 @@ const SignIn = () => {
 							onChange={setUsername}
 							placeholder="username"
 						/>
-						<TextInput
-							text="Password"
-							type="password"
+						<PasswordInput
 							value={password}
 							onChange={setPassword}
-							placeholder="Password"
+							isSignIn={true}
+							// passwordStrength={3}
 						/>
 					</div>
 					<div className="w-full flex flex-col items-center gap-3">
