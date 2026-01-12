@@ -7,8 +7,8 @@ const Background = ({ className }: BackgroundProps) => {
 	const stars = [];
 	for (let i = 0; i < count; i++) {
 		// Random Initial Positions
-		const x = Math.random() * 100;
-		const y = Math.random() * 100; // 0-100%
+		const x = Math.random() * 99;
+		const y = Math.random() * 99; // 0-100%
 
 		const size = 1 + Math.random() * 2; // Static stars smaller
 

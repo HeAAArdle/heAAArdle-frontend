@@ -1,5 +1,4 @@
 import { useState } from "react";
-import MusicPlayer from "../components/compound/MusicPlayer";
 import DeleteAccount from "../components/modals/DeleteAccount";
 
 const Test = () => {

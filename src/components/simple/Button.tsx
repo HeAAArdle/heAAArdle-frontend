@@ -2,12 +2,19 @@ type ButtonType = "primary" | "secondary" | "destructive" | "cancel";
 
 type ButtonProps = {
 	text: string;
-	onClick: () => null;
+	onClick?: () => null;
 	type: ButtonType;
+	htmlType?: "button" | "submit";
 	full?: boolean;
 };
 
-const Button = ({ text, onClick, type, full = false }: ButtonProps) => {
+const Button = ({
+	text,
+	onClick,
+	type,
+	htmlType = "button",
+	full = false,
+}: ButtonProps) => {
 	const buttonClasses = (() => {
 		switch (type) {
 			case "primary":
@@ -25,6 +32,7 @@ const Button = ({ text, onClick, type, full = false }: ButtonProps) => {
 	return (
 		<button
 			className={`px-10 rounded-4xl text-xl lato-bold cursor-pointer ${buttonClasses} ${full ? "w-full" : ""}`}
+			type={htmlType}
 			onClick={onClick}
 		>
 			{text}

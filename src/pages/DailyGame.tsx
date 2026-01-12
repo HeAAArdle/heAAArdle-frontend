@@ -1,11 +1,15 @@
 import { useState } from "react";
 import MusicPlayer from "../components/compound/MusicPlayer";
-import GuessInput from "../components/simple/GuessInput";
-import GuessHistory from "../components/simple/GuessHistory";
 import Button from "../components/simple/Button";
+import GuessHistory from "../components/simple/GuessHistory";
+import GuessInput from "../components/simple/GuessInput";
+import { useParams } from "react-router-dom";
+import dateFormatter from "../utils/dateFormatter";
 
-const Game = () => {
+const DailyGame = () => {
 	const [text, setText] = useState("");
+	const { date } = useParams<{ date: string }>();
+	const header = date ?? "Today";
 
 	const handleText = (text: string) => {
 		setText(text);
@@ -13,6 +17,12 @@ const Game = () => {
 
 	return (
 		<div className="h-full flex flex-col space-y-4 items-center justify-center">
+			<span className="dm-sans-400 font-bold text-8xl text-white mb-8">
+				{header === "Today" ? header : dateFormatter(header)}'s{" "}
+				<span className="bg-linear-to-r from-primary-500 to-accent-300 bg-clip-text text-transparent">
+					Heardle
+				</span>
+			</span>
 			<MusicPlayer />
 			<Button text="Skip" type="secondary" />
 			<div className="w-132 space-y-4">
@@ -27,4 +37,4 @@ const Game = () => {
 	);
 };
 
-export default Game;
+export default DailyGame;

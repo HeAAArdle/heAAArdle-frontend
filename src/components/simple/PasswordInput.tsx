@@ -1,21 +1,21 @@
 import { useState } from "react";
 import EyesClosedIcon from "../../icons/EyesClosedIcon";
 import EyesOpenIcon from "../../icons/EyesOpenIcon";
+import type { UseFormRegister } from "react-hook-form";
+import type { CredentialFormFields } from "../../types";
 
 type PasswordStrength = 1 | 2 | 3 | 4 | 5;
 
 type PasswordInputProps = {
-	value: string;
-	onChange: (value: string) => void;
 	isSignIn: boolean;
 	passwordStrength?: PasswordStrength;
+	register: UseFormRegister<CredentialFormFields>;
 };
 
 const PasswordInput = ({
-	value,
-	onChange,
 	isSignIn,
 	passwordStrength,
+	register,
 }: PasswordInputProps) => {
 	const [passwordIsVisible, setPasswordIsVisible] = useState(false);
 
@@ -49,9 +49,8 @@ const PasswordInput = ({
 			<div className="flex items-center justify-between gap-4 h-12.5 border-2 bg-neutral-900 border-neutral-700 rounded-xl p-4 w-full">
 				<input
 					type={passwordIsVisible ? "text" : "password"}
-					value={value}
 					placeholder="Enter your password.."
-					onChange={(e) => onChange(e.target.value)}
+					{...register("password")}
 					className={`${passwordIsVisible ? "text-neutral-50" : "text-neutral-600"} lato-regular text-[16px] w-full outline-none`}
 				/>
 				<div

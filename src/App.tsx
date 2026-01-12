@@ -1,11 +1,13 @@
 import { Route, Routes } from "react-router-dom";
-import Game from "./pages/Game";
-import Login from "./pages/Login";
-import SignIn from "./pages/SignIn";
+import SignInUp from "./pages/SignInUp";
 import Leaderboard from "./pages/Leaderboard";
 import NavigationBar from "./components/compound/NavigationBar";
 import Background from "./components/simple/Background";
 import Test from "./pages/Test";
+import OriginalGame from "./pages/OriginalGame";
+import DailyGame from "./pages/DailyGame";
+import RapidGame from "./pages/RapidGame";
+import LyricsGame from "./pages/LyricsGame";
 
 function App() {
 	return (
@@ -14,10 +16,20 @@ function App() {
 			<div className="h-full">
 				<NavigationBar />
 				<Routes>
-					{/* TODO: Game is different how to know which is which smth */}
-					<Route path="/" element={<Game />} />
-					<Route path="/login" element={<Login />} />
-					<Route path="/signup" element={<SignIn />} />
+					{/* TODO: Check how daily game access date */}
+					<Route path="/" element={<OriginalGame />} />
+					<Route path="/daily" element={<DailyGame />} />
+					<Route path="/daily/:date" element={<DailyGame />} />
+					<Route path="/rapid" element={<RapidGame />} />
+					<Route path="/lyrics" element={<LyricsGame />} />
+					<Route
+						path="/login"
+						element={<SignInUp isSignIn={true} />}
+					/>
+					<Route
+						path="/signin"
+						element={<SignInUp isSignIn={false} />}
+					/>
 					<Route path="/leaderboards" element={<Leaderboard />} />
 					<Route path="/test" element={<Test />} />
 				</Routes>
