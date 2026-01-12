@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import SignInUp from "./pages/SignInUp";
 import Leaderboard from "./pages/Leaderboard";
 import NavigationBar from "./components/compound/NavigationBar";
@@ -10,11 +10,13 @@ import RapidGame from "./pages/RapidGame";
 import LyricsGame from "./pages/LyricsGame";
 
 function App() {
+	const location = useLocation();
+	const path = location.pathname;
 	return (
 		<div className="relative h-screen w-full flex flex-col">
 			<Background className="absolute w-screen h-screen z-[-1]" />
 			<div className="h-full">
-				<NavigationBar />
+				{path !== "/signin" && path !== "/login" && <NavigationBar />}
 				<Routes>
 					{/* TODO: Check how daily game access date */}
 					<Route path="/" element={<OriginalGame />} />
