@@ -7,7 +7,6 @@ type CircularPlayButtonProps = {
 	size?: number;
 	strokeWidth?: number; // thickness of line
 	color: string;
-	trackColor: string;
 };
 
 const CircularPlayButton = ({
@@ -16,7 +15,6 @@ const CircularPlayButton = ({
 	size = 96,
 	strokeWidth = 4,
 	color,
-	trackColor,
 }: CircularPlayButtonProps) => {
 	const radius = (size - strokeWidth) / 2;
 	const circumference = 2 * Math.PI * radius;
@@ -26,25 +24,16 @@ const CircularPlayButton = ({
 
 	return (
 		<div
-			className="relative inline-block cursor-pointer"
+			className="relative inline-block cursor-pointer group"
 			style={{ width: size, height: size }}
 		>
 			<svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
-				{/* Track circle */}
-				{/* <circle
-					cx={size / 2}
-					cy={size / 2}
-					r={radius}
-					className={`${trackColor} stroke-current`}
-					strokeWidth={strokeWidth}
-					fill="none"
-				/> */}
 				{/* Progress circle */}
 				<circle
 					cx={size / 2}
 					cy={size / 2}
 					r={radius}
-					className={`${color} stroke-current`}
+					className={`${color} stroke-current group-hover:text-accent-500`}
 					strokeWidth={strokeWidth}
 					fill="none"
 					strokeDasharray={circumference}
@@ -60,9 +49,9 @@ const CircularPlayButton = ({
 				style={{ width: iconSize, height: iconSize }}
 			>
 				{isPlaying ? (
-					<PauseIcon className="w-full h-full text-primary-500 hover:text-accent-500" />
+					<PauseIcon className="w-full h-full text-primary-500 group-hover:text-accent-500" />
 				) : (
-					<PlayIcon className="w-full h-full text-primary-500 hover:text-accent-500" />
+					<PlayIcon className="w-full h-full text-primary-500 group-hover:text-accent-500" />
 				)}
 			</div>
 		</div>
