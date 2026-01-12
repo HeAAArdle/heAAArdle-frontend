@@ -4,6 +4,8 @@ import SignInIcon from "../icons/SignInIcon";
 import PasswordInput from "../components/simple/PasswordInput";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import type { CredentialFormFields } from "../types";
+import LeftArrowIcon from "../icons/LeftArrowIcon";
+import { Link } from "react-router-dom";
 
 type SignInUpProps = {
 	isSignIn: boolean;
@@ -19,9 +21,14 @@ const SignInUp = ({ isSignIn }: SignInUpProps) => {
 
 	return (
 		<div className="h-full flex items-center justify-center">
-			<div>
+			<div className="relative">
 				{/* back button */}
-				<button></button>
+				<Link
+					to={`/${isSignIn ? "" : "login"}`}
+					className="absolute top-12 left-12 w-12 h-12 text-neutral-50"
+				>
+					<LeftArrowIcon />
+				</Link>
 				<form
 					onSubmit={handleSubmit(onSubmit)}
 					className="flex flex-col items-center justify-around py-12 gap-3 px-32 w-160 h-161.5  shadow-2xl shadow-[#36327D]/30 rounded-[48px] border-4 border-neutral-300/40"
@@ -54,9 +61,11 @@ const SignInUp = ({ isSignIn }: SignInUpProps) => {
 						/>
 						<div className="text-neutral-300 lato-regular">
 							{isSignIn ? "Don't" : "Already"} have an account?{" "}
-							<span className="text-primary-500 underline font-bold">
-								Sign {isSignIn ? "Up" : "In"}
-							</span>
+							<Link to={`/${isSignIn ? "signin" : "login"}`}>
+								<span className="text-primary-500 underline font-bold cursor-pointer">
+									Sign {isSignIn ? "Up" : "In"}
+								</span>
+							</Link>
 						</div>
 					</div>
 				</form>
