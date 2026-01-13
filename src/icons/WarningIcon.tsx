@@ -13,7 +13,7 @@ const WarningIcon = ({ className = "" }: IconProps) => {
 			<path
 				d="M36 66C44.2842 66 51.7842 62.6421 57.2132 57.2132C62.6421 51.7842 66 44.2842 66 36C66 27.7158 62.6421 20.2158 57.2132 14.7868C51.7842 9.35787 44.2842 6 36 6C27.7158 6 20.2158 9.35787 14.7868 14.7868C9.35787 20.2158 6 27.7158 6 36C6 44.2842 9.35787 51.7842 14.7868 57.2132C20.2158 62.6421 27.7158 66 36 66Z"
 				stroke="currentColor"
-				stroke-width="6"
+				strokeWidth="6"
 				stroke-linejoin="round"
 			/>
 			<path
@@ -25,7 +25,7 @@ const WarningIcon = ({ className = "" }: IconProps) => {
 			<path
 				d="M36 18V42"
 				stroke="currentColor"
-				stroke-width="6"
+				strokeWidth="6"
 				stroke-linecap="round"
 				stroke-linejoin="round"
 			/>

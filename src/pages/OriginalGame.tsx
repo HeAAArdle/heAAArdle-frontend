@@ -1,15 +1,28 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import MusicPlayer from "../components/compound/MusicPlayer";
 import GuessInput from "../components/simple/GuessInput";
 import GuessHistory from "../components/simple/GuessHistory";
 import Button from "../components/simple/Button";
+import { useWebSocket } from "../hooks/useWebSocket";
+import { useGameStartQuery } from "../services/queries/game";
+import { UserContext } from "../context/UserContext";
 
 const OriginalGame = () => {
-	const [text, setText] = useState("");
+	const { SONGS, isSongsLoading, songsError, noOfGuesses } =
+		useContext(UserContext);
 
-	const handleText = (text: string) => {
-		setText(text);
-	};
+	// move logic into diff location
+	const {
+		data: wsData,
+		isLoading: isWsLoading,
+		error: wsError,
+	} = useGameStartQuery({ mode: "original" });
+	useWebSocket(wsData?.wsURL);
+
+	const [guessText, setGuessText] = useState("");
+	const [guesses, setGuesses] = useState(() => new Array(6).fill(""));
+	const [currGuess, setCurrGuess] = useState(0);
+	const [hasWon, setHasWon] = useState(false);
 
 	return (
 		<div className="h-full flex flex-col space-y-4 items-center justify-center">
@@ -19,12 +32,38 @@ const OriginalGame = () => {
 			<MusicPlayer />
 			<Button text="Skip" type="secondary" />
 			<div className="w-132 space-y-4">
-				<GuessHistory result={"incorrect"} text={"Taylor Swift"} />
+				{guesses.map((guess, index) =>
+					index === currGuess && !hasWon ? (
+						<GuessInput
+							key={index}
+							value={guessText}
+							onChange={(text) => setGuessText(text)}
+							onClick={() => 1}
+						/>
+					) : guess === "" ? (
+						<GuessHistory
+							key={index}
+							result={"unanswered"}
+							text={guess}
+						/>
+					) : (
+						<GuessHistory
+							key={index}
+							result={hasWon ? "correct" : "incorrect"}
+							text={guess}
+						/>
+					)
+				)}
+
+				{/* <GuessHistory result={"incorrect"} text={"Taylor Swift"} />
 				<GuessHistory result={"incorrect"} text={"Taylor Swift"} />
 				<GuessHistory result={"correct"} text={"Ed Sheeran"} />
-				<GuessInput value={text} onChange={handleText} />
+				<GuessInput
+					value={guessText}
+					onChange={(text) => setGuessText(text)}
+				/>
 				<GuessHistory result={"unanswered"} />
-				<GuessHistory result={"unanswered"} />
+				<GuessHistory result={"unanswered"} /> */}
 			</div>
 		</div>
 	);

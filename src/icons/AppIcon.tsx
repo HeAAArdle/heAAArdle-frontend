@@ -16,7 +16,7 @@ const AppIcon = ({ className = "" }: IconProps) => {
 				r="31"
 				fill="white"
 				stroke="black"
-				stroke-width="2"
+				strokeWidth="2"
 			/>
 		</svg>
 	);

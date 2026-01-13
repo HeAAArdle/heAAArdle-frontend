@@ -15,9 +15,7 @@ const SignInUp = ({ isSignIn }: SignInUpProps) => {
 	const { register, handleSubmit, watch } = useForm<CredentialFormFields>();
 	const passwordText = watch("password");
 
-	const onSubmit: SubmitHandler<CredentialFormFields> = (data) => {
-		console.log(data);
-	};
+	const onSubmit: SubmitHandler<CredentialFormFields> = (data) => {};
 
 	return (
 		<div className="h-full flex items-center justify-center">
