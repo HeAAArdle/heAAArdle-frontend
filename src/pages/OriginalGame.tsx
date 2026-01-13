@@ -1,28 +1,43 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import MusicPlayer from "../components/compound/MusicPlayer";
 import GuessInput from "../components/simple/GuessInput";
 import GuessHistory from "../components/simple/GuessHistory";
 import Button from "../components/simple/Button";
 import { useWebSocket } from "../hooks/useWebSocket";
-import { useGameStartQuery } from "../services/queries/game";
 import { UserContext } from "../context/UserContext";
+import { useGameStart } from "../services/api/game/start-game";
+import { useSongs } from "../services/api/song/get-songs";
 
 const OriginalGame = () => {
-	const { SONGS, isSongsLoading, songsError, noOfGuesses } =
-		useContext(UserContext);
+	const { noOfGuesses } = useContext(UserContext);
+	const { SONGS } = useSongs();
 
 	// move logic into diff location
 	const {
+		mutate,
 		data: wsData,
-		isLoading: isWsLoading,
+		isPending: isWsLoading,
 		error: wsError,
-	} = useGameStartQuery({ mode: "original" });
+	} = useGameStart();
+
+	useEffect(() => {
+		if (!wsData) {
+			mutate("original");
+		}
+	}, [mutate, wsData]);
+
 	useWebSocket(wsData?.wsURL);
 
 	const [guessText, setGuessText] = useState("");
-	const [guesses, setGuesses] = useState(() => new Array(6).fill(""));
+	const [guesses, setGuesses] = useState(() =>
+		new Array(noOfGuesses).fill("")
+	);
 	const [currGuess, setCurrGuess] = useState(0);
 	const [hasWon, setHasWon] = useState(false);
+
+	// basic err stuff
+	if (isWsLoading) return <p>Starting game...</p>;
+	if (wsError) return <p>Failed to start game</p>;
 
 	return (
 		<div className="h-full flex flex-col space-y-4 items-center justify-center">
@@ -54,16 +69,6 @@ const OriginalGame = () => {
 						/>
 					)
 				)}
-
-				{/* <GuessHistory result={"incorrect"} text={"Taylor Swift"} />
-				<GuessHistory result={"incorrect"} text={"Taylor Swift"} />
-				<GuessHistory result={"correct"} text={"Ed Sheeran"} />
-				<GuessInput
-					value={guessText}
-					onChange={(text) => setGuessText(text)}
-				/>
-				<GuessHistory result={"unanswered"} />
-				<GuessHistory result={"unanswered"} /> */}
 			</div>
 		</div>
 	);

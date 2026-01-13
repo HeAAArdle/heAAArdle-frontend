@@ -8,10 +8,14 @@ import OriginalGame from "./pages/OriginalGame";
 import DailyGame from "./pages/DailyGame";
 import RapidGame from "./pages/RapidGame";
 import LyricsGame from "./pages/LyricsGame";
+import { useSongs } from "./services/api/song/get-songs";
 
 function App() {
 	const location = useLocation();
 	const path = location.pathname;
+
+	useSongs();
+
 	return (
 		<div className="relative h-screen w-full flex flex-col">
 			<Background className="absolute w-screen h-screen z-[-1]" />
