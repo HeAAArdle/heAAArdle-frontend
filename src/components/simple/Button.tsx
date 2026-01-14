@@ -2,7 +2,7 @@ type ButtonType = "primary" | "secondary" | "destructive" | "cancel";
 
 type ButtonProps = {
 	text: string;
-	onClick?: () => null;
+	onClick?: () => void;
 	type: ButtonType;
 	htmlType?: "button" | "submit";
 	full?: boolean;

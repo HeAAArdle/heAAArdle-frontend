@@ -1,42 +1,27 @@
-import { useContext, useEffect, useState } from "react";
 import MusicPlayer from "../components/compound/MusicPlayer";
 import GuessInput from "../components/simple/GuessInput";
 import GuessHistory from "../components/simple/GuessHistory";
 import Button from "../components/simple/Button";
-import { useWebSocket } from "../hooks/useWebSocket";
-import { UserContext } from "../context/UserContext";
-import { useGameStart } from "../services/api/game/start-game";
 import { useSongs } from "../services/api/song/get-songs";
+import useHeardleGame from "../hooks/useHeardleGame";
 
 const OriginalGame = () => {
-	const { noOfGuesses } = useContext(UserContext);
 	const { SONGS } = useSongs();
 
-	// move logic into diff location
 	const {
-		mutate,
-		data: wsData,
-		isPending: isWsLoading,
-		error: wsError,
-	} = useGameStart();
-
-	useEffect(() => {
-		if (!wsData) {
-			mutate("original");
-		}
-	}, [mutate, wsData]);
-
-	useWebSocket(wsData?.wsURL);
-
-	const [guessText, setGuessText] = useState("");
-	const [guesses, setGuesses] = useState(() =>
-		new Array(noOfGuesses).fill("")
-	);
-	const [currGuess, setCurrGuess] = useState(0);
-	const [hasWon, setHasWon] = useState(false);
+		isWsPending,
+		wsError,
+		guessText,
+		setGuessText,
+		guesses,
+		currGuess,
+		hasWon,
+		handleGuess,
+		handleSkip,
+	} = useHeardleGame("original");
 
 	// basic err stuff
-	if (isWsLoading) return <p>Starting game...</p>;
+	if (isWsPending) return <p>Starting game...</p>;
 	if (wsError) return <p>Failed to start game</p>;
 
 	return (
@@ -45,7 +30,7 @@ const OriginalGame = () => {
 				Heardle
 			</span>
 			<MusicPlayer />
-			<Button text="Skip" type="secondary" />
+			<Button text="Skip" type="secondary" onClick={handleSkip} />
 			<div className="w-132 space-y-4">
 				{guesses.map((guess, index) =>
 					index === currGuess && !hasWon ? (
@@ -53,9 +38,9 @@ const OriginalGame = () => {
 							key={index}
 							value={guessText}
 							onChange={(text) => setGuessText(text)}
-							onClick={() => 1}
+							onClick={handleGuess}
 						/>
-					) : guess === "" ? (
+					) : guess === null ? (
 						<GuessHistory
 							key={index}
 							result={"unanswered"}
