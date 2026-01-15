@@ -46,7 +46,7 @@ const SignInUp = ({ isSignIn }: SignInUpProps) => {
 						/>
 						<PasswordInput
 							isSignIn={isSignIn}
-							// passwordStrength={3}
+							// passwordStrength={1}
 							register={register}
 						/>
 					</div>

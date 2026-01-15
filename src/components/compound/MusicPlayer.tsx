@@ -2,7 +2,13 @@ import { useEffect, useRef, useState } from "react";
 import music from "../../assets/Ed Sheeran - Perfect (Official Music Video).mp3";
 import CircularPlayButton from "../simple/CircularPlayButton";
 
-const MusicPlayer = () => {
+type MusicPlayerType = {
+	src: string; // audio url
+	startTime: number;
+	clipDuration: number; // how long to run
+};
+
+const MusicPlayer = ({ src, startTime, clipDuration }: MusicPlayerType) => {
 	const [isPlaying, setIsPlaying] = useState(false);
 	const [percentage, setPercentage] = useState(0);
 	const audioRef = useRef<HTMLAudioElement>(null);
@@ -17,8 +23,19 @@ const MusicPlayer = () => {
 		const audio = audioRef.current;
 		if (!audio) return;
 
+		// random start given by backend
+		audio.currentTime = startTime;
+
 		const handleTimeUpdate = () => {
-			setPercentage((audio.currentTime / audio.duration) * 100);
+			setPercentage(
+				((audio.currentTime - startTime) / clipDuration) * 100
+			);
+			if (audio.currentTime >= startTime + clipDuration) {
+				audio.pause();
+				setIsPlaying(false);
+				setPercentage(0);
+				audio.currentTime = startTime;
+			}
 		};
 
 		audio.addEventListener("timeupdate", handleTimeUpdate);
@@ -28,7 +45,7 @@ const MusicPlayer = () => {
 
 	return (
 		<div>
-			<audio ref={audioRef} src={music} />
+			<audio ref={audioRef} src={src} />
 			<button onClick={handleClick}>
 				<CircularPlayButton
 					size={96}
