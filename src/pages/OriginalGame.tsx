@@ -3,8 +3,6 @@ import GuessInput from "../components/simple/GuessInput";
 import GuessHistory from "../components/simple/GuessHistory";
 import Button from "../components/simple/Button";
 import useHeardleGame from "../hooks/useHeardleGame";
-import type { StartGameData } from "../services/api/game/start-game";
-import { useQuery } from "@tanstack/react-query";
 
 const OriginalGame = () => {
 	const {
@@ -21,23 +19,9 @@ const OriginalGame = () => {
 		startAt,
 	} = useHeardleGame("original");
 
-	// const { data: wsData } = useQuery<StartGameData | null>({
-	// 	queryKey: ["gameStart"],
-	// 	queryFn: () => null,
-	// 	// will only run if not in cache
-	// 	staleTime: Infinity,
-	// 	initialData: null,
-	// });
-
-	// const audio = wsData?.audio;
-	// const startAt = wsData?.startAt;
-
 	// basic err stuff
 	if (isWsPending) return <p>Starting game...</p>;
 	if (wsError) return <p>Failed to start game</p>;
-
-	console.log(audio);
-	console.log(startAt);
 
 	return (
 		<div className="h-full flex flex-col space-y-4 items-center justify-center">

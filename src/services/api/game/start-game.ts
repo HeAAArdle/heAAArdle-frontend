@@ -1,6 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
 import { api } from "../../../lib/axios";
-import { data } from "react-router-dom";
 import { queryClient } from "../../../lib/queryClient";
 
 export type StartGameData = {
@@ -8,7 +7,7 @@ export type StartGameData = {
 	wsURL: string;
 	expiresIn: number;
 	audio: string; // to check
-	startAt: number;
+	audioStartAt: number;
 	date?: string; // ayusin to date???
 };
 

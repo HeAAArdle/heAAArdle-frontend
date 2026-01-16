@@ -18,16 +18,7 @@ const useHeardleGame = (mode: UseHeardleGameProps) => {
 	const [currGuess, setCurrGuess] = useState(0);
 	const [hasWon, setHasWon] = useState(false); // maybe state rather than boolean
 
-	const [webSocketData, setWebSocketData] = useState<StartGameData | null>(
-		null
-	);
-
-	const {
-		mutate,
-		// data: wsData,
-		isPending: isWsPending,
-		error: wsError,
-	} = useGameStart();
+	const { mutate, isPending: isWsPending, error: wsError } = useGameStart();
 
 	const { data: wsData } = useQuery<StartGameData | null>({
 		queryKey: ["gameStart"],
@@ -44,18 +35,11 @@ const useHeardleGame = (mode: UseHeardleGameProps) => {
 		if (!wsData) mutate({ mode: "original", date: null }); // this changes based on mode
 	}, [mutate, mode, wsData]);
 
-	useEffect(() => {
-		if (!wsData) return;
-
-		setWebSocketData(wsData);
-	}, [wsData]);
-
 	// connect to websocket when we have url
 	const { sendMessage, closeConnection } = useWebSocket(wsData?.wsURL);
-	// const { sendMessage, closeConnection } = useWebSocket(webSocketData?.wsURL);
 
 	// ws cache
-	const { data: gameEvent } = useQuery<WsReturnType>({
+	const { data: gameEvent } = useQuery<WsReturnType | null>({
 		queryKey: ["gameEvent"],
 		queryFn: () => null,
 		enabled: false,
@@ -65,6 +49,7 @@ const useHeardleGame = (mode: UseHeardleGameProps) => {
 
 	// update game state based on ws
 	useEffect(() => {
+		console.log(gameEvent);
 		if (!gameEvent || gameEvent.type !== "result") return;
 
 		setGuesses((prev) => {
@@ -75,20 +60,24 @@ const useHeardleGame = (mode: UseHeardleGameProps) => {
 
 		if (gameEvent.is_correct) {
 			setHasWon(true);
+			console.log("cleanup 1");
 			handleCleanup();
 			return;
 		}
 
 		if (currGuess === noOfGuesses - 1) {
+			console.log(currGuess, noOfGuesses);
+			console.log("cleanup 2");
 			handleCleanup();
 			return;
 		}
 
-		setCurrGuess((prev) => prev + 1);
-	}, [gameEvent, currGuess, noOfGuesses]);
+		setCurrGuess(currGuess + 1);
+	}, [gameEvent]);
 
 	const handleCleanup = () => {
 		// close ws
+		console.log("cleaning up");
 		closeConnection();
 		// if has profile
 		// sent to backend updated
@@ -104,8 +93,6 @@ const useHeardleGame = (mode: UseHeardleGameProps) => {
 		sendMessage({ type: "guess", guess: "" });
 		setGuessText("");
 	};
-
-	console.log(wsData);
 
 	return {
 		isWsPending,
