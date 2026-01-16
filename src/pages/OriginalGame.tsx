@@ -13,6 +13,7 @@ const OriginalGame = () => {
 		guesses,
 		currGuess,
 		hasWon,
+		isGameDone,
 		handleGuess,
 		handleSkip,
 		audio,
@@ -38,7 +39,7 @@ const OriginalGame = () => {
 			<Button text="Skip" type="secondary" onClick={handleSkip} />
 			<div className="w-132 space-y-4">
 				{guesses.map((guess, index) =>
-					index === currGuess && !hasWon ? (
+					index === currGuess && !isGameDone ? (
 						<GuessInput
 							key={index}
 							value={guessText}
@@ -54,7 +55,11 @@ const OriginalGame = () => {
 					) : (
 						<GuessHistory
 							key={index}
-							result={hasWon ? "correct" : "incorrect"}
+							result={
+								hasWon && index === currGuess
+									? "correct"
+									: "incorrect"
+							}
 							text={guess}
 						/>
 					)

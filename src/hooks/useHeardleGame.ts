@@ -16,7 +16,6 @@ const useHeardleGame = (mode: UseHeardleGameProps) => {
 		new Array(noOfGuesses).fill(null)
 	);
 	const [currGuess, setCurrGuess] = useState(0);
-	const [hasWon, setHasWon] = useState(false); // maybe state rather than boolean
 
 	const { mutate, isPending: isWsPending, error: wsError } = useGameStart();
 
@@ -49,7 +48,6 @@ const useHeardleGame = (mode: UseHeardleGameProps) => {
 
 	// update game state based on ws
 	useEffect(() => {
-		console.log(gameEvent);
 		if (!gameEvent || gameEvent.type !== "result") return;
 
 		setGuesses((prev) => {
@@ -58,16 +56,7 @@ const useHeardleGame = (mode: UseHeardleGameProps) => {
 			return updated;
 		});
 
-		if (gameEvent.is_correct) {
-			setHasWon(true);
-			console.log("cleanup 1");
-			handleCleanup();
-			return;
-		}
-
-		if (currGuess === noOfGuesses - 1) {
-			console.log(currGuess, noOfGuesses);
-			console.log("cleanup 2");
+		if (gameEvent.done) {
 			handleCleanup();
 			return;
 		}
@@ -77,7 +66,6 @@ const useHeardleGame = (mode: UseHeardleGameProps) => {
 
 	const handleCleanup = () => {
 		// close ws
-		console.log("cleaning up");
 		closeConnection();
 		// if has profile
 		// sent to backend updated
@@ -101,7 +89,8 @@ const useHeardleGame = (mode: UseHeardleGameProps) => {
 		setGuessText,
 		guesses,
 		currGuess,
-		hasWon,
+		hasWon: gameEvent?.is_correct,
+		isGameDone: gameEvent?.done,
 		handleGuess,
 		handleSkip,
 		audio: wsData?.audio,

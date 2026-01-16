@@ -10,28 +10,15 @@ const Test = () => {
 	return (
 		<div className="h-full flex items-center justify-center w-full">
 			<div className="h-full flex flex-col items-center justify-center w-96 gap-4">
-				{/* <DeleteAccount /> */}
-				<GuessInput value={text} onChange={setText} onClick={() => 1} />
-				<Leaderboard />
 				<Statistics
 					currentStreak={69}
 					longestStreak={69}
 					gamesPlayed={69}
 					winCount={69}
-					winRate={100}
-					type="original"
-				/>
-				<Statistics
-					currentStreak={69}
-					longestStreak={69}
-					gamesPlayed={69}
-					winCount={69}
-					winRate={100}
+					winRate={69}
 					type="daily"
-					distribution={[6, 5, 4, 3, 6, 7, 1]}
+					distribution={[8, 5, 4, 2, 7, 9]}
 				/>
-				{/* <PasswordInput isSignIn={true} register={(a)=>"")} />
-				<PasswordInput isSignIn={false} register={a=>""} /> */}
 			</div>
 		</div>
 	);

@@ -6,6 +6,7 @@ export type WsReturnType = {
 	is_correct: boolean;
 	done: boolean;
 	guess: string;
+	attempts: number;
 };
 
 export const useWebSocket = (wsUrl?: string) => {
@@ -19,6 +20,7 @@ export const useWebSocket = (wsUrl?: string) => {
 
 		ws.onmessage = (event) => {
 			const payload: WsReturnType = JSON.parse(event.data);
+			console.log(payload);
 			queryClient.setQueryData(["gameEvent"], payload);
 		};
 
