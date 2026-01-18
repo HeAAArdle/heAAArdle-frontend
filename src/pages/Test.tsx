@@ -1,8 +1,10 @@
 import { useState } from "react";
 import GuessInput from "../components/simple/GuessInput";
-import Leaderboard from "./Leaderboard";
+import Leaderboard from "../components/compound/Leaderboard";
 import Statistics from "../components/simple/Statistics";
 import PasswordInput from "../components/simple/PasswordInput";
+import Result from "../components/simple/Result";
+import Archive from "../components/simple/Archive";
 
 const Test = () => {
 	const [text, setText] = useState("");
@@ -10,15 +12,26 @@ const Test = () => {
 	return (
 		<div className="h-full flex items-center justify-center w-full">
 			<div className="h-full flex flex-col items-center justify-center w-96 gap-4">
-				<Statistics
-					currentStreak={69}
-					longestStreak={69}
-					gamesPlayed={69}
-					winCount={69}
-					winRate={69}
-					type="daily"
-					distribution={[8, 5, 4, 2, 7, 9]}
-				/>
+				{/* <Leaderboard /> */}
+				{/* <Result
+					hasWon={true}
+					title={"Candy Necklace"}
+					artist={"Lana Del Ray"}
+					album={
+						"Did You Know That There's a Tunnel Under Ocean Blvd • 1994"
+					}
+					attempts={4}
+				/> */}
+				{/* <Result
+					hasWon={false}
+					title={"Candy Necklace"}
+					artist={"Lana Del Ray"}
+					album={
+						"Did You Know That There's a Tunnel Under Ocean Blvd • 1994"
+					}
+					attempts={4}
+				/> */}
+				<Archive />
 			</div>
 		</div>
 	);

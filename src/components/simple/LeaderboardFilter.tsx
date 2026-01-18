@@ -1,41 +1,58 @@
-import { useState } from "react";
+export type FilterType = "Daily" | "Weekly" | "Monthly" | "All-time";
 
-type FilterType = "Daily" | "Weekly" | "Monthly" | "All-time";
+export type ModeType = "original" | "daily";
 
 type LeaderboardFilterProps = {
+	currMode: ModeType;
 	currFilter: FilterType;
 	onClick: (value: FilterType) => void;
 };
 
-const LeaderboardFilter = ({ currFilter, onClick }: LeaderboardFilterProps) => {
-	const filters: FilterType[] = ["Daily", "Weekly", "Monthly", "All-time"];
+const LeaderboardFilter = ({
+	currMode,
+	currFilter,
+	onClick,
+}: LeaderboardFilterProps) => {
+	const filters: FilterType[] =
+		currMode === "original"
+			? ["Daily", "Weekly", "Monthly", "All-time"]
+			: ["Weekly", "Monthly", "All-time"];
+	const totalSlots = filters.length;
 	const activeIndex = filters.indexOf(currFilter);
 	return (
-		<div className="relative flex h-10 p-1 bg-gray-300 rounded-lg">
+		<div className="relative flex h-16 p-1 bg-neutral-900 rounded-lg w-lg">
 			<div
-				className="absolute inset-1 flex transition-transform duration-300 ease-out w-32"
 				style={{
+					width: `${98.5 / totalSlots}%`,
 					transform: `translateX(${activeIndex * 100}%)`,
 				}}
+				className="absolute inset-1 flex transition-transform duration-300 ease-out"
 			>
-				<div className="flex-1 bg-white rounded-lg" />
+				<div className="w-full bg-primary-500 rounded-lg" />
 			</div>
-			{filters.map((filter) => (
-				<button
-					onClick={() => onClick(filter)}
-					className="relative z-10 w-32 flex-1 rounded-lg text-sm font-medium"
-					key={filter}
-				>
-					{filter}
-				</button>
-			))}
+			{Array.from({ length: totalSlots }).map((_, i) => {
+				const filter = filters[i];
+
+				return (
+					<button
+						key={i}
+						disabled={!filter}
+						onClick={() => filter && onClick(filter)}
+						className={`relative z-10 flex-1 text-2xl lato-regular font-bold rounded-lg
+							${
+								filter
+									? currFilter === filter
+										? "text-neutral-950"
+										: "text-neutral-600"
+									: "cursor-default"
+							}`}
+					>
+						{filter ?? ""}
+					</button>
+				);
+			})}
 		</div>
 	);
 };
 
-const Tester = () => {
-	const [filter, setFilter] = useState<FilterType>("Daily");
-	return <LeaderboardFilter currFilter={filter} onClick={setFilter} />;
-};
-
-export default Tester;
+export default LeaderboardFilter;

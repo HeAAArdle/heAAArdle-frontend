@@ -17,10 +17,9 @@ type StartGameInput = {
 };
 
 const getGameStartFn = async (
-	payload: StartGameInput
+	payload: StartGameInput,
 ): Promise<StartGameData> => {
 	const response = await api.post("/game/start", payload);
-	console.log(response.data);
 	return response.data;
 };
 

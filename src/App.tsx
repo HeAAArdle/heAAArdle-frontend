@@ -1,6 +1,6 @@
 import { Route, Routes, useLocation } from "react-router-dom";
 import SignInUp from "./pages/SignInUp";
-import Leaderboard from "./pages/Leaderboard";
+import Leaderboard from "./components/compound/Leaderboard";
 import NavigationBar from "./components/compound/NavigationBar";
 import Background from "./components/simple/Background";
 import Test from "./pages/Test";
@@ -36,7 +36,6 @@ function App() {
 						path="/signin"
 						element={<SignInUp isSignIn={false} />}
 					/>
-					<Route path="/leaderboards" element={<Leaderboard />} />
 					<Route path="/test" element={<Test />} />
 				</Routes>
 			</div>

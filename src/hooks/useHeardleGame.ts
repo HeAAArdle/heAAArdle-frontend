@@ -4,6 +4,7 @@ import { useGameStart } from "../services/api/game/start-game";
 import { useWebSocket, type WsReturnType } from "./useWebSocket";
 import { useQuery } from "@tanstack/react-query";
 import type { StartGameData } from "../services/api/game/start-game";
+import { useGameSubmit } from "../services/api/game/submit-game";
 
 type UseHeardleGameProps = "original" | "daily" | "rapid" | "lyrics";
 
@@ -13,11 +14,16 @@ const useHeardleGame = (mode: UseHeardleGameProps) => {
 
 	const [guessText, setGuessText] = useState("");
 	const [guesses, setGuesses] = useState(() =>
-		new Array(noOfGuesses).fill(null)
+		new Array(noOfGuesses).fill(null),
 	);
 	const [currGuess, setCurrGuess] = useState(0);
 
 	const { mutate, isPending: isWsPending, error: wsError } = useGameStart();
+	const {
+		mutate: sendResult,
+		isPending: isGameSubmitted,
+		error: submitError,
+	} = useGameSubmit();
 
 	const { data: wsData } = useQuery<StartGameData | null>({
 		queryKey: ["gameStart"],
