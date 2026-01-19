@@ -5,7 +5,7 @@ import PasswordInput from "../components/simple/PasswordInput";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import type { CredentialFormFields } from "../types";
 import LeftArrowIcon from "../icons/LeftArrowIcon";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useSignIn } from "../services/api/account/sign-in";
 import { useEffect, useState } from "react";
 import { useDebounce } from "../hooks/useDebounce";
@@ -44,7 +44,10 @@ const SignInUp = ({ isSignIn }: SignInUpProps) => {
 				{/* back button */}
 				<Link
 					to={`/${isSignIn ? "" : "signin"}`}
-					onClick={() => reset()}
+					onClick={() => {
+						reset();
+						setPasswordStrength(null);
+					}}
 					className="absolute top-12 left-12 w-12 h-12 text-neutral-50"
 				>
 					<LeftArrowIcon />
@@ -59,7 +62,7 @@ const SignInUp = ({ isSignIn }: SignInUpProps) => {
 							Sign {isSignIn ? "In" : "Up"}
 						</span>
 						<TextInput
-							{...register("username")}
+							{...register("username", { required: true })}
 							text="Username"
 							type="text"
 							placeholder="username"

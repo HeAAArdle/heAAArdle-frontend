@@ -3,6 +3,7 @@ import EyesClosedIcon from "../../icons/EyesClosedIcon";
 import EyesOpenIcon from "../../icons/EyesOpenIcon";
 import type { UseFormRegister } from "react-hook-form";
 import type { CredentialFormFields } from "../../types";
+import { getPasswordStrength } from "../../utils/getPasswordStrength";
 
 type PasswordStrength = 1 | 2 | 3 | 4 | 5;
 
@@ -50,7 +51,14 @@ const PasswordInput = ({
 				<input
 					type={passwordIsVisible ? "text" : "password"}
 					placeholder="Enter your password.."
-					{...register("password")}
+					{...register("password", {
+						required: true,
+						validate: (value: string) => {
+							const result = getPasswordStrength(value);
+							console.log(result);
+							return result == null ? false : result >= 4;
+						},
+					})}
 					className={`${passwordIsVisible ? "text-neutral-50" : "text-neutral-600"} lato-regular text-[16px] w-full outline-none`}
 				/>
 				<div
