@@ -1,12 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
-import { api } from "../../../lib/axios";
+import { publicApi } from "../../../lib/api/publicApi";
 
 type SongType = {
 	title: string;
 };
 
 const getSongsFn = async (): Promise<SongType[]> => {
-	const response = await api.get("/songs/");
+	const response = await publicApi.get("/songs/");
 	return response.data;
 };
 

@@ -8,7 +8,7 @@ type PasswordStrength = 1 | 2 | 3 | 4 | 5;
 
 type PasswordInputProps = {
 	isSignIn: boolean;
-	passwordStrength?: PasswordStrength;
+	passwordStrength: PasswordStrength | null;
 	register: UseFormRegister<CredentialFormFields>;
 };
 
@@ -64,7 +64,7 @@ const PasswordInput = ({
 					)}
 				</div>
 			</div>
-			{passwordStrength && (
+			{!isSignIn && passwordStrength && (
 				<div className="w-full h-fit">
 					<div className="flex w-full h-2 rounded-2xl">
 						<div

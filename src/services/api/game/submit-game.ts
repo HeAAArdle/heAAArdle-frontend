@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { api } from "../../../lib/axios";
+import { publicApi } from "../../../lib/api/publicApi";
 import { queryClient } from "../../../lib/queryClient";
 
 type SubmitGameInput = {
@@ -24,7 +24,7 @@ type SubmitGameData = {
 const getGameSubmitFn = async (
 	payload: SubmitGameInput,
 ): Promise<SubmitGameData> => {
-	const response = await api.post("/game/submit", payload);
+	const response = await publicApi.post("/game/submit", payload);
 	return response.data;
 };
 

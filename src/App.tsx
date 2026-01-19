@@ -1,6 +1,5 @@
 import { Route, Routes, useLocation } from "react-router-dom";
 import SignInUp from "./pages/SignInUp";
-import Leaderboard from "./components/compound/Leaderboard";
 import NavigationBar from "./components/compound/NavigationBar";
 import Background from "./components/simple/Background";
 import Test from "./pages/Test";
@@ -20,7 +19,7 @@ function App() {
 		<div className="relative h-screen w-full flex flex-col">
 			<Background className="absolute w-screen h-screen z-[-1]" />
 			<div className="h-full">
-				{path !== "/signin" && path !== "/login" && <NavigationBar />}
+				{path !== "/signin" && path !== "/signup" && <NavigationBar />}
 				<Routes>
 					{/* TODO: Check how daily game access date */}
 					<Route path="/" element={<OriginalGame />} />
@@ -29,11 +28,11 @@ function App() {
 					<Route path="/rapid" element={<RapidGame />} />
 					<Route path="/lyrics" element={<LyricsGame />} />
 					<Route
-						path="/login"
+						path="/signin"
 						element={<SignInUp isSignIn={true} />}
 					/>
 					<Route
-						path="/signin"
+						path="/signup"
 						element={<SignInUp isSignIn={false} />}
 					/>
 					<Route path="/test" element={<Test />} />

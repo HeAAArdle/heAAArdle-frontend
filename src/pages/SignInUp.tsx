@@ -6,23 +6,44 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import type { CredentialFormFields } from "../types";
 import LeftArrowIcon from "../icons/LeftArrowIcon";
 import { Link } from "react-router-dom";
+import { useSignIn } from "../services/api/account/sign-in";
+import { useEffect, useState } from "react";
+import { useDebounce } from "../hooks/useDebounce";
+import { getPasswordStrength } from "../utils/getPasswordStrength";
 
 type SignInUpProps = {
 	isSignIn: boolean;
 };
 
-const SignInUp = ({ isSignIn }: SignInUpProps) => {
-	const { register, handleSubmit, watch } = useForm<CredentialFormFields>();
-	const passwordText = watch("password");
+type PasswordStrength = 1 | 2 | 3 | 4 | 5;
 
-	const onSubmit: SubmitHandler<CredentialFormFields> = (data) => {};
+const SignInUp = ({ isSignIn }: SignInUpProps) => {
+	const { register, handleSubmit, watch, reset } =
+		useForm<CredentialFormFields>();
+	const [passwordStrength, setPasswordStrength] =
+		useState<PasswordStrength | null>(null);
+	const passwordText = watch("password");
+	const debouncedValue = useDebounce(passwordText);
+
+	useEffect(() => {
+		setPasswordStrength(getPasswordStrength(debouncedValue));
+	}, [debouncedValue]);
+
+	const { mutate: signin } = useSignIn();
+	const { mutate: signup } = useSignIn();
+
+	const onSubmit: SubmitHandler<CredentialFormFields> = (data) => {
+		if (isSignIn) signin(data);
+		else signup(data);
+	};
 
 	return (
 		<div className="h-full flex items-center justify-center">
 			<div className="relative">
 				{/* back button */}
 				<Link
-					to={`/${isSignIn ? "" : "login"}`}
+					to={`/${isSignIn ? "" : "signin"}`}
+					onClick={() => reset()}
 					className="absolute top-12 left-12 w-12 h-12 text-neutral-50"
 				>
 					<LeftArrowIcon />
@@ -46,7 +67,7 @@ const SignInUp = ({ isSignIn }: SignInUpProps) => {
 						/>
 						<PasswordInput
 							isSignIn={isSignIn}
-							// passwordStrength={1}
+							passwordStrength={passwordStrength}
 							register={register}
 						/>
 					</div>
@@ -59,7 +80,10 @@ const SignInUp = ({ isSignIn }: SignInUpProps) => {
 						/>
 						<div className="text-neutral-300 lato-regular">
 							{isSignIn ? "Don't" : "Already"} have an account?{" "}
-							<Link to={`/${isSignIn ? "signin" : "login"}`}>
+							<Link
+								to={`/${isSignIn ? "signup" : "signin"}`}
+								onClick={() => reset()}
+							>
 								<span className="text-primary-500 underline font-bold cursor-pointer">
 									Sign {isSignIn ? "Up" : "In"}
 								</span>

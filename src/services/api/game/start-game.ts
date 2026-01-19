@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { api } from "../../../lib/axios";
+import { publicApi } from "../../../lib/api/publicApi";
 import { queryClient } from "../../../lib/queryClient";
 
 export type StartGameData = {
@@ -19,7 +19,7 @@ type StartGameInput = {
 const getGameStartFn = async (
 	payload: StartGameInput,
 ): Promise<StartGameData> => {
-	const response = await api.post("/game/start", payload);
+	const response = await publicApi.post("/game/start", payload);
 	return response.data;
 };
 
