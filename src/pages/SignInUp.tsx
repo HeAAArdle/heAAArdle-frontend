@@ -5,17 +5,18 @@ import PasswordInput from "../components/simple/PasswordInput";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import type { CredentialFormFields } from "../types";
 import LeftArrowIcon from "../icons/LeftArrowIcon";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSignIn } from "../services/api/account/sign-in";
 import { useEffect, useState } from "react";
 import { useDebounce } from "../hooks/useDebounce";
-import { getPasswordStrength } from "../utils/getPasswordStrength";
+import {
+	getPasswordStrength,
+	type PasswordStrength,
+} from "../utils/getPasswordStrength";
 
 type SignInUpProps = {
 	isSignIn: boolean;
 };
-
-type PasswordStrength = 1 | 2 | 3 | 4 | 5;
 
 const SignInUp = ({ isSignIn }: SignInUpProps) => {
 	const { register, handleSubmit, watch, reset } =
@@ -82,7 +83,10 @@ const SignInUp = ({ isSignIn }: SignInUpProps) => {
 							{isSignIn ? "Don't" : "Already"} have an account?{" "}
 							<Link
 								to={`/${isSignIn ? "signup" : "signin"}`}
-								onClick={() => reset()}
+								onClick={() => {
+									reset();
+									setPasswordStrength(null);
+								}}
 							>
 								<span className="text-primary-500 underline font-bold cursor-pointer">
 									Sign {isSignIn ? "Up" : "In"}

@@ -1,17 +1,32 @@
-type PasswordStrength = 1 | 2 | 3 | 4 | 5;
+export type PasswordStrength = 1 | 2 | 3 | 4 | 5;
 
 export function getPasswordStrength(password: string): PasswordStrength | null {
-	if (!password) return null;
+	if (password === null || password === undefined || password === "")
+		return null;
 
-	let counter: PasswordStrength = 1;
-	// check for symbols
-	if (/[^a-zA-Z0-9]/.test(password)) counter++;
-	// check for pw longer than 13 char
-	if (password.length > 13) counter++;
-	// check for numbers
-	if (/[0-9]/.test(password)) counter++;
-	// check for pw longer than 8 char
-	if (password.length > 8) counter++;
+	let strength: PasswordStrength = 1;
 
-	return Math.min(counter, 6) as PasswordStrength;
+	const length = password.length;
+	const hasLower = /[a-z]/.test(password);
+	const hasUpper = /[A-Z]/.test(password);
+	const hasNumber = /\d/.test(password);
+	const hasSymbol = /[^a-zA-Z0-9]/.test(password);
+
+	const typesCount = [hasLower, hasUpper, hasNumber, hasSymbol].filter(
+		Boolean,
+	).length;
+
+	if (length < 8 || typesCount === 1) {
+		strength = 1; // Very Weak
+	} else if (length >= 8 && typesCount === 2) {
+		strength = 3; // Moderate
+	} else if (length >= 10 && typesCount === 3) {
+		strength = 4; // Strong
+	} else if (length >= 12 && typesCount === 4) {
+		strength = 5; // Very Strong
+	} else {
+		strength = 2; // Weak
+	}
+
+	return strength;
 }
