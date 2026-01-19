@@ -90,7 +90,7 @@ const ArchiveDay = ({
 
 	return (
 		<button
-			className={`relative flex flex-col justify-center items-center w-16 h-16 dm-sans-400 font-bold text-4xl rounded-full ${isSelected ? "border-2 border-accent-500" : ""} ${textColor} ${state === "otherMonth" ? "" : "cursor-pointer"}`}
+			className={`relative flex flex-col justify-center items-center w-16 h-16 dm-sans-400 font-bold text-4xl rounded-full ${isSelected ? "border-2 border-accent-500" : ""} ${textColor} ${state === "otherMonth" || day > currentDay ? "" : "cursor-pointer"}`}
 		>
 			{day}
 			{state !== "unplayed" && state !== "otherMonth" && (
