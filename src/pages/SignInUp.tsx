@@ -13,6 +13,7 @@ import {
 	getPasswordStrength,
 	type PasswordStrength,
 } from "../utils/getPasswordStrength";
+import { useSignUp } from "../services/api/account/sign-up";
 
 type SignInUpProps = {
 	isSignIn: boolean;
@@ -31,7 +32,7 @@ const SignInUp = ({ isSignIn }: SignInUpProps) => {
 	}, [debouncedValue]);
 
 	const { mutate: signin } = useSignIn();
-	const { mutate: signup } = useSignIn();
+	const { mutate: signup } = useSignUp();
 
 	const onSubmit: SubmitHandler<CredentialFormFields> = (data) => {
 		if (isSignIn) signin(data);

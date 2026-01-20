@@ -28,15 +28,15 @@ const SignInIcon = ({ className = "" }: IconProps) => {
 				d="M36 30C42.6274 30 48 24.6274 48 18C48 11.3726 42.6274 6 36 6C29.3726 6 24 11.3726 24 18C24 24.6274 29.3726 30 36 30Z"
 				stroke="#A9B4F8"
 				strokeWidth="6"
-				stroke-linecap="round"
-				stroke-linejoin="round"
+				strokeLinecap="round"
+				strokeLinejoin="round"
 			/>
 			<path
 				d="M63 66C63 51.0883 50.9117 39 36 39C21.0883 39 9 51.0883 9 66"
 				stroke="#A9B4F8"
 				strokeWidth="6"
-				stroke-linecap="round"
-				stroke-linejoin="round"
+				strokeLinecap="round"
+				strokeLinejoin="round"
 			/>
 		</svg>
 	);

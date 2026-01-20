@@ -3,8 +3,12 @@ import GuessInput from "../components/simple/GuessInput";
 import GuessHistory from "../components/simple/GuessHistory";
 import Button from "../components/simple/Button";
 import useHeardleGame from "../hooks/useHeardleGame";
+import { useContext } from "react";
+import { UserContext } from "../context/UserContext";
+import { useGameEvent } from "../hooks/server-data/useGameEvent";
 
 const OriginalGame = () => {
+	const { lengthOfAudio } = useContext(UserContext);
 	const {
 		isWsPending,
 		wsError,
@@ -20,6 +24,10 @@ const OriginalGame = () => {
 		startAt,
 	} = useHeardleGame("original");
 
+	const { data: gameEvent } = useGameEvent();
+
+	const attempts = gameEvent?.attempts ?? 0;
+
 	// basic err stuff
 	if (isWsPending) return <p>Starting game...</p>;
 	if (wsError) return <p>Failed to start game</p>;
@@ -33,7 +41,7 @@ const OriginalGame = () => {
 				<MusicPlayer
 					src={audio}
 					startTime={startAt}
-					clipDuration={16}
+					clipDuration={lengthOfAudio[attempts]}
 				/>
 			)}
 			<Button text="Skip" type="secondary" onClick={handleSkip} />
@@ -62,7 +70,7 @@ const OriginalGame = () => {
 							}
 							text={guess}
 						/>
-					)
+					),
 				)}
 			</div>
 		</div>

@@ -13,9 +13,9 @@ const SettingsIcon = ({ className = "" }: IconProps) => {
 			<path
 				d="M31 31C31 23.5442 24.2843 17.5 16 17.5C7.71575 17.5 1 23.5442 1 31M22.6667 7C22.6667 10.3137 19.6819 13 16 13C12.3181 13 9.33333 10.3137 9.33333 7C9.33333 3.68629 12.3181 1 16 1C19.6819 1 22.6667 3.68629 22.6667 7Z"
 				stroke="currentColor"
-				stroke-width="2"
-				stroke-linecap="round"
-				stroke-linejoin="round"
+				strokeWidth="2"
+				strokeLinecap="round"
+				strokeLinejoin="round"
 			/>
 		</svg>
 	);

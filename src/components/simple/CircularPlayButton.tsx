@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import PauseIcon from "../../icons/PauseIcon";
 import PlayIcon from "../../icons/PlayIcon";
 
@@ -27,31 +28,37 @@ const CircularPlayButton = ({
 			className="relative inline-block cursor-pointer group"
 			style={{ width: size, height: size }}
 		>
-			<svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
-				{/* Progress circle */}
-				<circle
-					cx={size / 2}
-					cy={size / 2}
-					r={radius}
-					className={`${color} stroke-current group-hover:text-accent-500`}
-					strokeWidth={strokeWidth}
-					fill="none"
-					strokeDasharray={circumference}
-					strokeDashoffset={offset}
-					strokeLinecap="round"
-					transform={`rotate(-90 ${size / 2} ${size / 2})`}
-					style={{ transition: "stroke-dashoffset 0.5s ease" }}
-				/>
-			</svg>
+			{(percentage < 100 || percentage === 0) && (
+				<svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+					{/* Progress circle */}
+					<circle
+						cx={size / 2}
+						cy={size / 2}
+						r={radius}
+						className={`${color} stroke-current group-hover:text-accent-500 transition-colors duration-300`}
+						strokeWidth={strokeWidth}
+						fill="none"
+						strokeDasharray={circumference}
+						strokeDashoffset={offset}
+						strokeLinecap="round"
+						transform={`rotate(-90 ${size / 2} ${size / 2})`}
+						style={{
+							transitionProperty: "stroke-dashoffset",
+							transitionDuration: "0.3s",
+							transitionTimingFunction: "linear",
+						}}
+					/>
+				</svg>
+			)}
 			{/* Icon */}
 			<div
 				className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
 				style={{ width: iconSize, height: iconSize }}
 			>
 				{isPlaying ? (
-					<PauseIcon className="w-full h-full text-primary-500 group-hover:text-accent-500" />
+					<PauseIcon className="w-full h-full text-primary-500 group-hover:text-accent-500 transition-colors duration-300" />
 				) : (
-					<PlayIcon className="w-full h-full text-primary-500 group-hover:text-accent-500" />
+					<PlayIcon className="w-full h-full text-primary-500 group-hover:text-accent-500 transition-colors duration-300" />
 				)}
 			</div>
 		</div>

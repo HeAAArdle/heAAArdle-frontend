@@ -3,8 +3,9 @@ import { UserContext } from "../context/UserContext";
 import { useGameStart } from "../services/api/game/start-game";
 import { useWebSocket, type WsReturnType } from "./useWebSocket";
 import { useQuery } from "@tanstack/react-query";
-import type { StartGameData } from "../services/api/game/start-game";
 import { useGameSubmit } from "../services/api/game/submit-game";
+import { useWsData } from "./server-data/useWsData";
+import { useGameEvent } from "./server-data/useGameEvent";
 
 type UseHeardleGameProps = "original" | "daily" | "rapid" | "lyrics";
 
@@ -18,39 +19,33 @@ const useHeardleGame = (mode: UseHeardleGameProps) => {
 	);
 	const [currGuess, setCurrGuess] = useState(0);
 
-	const { mutate, isPending: isWsPending, error: wsError } = useGameStart();
 	const {
-		mutate: sendResult,
-		isPending: isGameSubmitted,
-		error: submitError,
-	} = useGameSubmit();
+		mutate: startGame,
+		isPending: isWsPending,
+		error: wsError,
+	} = useGameStart();
 
-	const { data: wsData } = useQuery<StartGameData | null>({
-		queryKey: ["gameStart"],
-		queryFn: () => null, // won't run, just reads cache
-		initialData: null,
-		staleTime: Infinity,
-	});
+	// const {
+	// 	mutate: sendResult,
+	// 	isPending: isGameSubmitted,
+	// 	error: submitError,
+	// } = useGameSubmit();
+
+	const { data: wsData } = useWsData();
 
 	// starts the game
 	useEffect(() => {
 		if (gameStartedRef.current) return;
 		gameStartedRef.current = true;
 
-		if (!wsData) mutate({ mode: "original", date: null }); // this changes based on mode
-	}, [mutate, mode, wsData]);
+		if (!wsData) startGame({ mode: "original", date: null }); // this changes based on mode
+	}, [startGame, mode, wsData]);
 
 	// connect to websocket when we have url
 	const { sendMessage, closeConnection } = useWebSocket(wsData?.wsURL);
 
 	// ws cache
-	const { data: gameEvent } = useQuery<WsReturnType | null>({
-		queryKey: ["gameEvent"],
-		queryFn: () => null,
-		enabled: false,
-		staleTime: Infinity,
-		gcTime: Infinity,
-	});
+	const { data: gameEvent } = useGameEvent();
 
 	// update game state based on ws
 	useEffect(() => {
@@ -86,6 +81,7 @@ const useHeardleGame = (mode: UseHeardleGameProps) => {
 	const handleSkip = () => {
 		sendMessage({ type: "guess", guess: "" });
 		setGuessText("");
+		// TODO: when skip is pressed also reset the player
 	};
 
 	return {

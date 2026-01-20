@@ -14,15 +14,15 @@ const LeftArrowIcon = ({ className = "" }: IconProps) => {
 				d="M5.79889 24H41.7989"
 				stroke="currentColor"
 				strokeWidth="4"
-				stroke-linecap="round"
-				stroke-linejoin="round"
+				strokeLinecap="round"
+				strokeLinejoin="round"
 			/>
 			<path
 				d="M17.7988 36L5.79883 24L17.7988 12"
 				stroke="currentColor"
 				strokeWidth="4"
-				stroke-linecap="round"
-				stroke-linejoin="round"
+				strokeLinecap="round"
+				strokeLinejoin="round"
 			/>
 		</svg>
 	);
