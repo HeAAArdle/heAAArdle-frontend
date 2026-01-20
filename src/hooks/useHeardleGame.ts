@@ -1,11 +1,12 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { UserContext } from "../context/UserContext";
 import { useGameStart } from "../services/api/game/start-game";
-import { useWebSocket, type WsReturnType } from "./useWebSocket";
-import { useQuery } from "@tanstack/react-query";
+import { useWebSocket } from "./useWebSocket";
 import { useGameSubmit } from "../services/api/game/submit-game";
 import { useWsData } from "./server-data/useWsData";
 import { useGameEvent } from "./server-data/useGameEvent";
+import { useAuthState } from "./server-data/useAuthState";
+import { isResultMode } from "../utils/isResultMode";
 
 type UseHeardleGameProps = "original" | "daily" | "rapid" | "lyrics";
 
@@ -25,13 +26,14 @@ const useHeardleGame = (mode: UseHeardleGameProps) => {
 		error: wsError,
 	} = useGameStart();
 
-	// const {
-	// 	mutate: sendResult,
-	// 	isPending: isGameSubmitted,
-	// 	error: submitError,
-	// } = useGameSubmit();
+	const {
+		mutate: sendResult,
+		isPending: isGameSubmitted,
+		error: submitError,
+	} = useGameSubmit();
 
 	const { data: wsData } = useWsData();
+	const { data: authState } = useAuthState();
 
 	// starts the game
 	useEffect(() => {
@@ -68,8 +70,21 @@ const useHeardleGame = (mode: UseHeardleGameProps) => {
 	const handleCleanup = () => {
 		// close ws
 		closeConnection();
+
+		console.log("here");
 		// if has profile
+		console.log(isResultMode(mode));
+		if (!isResultMode(mode)) return;
+		console.log(authState?.isAuthenticated, wsData, gameEvent);
+		if (!authState?.isAuthenticated || !wsData || !gameEvent) return;
 		// sent to backend updated
+		sendResult({
+			wsGameSessionID: wsData.wsGameSessionID,
+			attempts: gameEvent?.attempts,
+			date: wsData.date,
+			mode: mode,
+			won: gameEvent?.is_correct,
+		});
 	};
 
 	const handleGuess = () => {

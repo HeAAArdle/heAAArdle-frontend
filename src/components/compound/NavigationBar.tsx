@@ -7,10 +7,13 @@ import OriginalIcon from "../../icons/OriginalIcon";
 import SettingsIcon from "../../icons/SettingsIcon";
 import TimedIcon from "../../icons/TimedIcon";
 import IconCircle from "../simple/IconCircle";
+import { useSignOut } from "../../services/api/account/sign-out";
 
 const NavigationBar = () => {
 	const location = useLocation();
 	const isActive = (path: string) => location.pathname === path;
+
+	const { mutate: signout } = useSignOut();
 
 	return (
 		<div className="h-23/24 fixed top-0 left-0 w-26 ml-4 my-4 z-10 rounded-2xl border border-neutral-900 flex flex-col justify-between items-center py-8 bg-neutral-950/60">
@@ -51,7 +54,7 @@ const NavigationBar = () => {
 			{/* TODO: no settings yet */}
 			<Link to="/">
 				{/* TODO: once settings popup is done */}
-				<IconCircle isSelected={false}>
+				<IconCircle isSelected={false} onClick={signout}>
 					<SettingsIcon />
 				</IconCircle>
 			</Link>

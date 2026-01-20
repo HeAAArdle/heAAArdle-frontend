@@ -5,7 +5,7 @@ import PasswordInput from "../components/simple/PasswordInput";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import type { CredentialFormFields } from "../types";
 import LeftArrowIcon from "../icons/LeftArrowIcon";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSignIn } from "../services/api/account/sign-in";
 import { useEffect, useState } from "react";
 import { useDebounce } from "../hooks/useDebounce";
@@ -20,6 +20,7 @@ type SignInUpProps = {
 };
 
 const SignInUp = ({ isSignIn }: SignInUpProps) => {
+	const navigate = useNavigate();
 	const { register, handleSubmit, watch, reset } =
 		useForm<CredentialFormFields>();
 	const [passwordStrength, setPasswordStrength] =
@@ -34,9 +35,19 @@ const SignInUp = ({ isSignIn }: SignInUpProps) => {
 	const { mutate: signin } = useSignIn();
 	const { mutate: signup } = useSignUp();
 
+	const redirectToHome = () => {
+		navigate("/", { replace: true });
+	};
+
 	const onSubmit: SubmitHandler<CredentialFormFields> = (data) => {
-		if (isSignIn) signin(data);
-		else signup(data);
+		if (isSignIn)
+			signin(data, {
+				onSuccess: redirectToHome,
+			});
+		else
+			signup(data, {
+				onSuccess: redirectToHome,
+			});
 	};
 
 	return (

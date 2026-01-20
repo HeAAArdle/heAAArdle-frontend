@@ -7,7 +7,7 @@ type SubmitGameInput = {
 	mode: "original" | "daily";
 	won: boolean;
 	attempts: number;
-	date: string | null; // change to date
+	date: string | undefined; // change to date
 };
 
 type SubmitGameData = {
@@ -29,7 +29,7 @@ const getGameSubmitFn = async (
 };
 
 export const useGameSubmit = () => {
-	useMutation({
+	return useMutation({
 		mutationFn: getGameSubmitFn,
 		onSuccess: (data) => {
 			queryClient.setQueryData(["gameResult"], data);

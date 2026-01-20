@@ -56,7 +56,7 @@ const PasswordInput = ({
 						validate: (value: string) => {
 							const result = getPasswordStrength(value);
 							console.log(result);
-							return result == null ? false : result >= 4;
+							return result == null ? false : result >= 3;
 						},
 					})}
 					className={`${passwordIsVisible ? "text-neutral-50" : "text-neutral-600"} lato-regular text-[16px] w-full outline-none`}

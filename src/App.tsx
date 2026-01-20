@@ -8,6 +8,10 @@ import DailyGame from "./pages/DailyGame";
 import RapidGame from "./pages/RapidGame";
 import LyricsGame from "./pages/LyricsGame";
 import { useSongs } from "./services/api/song/get-songs";
+import { initAuthFromStorage } from "./lib/initAuthFromStorage";
+import { queryClient } from "./lib/queryClient";
+
+initAuthFromStorage(queryClient);
 
 function App() {
 	const location = useLocation();

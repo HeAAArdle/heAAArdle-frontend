@@ -10,3 +10,18 @@ export type CredentialFormFields = {
 export type InstructionProps = {
 	onClick: () => void;
 };
+
+export type AuthInput = {
+	username: string;
+	password: string;
+};
+
+export type AuthData = {
+	username: string;
+	token: string;
+};
+
+export type AuthState = {
+	isAuthenticated: boolean;
+	username: string;
+};

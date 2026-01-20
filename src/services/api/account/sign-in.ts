@@ -2,32 +2,22 @@ import { useMutation } from "@tanstack/react-query";
 import { publicApi } from "../../../lib/api/publicApi";
 import { queryClient } from "../../../lib/queryClient";
 import { authStorage } from "../../../lib/authStorage";
+import type { AuthData, AuthInput, AuthState } from "../../../types";
 
-type SignInInput = {
-	username: string;
-	password: string;
-};
-
-type SignInData = {
-	username: string;
-	token: string;
-};
-
-const getSignInFn = async (payload: SignInInput): Promise<SignInData> => {
-	const response = await publicApi.post("user/signin", payload);
+const getSignInFn = async (payload: AuthInput): Promise<AuthData> => {
+	const response = await publicApi.post("user/signin/", payload);
 	return response.data;
 };
 
 export const useSignIn = () => {
 	return useMutation({
-		mutationFn: (payload: SignInInput) => getSignInFn(payload),
+		mutationFn: (payload: AuthInput) => getSignInFn(payload),
 		onSuccess: (data) => {
 			authStorage.set(data.token);
-			queryClient.setQueryData(["auth"], {
-				isAutheticated: true,
+			queryClient.setQueryData<AuthState>(["auth"], {
+				isAuthenticated: true,
 				username: data.username,
 			});
-			window.location.href = "/";
 		},
 	});
 };
