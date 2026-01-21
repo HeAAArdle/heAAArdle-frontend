@@ -55,7 +55,6 @@ const PasswordInput = ({
 						required: true,
 						validate: (value: string) => {
 							const result = getPasswordStrength(value);
-							console.log(result);
 							return result == null ? false : result >= 3;
 						},
 					})}

@@ -20,7 +20,6 @@ export const useWebSocket = (wsUrl?: string) => {
 
 		ws.onmessage = (event) => {
 			const payload: WsReturnType = JSON.parse(event.data);
-			console.log(payload);
 			queryClient.setQueryData(["gameEvent"], payload);
 		};
 

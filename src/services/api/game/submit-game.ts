@@ -10,7 +10,7 @@ type SubmitGameInput = {
 	date: string | undefined; // change to date
 };
 
-type SubmitGameData = {
+export type SubmitGameData = {
 	mode: "original" | "daily";
 	won: boolean;
 	attempts: number;
@@ -24,6 +24,7 @@ type SubmitGameData = {
 const getGameSubmitFn = async (
 	payload: SubmitGameInput,
 ): Promise<SubmitGameData> => {
+	console.log(payload);
 	const response = await publicApi.post("/game/submit", payload);
 	return response.data;
 };

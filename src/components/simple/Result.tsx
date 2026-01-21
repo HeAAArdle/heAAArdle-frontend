@@ -1,4 +1,9 @@
+import type { UseMutateFunction } from "@tanstack/react-query";
 import CloseIcon from "../../icons/CloseIcon";
+import type {
+	StartGameData,
+	StartGameInput,
+} from "../../services/api/game/start-game";
 import Button from "./Button";
 
 type ResultProps = {
@@ -7,9 +12,19 @@ type ResultProps = {
 	title: string;
 	artist: string;
 	album: string;
+	videoLink: string;
+	onClick: UseMutateFunction<StartGameData, Error, StartGameInput, unknown>;
 };
 
-const Result = ({ hasWon, attempts, title, artist, album }: ResultProps) => {
+const Result = ({
+	hasWon,
+	attempts,
+	title,
+	artist,
+	album,
+	videoLink,
+	onClick,
+}: ResultProps) => {
 	const [header, buttonText] = (() => {
 		if (hasWon) {
 			return ["Congratulations!", "Share Your Results"];
@@ -20,7 +35,10 @@ const Result = ({ hasWon, attempts, title, artist, album }: ResultProps) => {
 
 	return (
 		<div className="relative flex z-10 flex-col items-center justify-center p-12 gap-6 text-neutral-50 bg-neutral-950 rounded-3xl text-[16px] lato-regular">
-			<button className="cursor-pointer">
+			<button
+				onClick={() => onClick({ mode: "original", date: null })}
+				className="cursor-pointer"
+			>
 				<CloseIcon className="absolute text-neutral-50 w-8 h-8 top-6 right-6" />
 			</button>
 			<div className="w-full text-[18px] flex flex-col items-center justify-center gap-2">
@@ -39,7 +57,7 @@ const Result = ({ hasWon, attempts, title, artist, album }: ResultProps) => {
 			</div>
 			<div className="flex flex-col gap-2 items-center justify-center">
 				Give the song another listen:
-				<EmbeddedVideo url="https://www.youtube.com/embed/JgDNFQ2RaLQ?si=eqskAjkkgO8yajzH" />
+				<EmbeddedVideo url={videoLink} />
 				<div className="flex flex-col items-center justify-center lato-regular text-[16px] text-neutral-400">
 					<span className="text-primary-500 dm-sans-400 font-bold text-3xl">
 						{title}

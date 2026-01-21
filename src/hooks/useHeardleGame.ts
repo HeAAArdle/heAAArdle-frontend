@@ -71,11 +71,8 @@ const useHeardleGame = (mode: UseHeardleGameProps) => {
 		// close ws
 		closeConnection();
 
-		console.log("here");
 		// if has profile
-		console.log(isResultMode(mode));
 		if (!isResultMode(mode)) return;
-		console.log(authState?.isAuthenticated, wsData, gameEvent);
 		if (!authState?.isAuthenticated || !wsData || !gameEvent) return;
 		// sent to backend updated
 		sendResult({
@@ -112,6 +109,7 @@ const useHeardleGame = (mode: UseHeardleGameProps) => {
 		handleSkip,
 		audio: wsData?.audio,
 		startAt: wsData?.audioStartAt,
+		startGame,
 	};
 };
 

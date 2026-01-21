@@ -6,6 +6,9 @@ import useHeardleGame from "../hooks/useHeardleGame";
 import { useContext } from "react";
 import { UserContext } from "../context/UserContext";
 import { useGameEvent } from "../hooks/server-data/useGameEvent";
+import Result from "../components/simple/Result";
+import { useGameResult } from "../hooks/server-data/useGameResult";
+import { artistFormatter } from "../utils/artistFormatter";
 
 const OriginalGame = () => {
 	const { lengthOfAudio } = useContext(UserContext);
@@ -22,9 +25,11 @@ const OriginalGame = () => {
 		handleSkip,
 		audio,
 		startAt,
+		startGame,
 	} = useHeardleGame("original");
 
 	const { data: gameEvent } = useGameEvent();
+	const { data: gameResult } = useGameResult();
 
 	const attempts = gameEvent?.attempts ?? 0;
 
@@ -33,7 +38,7 @@ const OriginalGame = () => {
 	if (wsError) return <p>Failed to start game</p>;
 
 	return (
-		<div className="h-full flex flex-col space-y-4 items-center justify-center">
+		<div className="relative h-full flex flex-col space-y-4 items-center justify-center">
 			<span className="dm-sans-400 font-bold text-8xl bg-linear-to-r from-primary-500 to-accent-300 bg-clip-text text-transparent mb-8">
 				Heardle
 			</span>
@@ -73,6 +78,20 @@ const OriginalGame = () => {
 					),
 				)}
 			</div>
+			{gameResult && (
+				<Result
+					hasWon
+					attempts={attempts}
+					title={gameResult.title}
+					artist={artistFormatter(
+						gameResult.artist,
+						gameResult.artist.length,
+					)}
+					album={gameResult.album}
+					videoLink={gameResult.shareLink}
+					onClick={startGame}
+				/>
+			)}
 		</div>
 	);
 };

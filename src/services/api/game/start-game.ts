@@ -11,7 +11,7 @@ export type StartGameData = {
 	date?: string; // ayusin to date???
 };
 
-type StartGameInput = {
+export type StartGameInput = {
 	mode: "original" | "daily" | "rapid" | "lyrics" | "archive";
 	date: string | null;
 };
@@ -20,6 +20,7 @@ const getGameStartFn = async (
 	payload: StartGameInput,
 ): Promise<StartGameData> => {
 	const response = await publicApi.post("/game/start", payload);
+	console.log(response.data);
 	return response.data;
 };
 
