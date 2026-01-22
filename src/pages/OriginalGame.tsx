@@ -6,9 +6,9 @@ import useHeardleGame from "../hooks/useHeardleGame";
 import { useContext } from "react";
 import { UserContext } from "../context/UserContext";
 import { useGameEvent } from "../hooks/server-data/useGameEvent";
-import Result from "../components/simple/Result";
 import { useGameResult } from "../hooks/server-data/useGameResult";
 import { artistFormatter } from "../utils/artistFormatter";
+import Result from "../components/modals/Result";
 
 const OriginalGame = () => {
 	const { lengthOfAudio } = useContext(UserContext);

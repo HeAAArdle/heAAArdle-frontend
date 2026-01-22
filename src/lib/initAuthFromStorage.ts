@@ -5,6 +5,7 @@ import type { AuthState } from "../types";
 export const initAuthFromStorage = (queryClient: QueryClient) => {
 	const token = authStorage.get();
 	if (!token) return;
+	if (token === undefined) return;
 
 	const username = "user"; // get func as api call
 

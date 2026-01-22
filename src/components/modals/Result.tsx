@@ -4,7 +4,7 @@ import type {
 	StartGameData,
 	StartGameInput,
 } from "../../services/api/game/start-game";
-import Button from "./Button";
+import Button from "../simple/Button";
 
 type ResultProps = {
 	hasWon: boolean;
