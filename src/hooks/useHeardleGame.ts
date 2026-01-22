@@ -26,12 +26,6 @@ const useHeardleGame = (mode: UseHeardleGameProps) => {
 		error: wsError,
 	} = useGameStart();
 
-	const {
-		mutate: sendResult,
-		isPending: isGameSubmitted,
-		error: submitError,
-	} = useGameSubmit();
-
 	const { data: wsData } = useWsData();
 	const { data: authState } = useAuthState();
 
@@ -48,6 +42,12 @@ const useHeardleGame = (mode: UseHeardleGameProps) => {
 
 	// ws cache
 	const { data: gameEvent } = useGameEvent();
+
+	const {
+		mutate: sendResult,
+		isPending: isGameSubmitted,
+		error: submitError,
+	} = useGameSubmit(closeConnection);
 
 	// update game state based on ws
 	useEffect(() => {
@@ -68,9 +68,6 @@ const useHeardleGame = (mode: UseHeardleGameProps) => {
 	}, [gameEvent]);
 
 	const handleCleanup = () => {
-		// close ws
-		closeConnection();
-
 		// if has profile
 		if (!isResultMode(mode)) return;
 		if (!authState?.isAuthenticated || !wsData || !gameEvent) return;

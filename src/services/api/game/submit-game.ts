@@ -29,11 +29,12 @@ const getGameSubmitFn = async (
 	return response.data;
 };
 
-export const useGameSubmit = () => {
+export const useGameSubmit = (close: () => void) => {
 	return useMutation({
 		mutationFn: getGameSubmitFn,
 		onSuccess: (data) => {
 			queryClient.setQueryData(["gameResult"], data);
+			close();
 		},
 	});
 };
