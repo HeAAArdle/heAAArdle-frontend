@@ -30,7 +30,6 @@ const NavigationBar = () => {
 		if (authData?.isAuthenticated) {
 			setIsSettingsSelected((prev) => !prev);
 		} else {
-			console.log("here");
 			navigate("/signin");
 		}
 	};

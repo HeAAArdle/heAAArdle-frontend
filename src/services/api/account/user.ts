@@ -1,7 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { authApi } from "../../../lib/api/authApi";
 import { queryClient } from "../../../lib/queryClient";
-import type { AuthData } from "../../../types";
 
 type UserType = {
 	username: string;
@@ -16,12 +15,9 @@ export const useUser = () => {
 	return useMutation({
 		mutationFn: getUser,
 		onSuccess: (data) => {
-			queryClient.setQueryData(["auth"], (prev: AuthData) => {
-				if (!prev) return prev;
-				return {
-					...prev,
-					username: data.username,
-				};
+			queryClient.setQueryData(["auth"], {
+				isAuthenticated: true,
+				username: data.username,
 			});
 		},
 	});

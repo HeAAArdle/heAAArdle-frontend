@@ -25,7 +25,7 @@ const OriginalGame = () => {
 		handleSkip,
 		audio,
 		startAt,
-		startGame,
+		handleNewGame,
 	} = useHeardleGame("original");
 
 	const { data: gameEvent } = useGameEvent();
@@ -84,12 +84,12 @@ const OriginalGame = () => {
 					attempts={attempts}
 					title={gameResult.title}
 					artist={artistFormatter(
-						gameResult.artist,
-						gameResult.artist.length,
+						gameResult.artists,
+						gameResult.artists.length,
 					)}
 					album={gameResult.album}
 					videoLink={gameResult.shareLink}
-					onClick={startGame}
+					onClick={handleNewGame}
 				/>
 			)}
 		</div>

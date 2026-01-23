@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import type { WsReturnType } from "../useWebSocket";
+import type { WsGuessType } from "../useWebSocket";
 
 export const useGameEvent = () => {
-	return useQuery<WsReturnType | null>({
+	return useQuery<WsGuessType | null>({
 		queryKey: ["gameEvent"],
 		queryFn: () => null,
 		enabled: false,

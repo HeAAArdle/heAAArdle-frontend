@@ -23,7 +23,7 @@ const TextInput = ({
 				{...register(field)}
 				type={type}
 				placeholder={`Enter your ${placeholder}..`}
-				className="h-12.5 border-2 bg-neutral-900 border-neutral-700 text-neutral-600 rounded-xl p-4 w-full lato-regular text-[16px]"
+				className="h-12.5 border-2 bg-neutral-900 border-neutral-700 text-neutral-600 focus:text-neutral-50 rounded-xl p-4 w-full lato-regular text-[16px]"
 			/>
 		</div>
 	);

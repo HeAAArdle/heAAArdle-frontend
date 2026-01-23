@@ -1,12 +1,16 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { UserContext } from "../context/UserContext";
-import { useGameStart } from "../services/api/game/start-game";
+import {
+	useGameStart,
+	type StartGameInput,
+} from "../services/api/game/start-game";
 import { useWebSocket } from "./useWebSocket";
 import { useGameSubmit } from "../services/api/game/submit-game";
 import { useWsData } from "./server-data/useWsData";
 import { useGameEvent } from "./server-data/useGameEvent";
 import { useAuthState } from "./server-data/useAuthState";
 import { isResultMode } from "../utils/isResultMode";
+import { queryClient } from "../lib/queryClient";
 
 type UseHeardleGameProps = "original" | "daily" | "rapid" | "lyrics";
 
@@ -38,16 +42,12 @@ const useHeardleGame = (mode: UseHeardleGameProps) => {
 	}, [startGame, mode, wsData]);
 
 	// connect to websocket when we have url
-	const { sendMessage, closeConnection } = useWebSocket(wsData?.wsURL);
+	const { sendMessage } = useWebSocket(wsData?.wsURL);
 
 	// ws cache
 	const { data: gameEvent } = useGameEvent();
 
-	const {
-		mutate: sendResult,
-		isPending: isGameSubmitted,
-		error: submitError,
-	} = useGameSubmit(closeConnection);
+	const { mutate: sendResult } = useGameSubmit();
 
 	// update game state based on ws
 	useEffect(() => {
@@ -93,6 +93,18 @@ const useHeardleGame = (mode: UseHeardleGameProps) => {
 		// TODO: when skip is pressed also reset the player
 	};
 
+	const handleNewGame = (data: StartGameInput) => {
+		setGuesses(new Array(noOfGuesses).fill(null));
+		setCurrGuess(0);
+		setGuessText("");
+		gameStartedRef.current = false;
+
+		queryClient.setQueryData(["gameResult"], null);
+		queryClient.setQueryData(["gameEvent"], null);
+		queryClient.setQueryData(["gameStart"], null);
+		startGame(data);
+	};
+
 	return {
 		isWsPending,
 		wsError,
@@ -106,7 +118,7 @@ const useHeardleGame = (mode: UseHeardleGameProps) => {
 		handleSkip,
 		audio: wsData?.audio,
 		startAt: wsData?.audioStartAt,
-		startGame,
+		handleNewGame,
 	};
 };
 

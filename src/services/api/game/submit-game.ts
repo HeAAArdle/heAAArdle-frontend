@@ -1,6 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
 import { publicApi } from "../../../lib/api/publicApi";
-import { queryClient } from "../../../lib/queryClient";
 
 type SubmitGameInput = {
 	wsGameSessionID: string;
@@ -10,31 +9,12 @@ type SubmitGameInput = {
 	date: string | undefined; // change to date
 };
 
-export type SubmitGameData = {
-	mode: "original" | "daily";
-	won: boolean;
-	attempts: number;
-	title: string;
-	releaseYear: string;
-	album: string;
-	shareLink: string;
-	artist: [string];
+const getGameSubmitFn = async (payload: SubmitGameInput): Promise<void> => {
+	await publicApi.post("/game/submit", payload);
 };
 
-const getGameSubmitFn = async (
-	payload: SubmitGameInput,
-): Promise<SubmitGameData> => {
-	console.log(payload);
-	const response = await publicApi.post("/game/submit", payload);
-	return response.data;
-};
-
-export const useGameSubmit = (close: () => void) => {
+export const useGameSubmit = () => {
 	return useMutation({
 		mutationFn: getGameSubmitFn,
-		onSuccess: (data) => {
-			queryClient.setQueryData(["gameResult"], data);
-			close();
-		},
 	});
 };

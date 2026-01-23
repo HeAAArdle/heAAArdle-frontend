@@ -8,14 +8,12 @@ import DailyGame from "./pages/DailyGame";
 import RapidGame from "./pages/RapidGame";
 import LyricsGame from "./pages/LyricsGame";
 import { useSongs } from "./services/api/song/get-songs";
-import { initAuthFromStorage } from "./lib/initAuthFromStorage";
-import { queryClient } from "./lib/queryClient";
-
-initAuthFromStorage(queryClient);
+import { useInitAuthFromStorage } from "./hooks/useInitAuthFromStorage";
 
 function App() {
 	const location = useLocation();
 	const path = location.pathname;
+	useInitAuthFromStorage();
 
 	useSongs();
 

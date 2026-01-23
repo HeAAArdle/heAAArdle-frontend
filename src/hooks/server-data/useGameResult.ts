@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import type { SubmitGameData } from "../../services/api/game/submit-game";
+import type { WsResultType } from "../useWebSocket";
 
 export const useGameResult = () => {
-	return useQuery<SubmitGameData | null>({
+	return useQuery<WsResultType | null>({
 		queryKey: ["gameResult"],
 		queryFn: () => null,
 		enabled: false,

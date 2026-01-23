@@ -20,7 +20,6 @@ const getGameStartFn = async (
 	payload: StartGameInput,
 ): Promise<StartGameData> => {
 	const response = await publicApi.post("/game/start", payload);
-	console.log(response.data);
 	return response.data;
 };
 
