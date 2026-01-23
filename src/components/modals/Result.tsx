@@ -1,9 +1,4 @@
-import type { UseMutateFunction } from "@tanstack/react-query";
 import CloseIcon from "../../icons/CloseIcon";
-import type {
-	StartGameData,
-	StartGameInput,
-} from "../../services/api/game/start-game";
 import Button from "../simple/Button";
 
 type ResultProps = {
@@ -13,7 +8,7 @@ type ResultProps = {
 	artist: string;
 	album: string;
 	videoLink: string;
-	onClick: UseMutateFunction<StartGameData, Error, StartGameInput, unknown>;
+	onClick: () => void;
 };
 
 const Result = ({
@@ -36,10 +31,7 @@ const Result = ({
 	return (
 		<div className="absolute flex items-center justify-center z-10">
 			<div className="relative flex flex-col items-center justify-center p-12 gap-6 text-neutral-50 bg-neutral-950 rounded-3xl text-[16px] lato-regular">
-				<button
-					onClick={() => onClick({ mode: "original", date: null })}
-					className="cursor-pointer"
-				>
+				<button onClick={() => onClick()} className="cursor-pointer">
 					<CloseIcon className="absolute text-neutral-50 w-8 h-8 top-6 right-6" />
 				</button>
 				<div className="w-full text-[18px] flex flex-col items-center justify-center gap-2">

@@ -51,8 +51,8 @@ const NavigationBar = () => {
 						<OriginalIcon />
 					</IconCircle>
 				</Link>
-				<Link to="/daily">
-					<IconCircle isSelected={isActive("/daily")}>
+				<Link to="/2026-01-23">
+					<IconCircle isSelected={isActive("/2026-01-23")}>
 						<DailyIcon />
 					</IconCircle>
 				</Link>

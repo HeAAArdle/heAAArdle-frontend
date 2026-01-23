@@ -88,6 +88,7 @@ const Statistics = ({
 									<span className="font-light text-neutral-50">
 										{value}
 									</span>
+									{/* TODO: hover to see score */}
 								</div>
 							))}
 						</div>

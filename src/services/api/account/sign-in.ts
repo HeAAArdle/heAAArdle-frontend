@@ -4,7 +4,12 @@ import { queryClient } from "../../../lib/queryClient";
 import { authStorage } from "../../../lib/authStorage";
 import type { AuthData, AuthInput, AuthState } from "../../../types";
 
-const getSignInFn = async (payload: AuthInput): Promise<AuthData> => {
+type AuthDataType = {
+	access_token: string;
+	token_type: string;
+};
+
+const getSignInFn = async (payload: AuthInput): Promise<AuthDataType> => {
 	const response = await publicApi.post("user/signin/", payload);
 	return response.data;
 };
@@ -13,10 +18,12 @@ export const useSignIn = () => {
 	return useMutation({
 		mutationFn: (payload: AuthInput) => getSignInFn(payload),
 		onSuccess: (data) => {
-			authStorage.set(data.token);
+			console.log(data);
+			authStorage.set(data.access_token);
 			queryClient.setQueryData<AuthState>(["auth"], {
 				isAuthenticated: true,
-				username: data.username,
+				username: "",
+				// todo find way to call useUser
 			});
 		},
 	});

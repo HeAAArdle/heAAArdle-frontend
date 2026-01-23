@@ -4,7 +4,7 @@ import React from "react";
 type IconCircleProps = {
 	isSelected: boolean;
 	children: JSX.Element;
-	onClick: () => void;
+	onClick?: () => void;
 };
 
 const IconCircle = ({ isSelected, children, onClick }: IconCircleProps) => {
