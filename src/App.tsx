@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes, useLocation, useParams } from "react-router-dom";
 import SignInUp from "./pages/SignInUp";
 import NavigationBar from "./components/compound/NavigationBar";
 import Background from "./components/simple/Background";
@@ -24,9 +24,25 @@ function App() {
 				{path !== "/signin" && path !== "/signup" && <NavigationBar />}
 				<Routes>
 					{/* TODO: Check how daily game access date */}
-					<Route path="/" element={<OriginalGame />} />
-					<Route path="/daily" element={<DailyGame />} />
-					<Route path="/daily/:date" element={<DailyGame />} />
+					<Route
+						path="/"
+						element={
+							<OriginalGame mode="original" key={"original"} />
+						}
+					/>
+					<Route
+						path="/daily"
+						element={<OriginalGame mode="daily" key={"daily"} />}
+					/>
+					<Route
+						path="/archive/:date"
+						element={
+							<OriginalGame
+								mode="archive"
+								key={useParams().date}
+							/>
+						}
+					/>
 					<Route path="/rapid" element={<RapidGame />} />
 					<Route path="/lyrics" element={<LyricsGame />} />
 					<Route

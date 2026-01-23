@@ -10,9 +10,7 @@ import { isResultMode } from "../utils/isResultMode";
 import { queryClient } from "../lib/queryClient";
 import type { GameMode } from "../types";
 
-type UseHeardleGameProps = "original" | "daily" | "rapid" | "lyrics";
-
-const useHeardleGame = (mode: UseHeardleGameProps, date: string | null) => {
+const useHeardleGame = (mode: GameMode, date: string | null) => {
 	const { noOfGuesses } = useContext(UserContext);
 	const gameStartedRef = useRef(false);
 
@@ -110,7 +108,6 @@ const useHeardleGame = (mode: UseHeardleGameProps, date: string | null) => {
 	};
 
 	return {
-		mode,
 		isWsPending,
 		wsError,
 		guessText,

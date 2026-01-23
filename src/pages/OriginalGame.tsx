@@ -11,14 +11,18 @@ import { artistFormatter } from "../utils/artistFormatter";
 import Result from "../components/modals/Result";
 import { useParams } from "react-router-dom";
 import dateFormatter from "../utils/dateFormatter";
+import type { GameMode } from "../types";
 
-const OriginalGame = () => {
+type GameProps = {
+	mode: GameMode;
+};
+
+const OriginalGame = ({ mode }: GameProps) => {
 	const { lengthOfAudio } = useContext(UserContext);
 	const { date } = useParams<{ date: string }>();
 	const header = date ?? "Today";
 
 	const {
-		mode,
 		isWsPending,
 		wsError,
 		guessText,
@@ -32,7 +36,7 @@ const OriginalGame = () => {
 		audio,
 		startAt,
 		handleNewGame,
-	} = useHeardleGame("original", date ? date : null);
+	} = useHeardleGame(mode, date ? date : null);
 
 	const { data: gameEvent } = useGameEvent(mode, date ? date : null);
 	const { data: gameResult } = useGameResult(mode, date ? date : null);
