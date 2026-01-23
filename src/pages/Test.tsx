@@ -2,6 +2,7 @@ import { useState } from "react";
 import ClassicHTP from "../components/compound/howToPlay/ClassicHTP";
 import Leaderboard from "../components/compound/Leaderboard";
 import Statistics from "../components/modals/Statistics";
+import Support from "../components/modals/Support";
 
 const Test = () => {
 	const [text, setText] = useState("");
@@ -12,7 +13,7 @@ const Test = () => {
 				{/* <Archive /> */}
 				{/* <ClassicHTP /> */}
 				{/* <Leaderboard /> */}
-				<Statistics
+				{/* <Statistics
 					currentStreak={69}
 					longestStreak={69}
 					gamesPlayed={69}
@@ -20,7 +21,8 @@ const Test = () => {
 					winRate={69}
 					type="daily"
 					distribution={[7, 8, 3, 5, 1, 5]}
-				/>
+				/> */}
+				<Support />
 			</div>
 		</div>
 	);
