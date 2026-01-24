@@ -3,6 +3,7 @@ import { publicApi } from "../../../lib/api/publicApi";
 
 type SubmitGameInput = {
 	wsGameSessionID: string;
+	songID: string;
 	mode: "original" | "daily";
 	won: boolean;
 	attempts: number;

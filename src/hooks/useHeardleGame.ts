@@ -9,6 +9,7 @@ import { useAuthState } from "./server-data/useAuthState";
 import { isResultMode } from "../utils/isResultMode";
 import { queryClient } from "../lib/queryClient";
 import type { GameMode } from "../types";
+import { useGameResult } from "./server-data/useGameResult";
 
 const useHeardleGame = (mode: GameMode, date: string | null) => {
 	const { noOfGuesses } = useContext(UserContext);
@@ -44,6 +45,7 @@ const useHeardleGame = (mode: GameMode, date: string | null) => {
 	const { data: gameEvent } = useGameEvent(mode, date);
 
 	const { mutate: sendResult } = useGameSubmit();
+	const { data: gameResult } = useGameResult(mode, date);
 
 	// update game state based on ws
 	useEffect(() => {
@@ -66,10 +68,12 @@ const useHeardleGame = (mode: GameMode, date: string | null) => {
 	const handleCleanup = () => {
 		// if has profile
 		if (!isResultMode(mode)) return;
-		if (!authState?.isAuthenticated || !wsData || !gameEvent) return;
+		if (!authState?.isAuthenticated || !wsData || !gameEvent || !gameResult)
+			return;
 		// sent to backend updated
 		sendResult({
 			wsGameSessionID: wsData.wsGameSessionID,
+			songID: gameResult?.songID,
 			attempts: gameEvent?.attempts,
 			date: wsData.date,
 			mode: mode,

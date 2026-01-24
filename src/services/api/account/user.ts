@@ -7,7 +7,7 @@ type UserType = {
 };
 
 const getUser = async (): Promise<UserType> => {
-	const response = await authApi.post("/user");
+	const response = await authApi.post("/user/user");
 	return response.data;
 };
 
@@ -18,6 +18,12 @@ export const useUser = () => {
 			queryClient.setQueryData(["auth"], {
 				isAuthenticated: true,
 				username: data.username,
+			});
+		},
+		onError: () => {
+			queryClient.setQueryData(["auth"], {
+				isAuthenticated: true,
+				username: null,
 			});
 		},
 	});

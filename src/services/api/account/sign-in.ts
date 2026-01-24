@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { publicApi } from "../../../lib/api/publicApi";
 import { queryClient } from "../../../lib/queryClient";
 import { authStorage } from "../../../lib/authStorage";
-import type { AuthData, AuthInput, AuthState } from "../../../types";
+import type { AuthInput, AuthState } from "../../../types";
 
 type AuthDataType = {
 	access_token: string;

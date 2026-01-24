@@ -1,10 +1,8 @@
-import { Route, Routes, useLocation, useParams } from "react-router-dom";
+import { Route, Routes, useParams } from "react-router-dom";
 import SignInUp from "./pages/SignInUp";
-import NavigationBar from "./components/compound/NavigationBar";
 import Background from "./components/simple/Background";
 import Test from "./pages/Test";
 import OriginalGame from "./pages/OriginalGame";
-import DailyGame from "./pages/DailyGame";
 import RapidGame from "./pages/RapidGame";
 import LyricsGame from "./pages/LyricsGame";
 import { useSongs } from "./services/api/song/get-songs";
@@ -12,8 +10,6 @@ import { useInitAuthFromStorage } from "./hooks/useInitAuthFromStorage";
 import PageLayout from "./components/pageLayout/PageLayout";
 
 function App() {
-	const location = useLocation();
-	const path = location.pathname;
 	useInitAuthFromStorage();
 
 	useSongs();
@@ -21,7 +17,6 @@ function App() {
 	return (
 		<div className="relative h-screen w-full flex flex-col">
 			<Background className="absolute w-screen h-screen z-[-1]" />
-			{/* {path !== "/signin" && path !== "/signup" && <NavigationBar />} */}
 			<PageLayout>
 				<Routes>
 					<Route

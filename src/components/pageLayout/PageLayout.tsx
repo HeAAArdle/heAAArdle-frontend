@@ -1,6 +1,7 @@
 import { useState, type JSX } from "react";
 import NavigationBar from "../compound/NavigationBar";
 import Support from "../modals/Support";
+import { useLocation } from "react-router-dom";
 
 type PageLayoutProps = {
 	children: JSX.Element;
@@ -8,9 +9,12 @@ type PageLayoutProps = {
 
 const PageLayout = ({ children }: PageLayoutProps) => {
 	const [isSupportOpen, setIsSupportOpen] = useState(false);
+
+	const location = useLocation();
+	const path = location.pathname;
 	return (
 		<div className="relative w-full h-full">
-			<NavigationBar />
+			{path !== "/signin" && path !== "/signup" && <NavigationBar />}
 			<div className="h-full w-full">{children}</div>
 			<div className="absolute bottom-4 right-4 lato-regular text-neutral-50 text-[18px]">
 				Support the{" "}
