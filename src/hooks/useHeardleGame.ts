@@ -67,6 +67,7 @@ const useHeardleGame = (mode: GameMode, date: string | null) => {
 
 	const handleCleanup = () => {
 		// if has profile
+
 		if (!isResultMode(mode)) return;
 		if (!authState?.isAuthenticated || !wsData || !gameEvent || !gameResult)
 			return;
@@ -118,7 +119,6 @@ const useHeardleGame = (mode: GameMode, date: string | null) => {
 		setGuessText,
 		guesses,
 		currGuess,
-		hasWon: gameEvent?.is_correct,
 		isGameDone: gameEvent?.done,
 		handleGuess,
 		handleSkip,

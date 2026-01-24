@@ -118,7 +118,18 @@ const Archive = () => {
 							}}
 							isSelected={currDay === day ? true : false}
 							state={state}
-							onClick={() => handleDay(year, month, day)}
+							onClick={() =>
+								handleDay(
+									dateObjToString({
+										currYear: todayYear,
+										currMonth: todayMonth,
+										currDay: todayDay,
+									}),
+									year,
+									month,
+									day,
+								)
+							}
 						/>
 					);
 				})}

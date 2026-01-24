@@ -28,7 +28,6 @@ export const useGameStart = (mode: GameMode) =>
 	useMutation({
 		mutationFn: (mode: StartGameInput) => getGameStartFn(mode),
 		onSuccess: (data) => {
-			console.log(data);
 			if (mode === "archive")
 				queryClient.setQueryData(["gameStart", mode, data.date], data);
 			else queryClient.setQueryData(["gameStart", mode], data);

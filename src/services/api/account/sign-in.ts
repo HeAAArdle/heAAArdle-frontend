@@ -18,7 +18,6 @@ export const useSignIn = () => {
 	return useMutation({
 		mutationFn: (payload: AuthInput) => getSignInFn(payload),
 		onSuccess: (data) => {
-			console.log(data);
 			authStorage.set(data.access_token);
 			queryClient.setQueryData<AuthState>(["auth"], {
 				isAuthenticated: true,

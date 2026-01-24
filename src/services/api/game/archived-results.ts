@@ -25,7 +25,6 @@ const getArchivedResults = async (
 	const response = await authApi.get("/archive/", {
 		params,
 	});
-	console.log(response.data);
 	return response.data;
 };
 

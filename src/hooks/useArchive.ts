@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useArchiveResults } from "../services/api/game/archived-results";
+import dateObjToString from "../utils/dateObjToString";
 
 const useArchive = (
 	year: number,
@@ -35,8 +36,22 @@ const useArchive = (
 		});
 	};
 
-	const handleDay = (year: number, month: number, day: number) => {
-		navigate(`/archive/${year}-${month}-${day}`);
+	const handleDay = (
+		currDate: string,
+		year: number,
+		month: number,
+		day: number,
+	) => {
+		const formattedDate = dateObjToString({
+			currYear: year,
+			currMonth: month,
+			currDay: day,
+		});
+		if (currDate === formattedDate) {
+			navigate("/daily");
+			return;
+		}
+		navigate(`/archive/${formattedDate}`);
 	};
 
 	return {

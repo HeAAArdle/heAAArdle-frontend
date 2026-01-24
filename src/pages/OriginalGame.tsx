@@ -29,7 +29,6 @@ const OriginalGame = ({ mode }: GameProps) => {
 		setGuessText,
 		guesses,
 		currGuess,
-		hasWon,
 		isGameDone,
 		handleGuess,
 		handleSkip,
@@ -88,7 +87,7 @@ const OriginalGame = ({ mode }: GameProps) => {
 						<GuessHistory
 							key={index}
 							result={
-								hasWon && index === currGuess
+								gameEvent?.is_correct && index === currGuess
 									? "correct"
 									: "incorrect"
 							}
@@ -97,9 +96,9 @@ const OriginalGame = ({ mode }: GameProps) => {
 					),
 				)}
 			</div>
-			{gameResult && (
+			{gameResult && gameEvent && (
 				<Result
-					hasWon
+					hasWon={gameEvent?.is_correct}
 					attempts={attempts}
 					title={gameResult.title}
 					artist={artistFormatter(
