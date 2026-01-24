@@ -13,7 +13,11 @@ type SupportDataType = {
 	linkedInLink: string;
 };
 
-const Support = () => {
+type SupportProps = {
+	onClick: () => void;
+};
+
+const Support = ({ onClick }: SupportProps) => {
 	const data: SupportDataType[] = [
 		{
 			image: portrait,
@@ -39,9 +43,12 @@ const Support = () => {
 	];
 
 	return (
-		<div className="absolute flex justify-center items-center">
+		<div className="fixed inset-0 flex justify-center items-center z-50">
 			<div className="relative flex flex-col bg-neutral-950 rounded-3xl p-12 gap-6 lato-regular shadow-2xl shadow-primary-500/30">
-				<button className="absolute top-6 right-6 cursor-pointer">
+				<button
+					onClick={onClick}
+					className="absolute top-6 right-6 cursor-pointer"
+				>
 					<CloseIcon className="w-8 h-8 text-neutral-50" />
 				</button>
 				<div className="flex flex-col text-neutral-50 text-[18px] gap-3">
@@ -51,7 +58,7 @@ const Support = () => {
 							Support Us
 						</span>
 					</div>
-					<div className="text-nowrap">
+					<div className="whitespace-nowrap">
 						Hello! We are{" "}
 						<span className="lato-bold text-accent-300">AAA</span>.
 						View our <span className="lato-bold">Github</span> and{" "}

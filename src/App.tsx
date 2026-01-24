@@ -9,6 +9,7 @@ import RapidGame from "./pages/RapidGame";
 import LyricsGame from "./pages/LyricsGame";
 import { useSongs } from "./services/api/song/get-songs";
 import { useInitAuthFromStorage } from "./hooks/useInitAuthFromStorage";
+import PageLayout from "./components/pageLayout/PageLayout";
 
 function App() {
 	const location = useLocation();
@@ -20,10 +21,9 @@ function App() {
 	return (
 		<div className="relative h-screen w-full flex flex-col">
 			<Background className="absolute w-screen h-screen z-[-1]" />
-			<div className="h-full">
-				{path !== "/signin" && path !== "/signup" && <NavigationBar />}
+			{/* {path !== "/signin" && path !== "/signup" && <NavigationBar />} */}
+			<PageLayout>
 				<Routes>
-					{/* TODO: Check how daily game access date */}
 					<Route
 						path="/"
 						element={
@@ -55,7 +55,7 @@ function App() {
 					/>
 					<Route path="/test" element={<Test />} />
 				</Routes>
-			</div>
+			</PageLayout>
 		</div>
 	);
 }
