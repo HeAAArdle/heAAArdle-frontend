@@ -1,8 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
-import { publicApi } from "../../../lib/api/publicApi";
+import { authApi } from "../../../lib/api/authApi";
 
 type SubmitGameInput = {
 	wsGameSessionID: string;
+	songID: string;
 	mode: "original" | "daily";
 	won: boolean;
 	attempts: number;
@@ -10,7 +11,7 @@ type SubmitGameInput = {
 };
 
 const getGameSubmitFn = async (payload: SubmitGameInput): Promise<void> => {
-	await publicApi.post("/game/submit", payload);
+	await authApi.post("/game/submit", payload);
 };
 
 export const useGameSubmit = () => {

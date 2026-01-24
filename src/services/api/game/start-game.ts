@@ -1,6 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { publicApi } from "../../../lib/api/publicApi";
 import { queryClient } from "../../../lib/queryClient";
+import type { GameMode } from "../../../types";
 
 export type StartGameData = {
 	wsGameSessionID: string;
@@ -12,7 +13,7 @@ export type StartGameData = {
 };
 
 export type StartGameInput = {
-	mode: "original" | "daily" | "rapid" | "lyrics" | "archive";
+	mode: GameMode;
 	date: string | null;
 };
 
@@ -23,10 +24,12 @@ const getGameStartFn = async (
 	return response.data;
 };
 
-export const useGameStart = () =>
+export const useGameStart = (mode: GameMode) =>
 	useMutation({
 		mutationFn: (mode: StartGameInput) => getGameStartFn(mode),
 		onSuccess: (data) => {
-			queryClient.setQueryData(["gameStart"], data);
+			if (mode === "archive")
+				queryClient.setQueryData(["gameStart", mode, data.date], data);
+			else queryClient.setQueryData(["gameStart", mode], data);
 		},
 	});

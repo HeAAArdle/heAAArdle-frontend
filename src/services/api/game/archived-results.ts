@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { publicApi } from "../../../lib/api/publicApi";
+import { authApi } from "../../../lib/api/authApi";
 
 type ArchiveResultsParams = {
 	year: number;
@@ -12,16 +12,17 @@ type ArchiveDayType = {
 	result: boolean | null;
 };
 
-type ArchiveResultsData = {
+export type ArchiveResultsData = {
 	numberOfDays: number;
 	startingDay: number;
+	numberOfDaysOfPreviousMonth: number;
 	days: ArchiveDayType[];
 };
 
 const getArchivedResults = async (
 	params: ArchiveResultsParams,
 ): Promise<ArchiveResultsData> => {
-	const response = await publicApi.get("/archive/", {
+	const response = await authApi.get("/archive/", {
 		params,
 	});
 	return response.data;

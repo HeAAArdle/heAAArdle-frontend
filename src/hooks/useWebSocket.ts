@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { queryClient } from "../lib/queryClient";
+import type { GameMode } from "../types";
 
 export type WsGuessType = {
 	type: "result";
@@ -21,7 +22,11 @@ export type WsResultType = {
 
 export type WsMessage = WsGuessType | WsResultType;
 
-export const useWebSocket = (wsUrl?: string) => {
+export const useWebSocket = (
+	mode: GameMode,
+	date: string | null,
+	wsUrl?: string,
+) => {
 	const wsRef = useRef<WebSocket | null>(null);
 
 	useEffect(() => {
@@ -34,12 +39,18 @@ export const useWebSocket = (wsUrl?: string) => {
 			const payload: WsMessage = JSON.parse(event.data);
 			switch (payload.type) {
 				case "result": {
-					queryClient.setQueryData(["gameEvent"], payload);
+					const queryKey = date
+						? ["gameEvent", mode, date]
+						: ["gameEvent", mode];
+					queryClient.setQueryData(queryKey, payload);
 					break;
 				}
 
 				case "song metadata": {
-					queryClient.setQueryData(["gameResult"], payload);
+					const queryKey = date
+						? ["gameResult", mode, date]
+						: ["gameResult", mode];
+					queryClient.setQueryData(queryKey, payload);
 					break;
 				}
 			}

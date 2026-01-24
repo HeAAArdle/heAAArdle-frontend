@@ -1,9 +1,6 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { UserContext } from "../context/UserContext";
-import {
-	useGameStart,
-	type StartGameInput,
-} from "../services/api/game/start-game";
+import { useGameStart } from "../services/api/game/start-game";
 import { useWebSocket } from "./useWebSocket";
 import { useGameSubmit } from "../services/api/game/submit-game";
 import { useWsData } from "./server-data/useWsData";
@@ -11,10 +8,10 @@ import { useGameEvent } from "./server-data/useGameEvent";
 import { useAuthState } from "./server-data/useAuthState";
 import { isResultMode } from "../utils/isResultMode";
 import { queryClient } from "../lib/queryClient";
+import type { GameMode } from "../types";
+import { useGameResult } from "./server-data/useGameResult";
 
-type UseHeardleGameProps = "original" | "daily" | "rapid" | "lyrics";
-
-const useHeardleGame = (mode: UseHeardleGameProps) => {
+const useHeardleGame = (mode: GameMode, date: string | null) => {
 	const { noOfGuesses } = useContext(UserContext);
 	const gameStartedRef = useRef(false);
 
@@ -28,9 +25,9 @@ const useHeardleGame = (mode: UseHeardleGameProps) => {
 		mutate: startGame,
 		isPending: isWsPending,
 		error: wsError,
-	} = useGameStart();
+	} = useGameStart(mode);
 
-	const { data: wsData } = useWsData();
+	const { data: wsData } = useWsData(mode, date);
 	const { data: authState } = useAuthState();
 
 	// starts the game
@@ -38,16 +35,17 @@ const useHeardleGame = (mode: UseHeardleGameProps) => {
 		if (gameStartedRef.current) return;
 		gameStartedRef.current = true;
 
-		if (!wsData) startGame({ mode: "original", date: null }); // this changes based on mode
-	}, [startGame, mode, wsData]);
+		if (!wsData) startGame({ mode: mode, date: date });
+	}, [startGame, mode, wsData, date]);
 
 	// connect to websocket when we have url
-	const { sendMessage } = useWebSocket(wsData?.wsURL);
+	const { sendMessage } = useWebSocket(mode, date, wsData?.wsURL);
 
 	// ws cache
-	const { data: gameEvent } = useGameEvent();
+	const { data: gameEvent } = useGameEvent(mode, date);
 
 	const { mutate: sendResult } = useGameSubmit();
+	const { data: gameResult } = useGameResult(mode, date);
 
 	// update game state based on ws
 	useEffect(() => {
@@ -69,11 +67,14 @@ const useHeardleGame = (mode: UseHeardleGameProps) => {
 
 	const handleCleanup = () => {
 		// if has profile
+
 		if (!isResultMode(mode)) return;
-		if (!authState?.isAuthenticated || !wsData || !gameEvent) return;
+		if (!authState?.isAuthenticated || !wsData || !gameEvent || !gameResult)
+			return;
 		// sent to backend updated
 		sendResult({
 			wsGameSessionID: wsData.wsGameSessionID,
+			songID: gameResult?.songID,
 			attempts: gameEvent?.attempts,
 			date: wsData.date,
 			mode: mode,
@@ -93,16 +94,22 @@ const useHeardleGame = (mode: UseHeardleGameProps) => {
 		// TODO: when skip is pressed also reset the player
 	};
 
-	const handleNewGame = (data: StartGameInput) => {
+	const handleNewGame = (mode: GameMode, date: string | null = null) => {
 		setGuesses(new Array(noOfGuesses).fill(null));
 		setCurrGuess(0);
 		setGuessText("");
 		gameStartedRef.current = false;
 
-		queryClient.setQueryData(["gameResult"], null);
-		queryClient.setQueryData(["gameEvent"], null);
-		queryClient.setQueryData(["gameStart"], null);
-		startGame(data);
+		if (date === null) {
+			queryClient.setQueryData(["gameResult", mode], null);
+			queryClient.setQueryData(["gameEvent", mode], null);
+			queryClient.setQueryData(["gameStart", mode], null);
+		} else {
+			queryClient.setQueryData(["gameResult", mode, date], null);
+			queryClient.setQueryData(["gameEvent", mode, date], null);
+			queryClient.setQueryData(["gameStart", mode, date], null);
+		}
+		startGame({ mode: mode, date: date });
 	};
 
 	return {
@@ -112,7 +119,6 @@ const useHeardleGame = (mode: UseHeardleGameProps) => {
 		setGuessText,
 		guesses,
 		currGuess,
-		hasWon: gameEvent?.is_correct,
 		isGameDone: gameEvent?.done,
 		handleGuess,
 		handleSkip,

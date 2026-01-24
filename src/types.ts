@@ -25,3 +25,5 @@ export type AuthState = {
 	isAuthenticated: boolean;
 	username: string;
 };
+
+export type GameMode = "original" | "daily" | "rapid" | "lyrics" | "archive";

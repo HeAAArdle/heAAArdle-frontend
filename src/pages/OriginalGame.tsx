@@ -9,9 +9,19 @@ import { useGameEvent } from "../hooks/server-data/useGameEvent";
 import { useGameResult } from "../hooks/server-data/useGameResult";
 import { artistFormatter } from "../utils/artistFormatter";
 import Result from "../components/modals/Result";
+import { useParams } from "react-router-dom";
+import dateFormatter from "../utils/dateFormatter";
+import type { GameMode } from "../types";
 
-const OriginalGame = () => {
+type GameProps = {
+	mode: GameMode;
+};
+
+const OriginalGame = ({ mode }: GameProps) => {
 	const { lengthOfAudio } = useContext(UserContext);
+	const { date } = useParams<{ date: string }>();
+	const header = date ?? "Today";
+
 	const {
 		isWsPending,
 		wsError,
@@ -19,17 +29,16 @@ const OriginalGame = () => {
 		setGuessText,
 		guesses,
 		currGuess,
-		hasWon,
 		isGameDone,
 		handleGuess,
 		handleSkip,
 		audio,
 		startAt,
 		handleNewGame,
-	} = useHeardleGame("original");
+	} = useHeardleGame(mode, date ? date : null);
 
-	const { data: gameEvent } = useGameEvent();
-	const { data: gameResult } = useGameResult();
+	const { data: gameEvent } = useGameEvent(mode, date ? date : null);
+	const { data: gameResult } = useGameResult(mode, date ? date : null);
 
 	const attempts = gameEvent?.attempts ?? 0;
 
@@ -39,9 +48,18 @@ const OriginalGame = () => {
 
 	return (
 		<div className="relative h-full flex flex-col space-y-4 items-center justify-center">
-			<span className="dm-sans-400 font-bold text-8xl bg-linear-to-r from-primary-500 to-accent-300 bg-clip-text text-transparent mb-8">
-				Heardle
-			</span>
+			{mode === "original" ? (
+				<span className="dm-sans-400 font-bold text-8xl bg-linear-to-r from-primary-500 to-accent-300 bg-clip-text text-transparent mb-8">
+					Heardle
+				</span>
+			) : (
+				<span className="dm-sans-400 font-bold text-8xl text-white mb-8">
+					{header === "Today" ? header : dateFormatter(header)}'s{" "}
+					<span className="bg-linear-to-r from-primary-500 to-accent-300 bg-clip-text text-transparent">
+						Heardle
+					</span>
+				</span>
+			)}
 			{audio && startAt != null && (
 				<MusicPlayer
 					src={audio}
@@ -69,7 +87,7 @@ const OriginalGame = () => {
 						<GuessHistory
 							key={index}
 							result={
-								hasWon && index === currGuess
+								gameEvent?.is_correct && index === currGuess
 									? "correct"
 									: "incorrect"
 							}
@@ -78,9 +96,9 @@ const OriginalGame = () => {
 					),
 				)}
 			</div>
-			{gameResult && (
+			{gameResult && gameEvent && (
 				<Result
-					hasWon
+					hasWon={gameEvent?.is_correct}
 					attempts={attempts}
 					title={gameResult.title}
 					artist={artistFormatter(
@@ -89,7 +107,7 @@ const OriginalGame = () => {
 					)}
 					album={gameResult.album}
 					videoLink={gameResult.shareLink}
-					onClick={handleNewGame}
+					onClick={() => handleNewGame(mode, date ? date : null)}
 				/>
 			)}
 		</div>
