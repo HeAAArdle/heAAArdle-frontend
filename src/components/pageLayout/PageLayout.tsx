@@ -2,6 +2,10 @@ import { useState, type JSX } from "react";
 import NavigationBar from "../compound/NavigationBar";
 import Support from "../modals/Support";
 import { useLocation } from "react-router-dom";
+import TopButtons from "../compound/TopButtons";
+import Leaderboard from "../compound/Leaderboard";
+import Archive from "../simple/Archive";
+import Statistics from "../modals/Statistics";
 
 type PageLayoutProps = {
 	children: JSX.Element;
@@ -9,6 +13,9 @@ type PageLayoutProps = {
 
 const PageLayout = ({ children }: PageLayoutProps) => {
 	const [isSupportOpen, setIsSupportOpen] = useState(false);
+    const [isLeaderboardsOpen, setIsLeaderboardsOpen] = useState(false);
+    const [isStatsOpen, setIsStatsOpen] = useState(false);
+    const [isArchiveOpen, setIsArchiveOpen] = useState(false);
 
 	const location = useLocation();
 	const path = location.pathname;
@@ -28,6 +35,20 @@ const PageLayout = ({ children }: PageLayoutProps) => {
 			{isSupportOpen && (
 				<Support onClick={() => setIsSupportOpen(false)} />
 			)}
+			<div className="absolute flex inset-0 justify-center items-center">
+				{isLeaderboardsOpen && (
+					<Leaderboard onClick={() => setIsLeaderboardsOpen(false)} />
+				)}
+				{isStatsOpen && (
+					<Statistics longestStreak={69} currentStreak={69} gamesPlayed={69} winCount={69} winRate={69} type="original" distribution={[1, 2, 3, 4, 5, 6]} onClick={() => setIsStatsOpen(false)} />
+				)}
+				{isArchiveOpen && (
+					<Archive />
+				)}
+			</div>
+			<div className="absolute top-0 right-0">
+				<TopButtons setIsLeaderboardsOpen={setIsLeaderboardsOpen} setIsStatsOpen={setIsStatsOpen} setIsArchiveOpen={setIsArchiveOpen} />
+			</div>
 		</div>
 	);
 };

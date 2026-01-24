@@ -9,7 +9,13 @@ import IconCircle from "../simple/IconCircle";
 import CloseIcon from "../../icons/CloseIcon";
 import StarIcon from "../../icons/StarIcon";
 
-const Leaderboard = () => {
+type LeaderboardProps = {
+	onClick: () => void;
+};
+
+const Leaderboard = ({
+	onClick,
+}: LeaderboardProps) => {
 	const [filter, setFilter] = useState<FilterType>("Daily");
 	const [mode, setMode] = useState<ModeType>("original");
 
@@ -23,7 +29,7 @@ const Leaderboard = () => {
 
 	return (
 		<div className="relative flex flex-col items-center justify-center gap-6 bg-neutral-950 rounded-3xl p-12">
-			<button className="absolute top-6 right-6">
+			<button className="absolute top-6 right-6" onClick={onClick}>
 				<CloseIcon className="text-neutral-50 w-8 h-8" />
 			</button>
 			<div className="flex gap-4">
