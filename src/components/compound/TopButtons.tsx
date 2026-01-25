@@ -3,56 +3,110 @@ import LeaderboardIcon from "../../icons/LeaderboardIcon";
 import StatsIcon from "../../icons/StatsIcon";
 import ArchiveIcon from "../../icons/ArchiveIcon";
 
-function TopButtons({ setIsLeaderboardsOpen, setIsStatsOpen, setIsArchiveOpen }: { setIsLeaderboardsOpen: (value: boolean) => void; setIsStatsOpen: (value: boolean) => void; setIsArchiveOpen: (value: boolean) => void; }) {
-    const circleActiveColor = "bg-primary-500/30";
-    const circleInactiveColor = "border-primary-300/60";
-    const circleInactiveHoverColor = "hover:border-primary-500/60";
-    
-    const iconActiveColor = "text-primary-200";
-    const iconInactiveColor = "text-primary-300";
-    const iconInactiveHoverColor = "group-hover:text-primary-500";
-
-    let isArchiveActive = false;
-    let isLeaderboardsActive = false;
-    let isStatsActive = false;
-
-    const setArchive = () => {
-        setIsArchiveOpen(true);
-        isArchiveActive = true
-
-        setIsLeaderboardsOpen(false);
-        setIsStatsOpen(false);
-    }
-
-    const setLeaderboards = () => {
-        setIsLeaderboardsOpen(true);
-        isLeaderboardsActive = true
-
-        setIsArchiveOpen(false);
-        setIsStatsOpen(false);
-    }
-    const setStats = () => {
-        setIsStatsOpen(true);
-        isStatsActive = true
-
-        setIsLeaderboardsOpen(false);
-        setIsArchiveOpen(false);
-    }
-    return (
-        <div className="mt-12 mr-12">
-            <div className="flex flex-row gap-8 justify-center items-center">
-                <IconCircle isSelected={isArchiveActive} onClick={() => setArchive()} circleActiveColor={circleActiveColor} circleInactiveColor={circleInactiveColor} circleInactiveHoverColor={circleInactiveHoverColor} iconActiveColor={iconActiveColor} iconInactiveColor={iconInactiveColor} iconInactiveHoverColor={iconInactiveHoverColor}>
-                    <ArchiveIcon />
-                </IconCircle>
-                <IconCircle isSelected={isLeaderboardsActive} onClick={() => setLeaderboards()} circleActiveColor={circleActiveColor} circleInactiveColor={circleInactiveColor} circleInactiveHoverColor={circleInactiveHoverColor} iconActiveColor={iconActiveColor} iconInactiveColor={iconInactiveColor} iconInactiveHoverColor={iconInactiveHoverColor}>
-                    <LeaderboardIcon />
-                </IconCircle>
-                <IconCircle isSelected={isStatsActive} onClick={() => setStats()} circleActiveColor={circleActiveColor} circleInactiveColor={circleInactiveColor} circleInactiveHoverColor={circleInactiveHoverColor} iconActiveColor={iconActiveColor} iconInactiveColor={iconInactiveColor} iconInactiveHoverColor={iconInactiveHoverColor}>
-                    <StatsIcon />
-                </IconCircle>
-            </div>
-        </div>
-    );
+type TopButtonsProps = {
+	isLeaderboardIconShowing: boolean;
+	isStatsIconShowing: boolean;
+	isArchiveIconShowing: boolean;
+	setIsLeaderboardsOpen: (value: boolean) => void;
+	setIsStatsOpen: (value: boolean) => void;
+	setIsArchiveOpen: (value: boolean) => void;
 };
+
+function TopButtons({
+	isLeaderboardIconShowing,
+	isStatsIconShowing,
+	isArchiveIconShowing,
+	setIsLeaderboardsOpen,
+	setIsStatsOpen,
+	setIsArchiveOpen,
+}: TopButtonsProps) {
+	// TODO:
+	// Archive		- show only when at daily / archive mode
+	// Leaderboard	- show only when at original / daily
+	// Stats		- show only when at original / daily and authenticated
+
+	const circleActiveColor = "bg-primary-500/30";
+	const circleInactiveColor = "border-primary-300/60";
+	const circleInactiveHoverColor = "hover:border-primary-500/60";
+
+	const iconActiveColor = "text-primary-200";
+	const iconInactiveColor = "text-primary-300";
+	const iconInactiveHoverColor = "group-hover:text-primary-500";
+
+	let isArchiveActive = false;
+	let isLeaderboardsActive = false;
+	let isStatsActive = false;
+
+	const setArchive = () => {
+		setIsArchiveOpen(true);
+		isArchiveActive = true;
+
+		setIsLeaderboardsOpen(false);
+		setIsStatsOpen(false);
+	};
+
+	const setLeaderboards = () => {
+		setIsLeaderboardsOpen(true);
+		isLeaderboardsActive = true;
+
+		setIsArchiveOpen(false);
+		setIsStatsOpen(false);
+	};
+	const setStats = () => {
+		setIsStatsOpen(true);
+		isStatsActive = true;
+
+		setIsLeaderboardsOpen(false);
+		setIsArchiveOpen(false);
+	};
+	return (
+		<div className="mt-12 mr-12">
+			<div className="flex flex-row gap-8 justify-center items-center">
+				{isArchiveIconShowing && (
+					<IconCircle
+						isSelected={isArchiveActive}
+						onClick={() => setArchive()}
+						circleActiveColor={circleActiveColor}
+						circleInactiveColor={circleInactiveColor}
+						circleInactiveHoverColor={circleInactiveHoverColor}
+						iconActiveColor={iconActiveColor}
+						iconInactiveColor={iconInactiveColor}
+						iconInactiveHoverColor={iconInactiveHoverColor}
+					>
+						<ArchiveIcon />
+					</IconCircle>
+				)}
+				{isLeaderboardIconShowing && (
+					<IconCircle
+						isSelected={isLeaderboardsActive}
+						onClick={() => setLeaderboards()}
+						circleActiveColor={circleActiveColor}
+						circleInactiveColor={circleInactiveColor}
+						circleInactiveHoverColor={circleInactiveHoverColor}
+						iconActiveColor={iconActiveColor}
+						iconInactiveColor={iconInactiveColor}
+						iconInactiveHoverColor={iconInactiveHoverColor}
+					>
+						<LeaderboardIcon />
+					</IconCircle>
+				)}
+				{isStatsIconShowing && (
+					<IconCircle
+						isSelected={isStatsActive}
+						onClick={() => setStats()}
+						circleActiveColor={circleActiveColor}
+						circleInactiveColor={circleInactiveColor}
+						circleInactiveHoverColor={circleInactiveHoverColor}
+						iconActiveColor={iconActiveColor}
+						iconInactiveColor={iconInactiveColor}
+						iconInactiveHoverColor={iconInactiveHoverColor}
+					>
+						<StatsIcon />
+					</IconCircle>
+				)}
+			</div>
+		</div>
+	);
+}
 
 export default TopButtons;

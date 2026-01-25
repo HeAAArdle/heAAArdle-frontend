@@ -22,7 +22,6 @@ export const useSignIn = () => {
 			queryClient.setQueryData<AuthState>(["auth"], {
 				isAuthenticated: true,
 				username: "",
-				// todo find way to call useUser
 			});
 		},
 	});

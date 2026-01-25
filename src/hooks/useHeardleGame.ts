@@ -91,7 +91,6 @@ const useHeardleGame = (mode: GameMode, date: string | null) => {
 	const handleSkip = () => {
 		sendMessage({ type: "guess", guess: "" });
 		setGuessText("");
-		// TODO: when skip is pressed also reset the player
 	};
 
 	const handleNewGame = (mode: GameMode, date: string | null = null) => {

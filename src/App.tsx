@@ -8,6 +8,7 @@ import LyricsGame from "./pages/LyricsGame";
 import { useSongs } from "./services/api/song/get-songs";
 import { useInitAuthFromStorage } from "./hooks/useInitAuthFromStorage";
 import PageLayout from "./components/pageLayout/PageLayout";
+import ArchiveGameWrapper from "./components/compound/ArchiveGameWrapper";
 
 function App() {
 	useInitAuthFromStorage();
@@ -31,12 +32,7 @@ function App() {
 					/>
 					<Route
 						path="/archive/:date"
-						element={
-							<OriginalGame
-								mode="archive"
-								key={useParams().date}
-							/>
-						}
+						element={<ArchiveGameWrapper />}
 					/>
 					<Route path="/rapid" element={<RapidGame />} />
 					<Route path="/lyrics" element={<LyricsGame />} />

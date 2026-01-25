@@ -16,7 +16,17 @@ type IconCircleProps = {
 	onClick?: () => void;
 };
 
-const IconCircle = ({ isSelected, circleActiveColor = "bg-accent-700/30", circleInactiveColor = "border-accent-500/60", circleInactiveHoverColor = "hover:border-accent-500", iconActiveColor = "text-accent-300", iconInactiveColor = "text-accent-500/60", iconInactiveHoverColor = "group-hover:text-accent-500", children, onClick }: IconCircleProps) => {
+const IconCircle = ({
+	isSelected,
+	circleActiveColor = "bg-accent-700/30",
+	circleInactiveColor = "border-accent-500/60",
+	circleInactiveHoverColor = "hover:border-accent-500",
+	iconActiveColor = "text-accent-300",
+	iconInactiveColor = "text-accent-500/60",
+	iconInactiveHoverColor = "group-hover:text-accent-500",
+	children,
+	onClick,
+}: IconCircleProps) => {
 	return (
 		<div
 			onClick={onClick}

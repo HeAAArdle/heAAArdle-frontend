@@ -80,7 +80,6 @@ const Archive = () => {
 				{Array.from({ length: otherMonthDay }, (_, index) => (
 					<ArchiveDay
 						key={index}
-						// TODO: know no of days prev
 						date={`${month === 1 ? year - 1 : year}-${month === 1 ? "12" : month - 1}-${archiveData.numberOfDaysOfPreviousMonth - (otherMonthDay - index - 1)}`}
 						currentDate={{
 							currYear: todayYear,
