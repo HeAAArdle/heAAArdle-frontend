@@ -69,17 +69,11 @@ const PageLayout = ({ children }: PageLayoutProps) => {
 					)}
 					{isStatsOpen && (
 						<Statistics
-							longestStreak={69}
-							currentStreak={69}
-							gamesPlayed={69}
-							winCount={69}
-							winRate={69}
-							type="original"
-							distribution={[1, 2, 3, 4, 5, 6]}
-							onClick={() => setIsStatsOpen(false)}
+							onClose={() => setIsStatsOpen(false)}
+							path={path}
 						/>
 					)}
-					{isArchiveOpen && <Archive />}
+					{isArchiveOpen && <Archive onClose={() => setIsArchiveOpen(false)} />}
 				</div>
 			)}
 			<div className="absolute top-0 right-0 z-0">

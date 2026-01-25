@@ -3,10 +3,12 @@ import { publicApi } from "../../../lib/api/publicApi";
 
 type LeaderboardUserType = {
 	username: string;
-	wins: number;
+	isUser: boolean;
+	numberOfWins: number;
+	rank: number | null;
 };
 
-type LeaderboardBaseType = {
+export type LeaderboardBaseType = {
 	weekly: LeaderboardUserType[];
 	monthly: LeaderboardUserType[];
 	allTime: LeaderboardUserType[];

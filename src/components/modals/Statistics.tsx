@@ -1,40 +1,30 @@
-import CloseIcon from "../../icons/CloseIcon";
+	import CloseIcon from "../../icons/CloseIcon";
 import FireIcon from "../../icons/FireIcon";
-
-type StatType = "original" | "daily";
+import { useUserStatistics } from "../../services/api/account/user-statistics";
 
 type ScoreDistribution = [number, number, number, number, number, number];
 
 type StatisticsProps = {
-	currentStreak: number;
-	longestStreak: number;
-	gamesPlayed: number;
-	winCount: number;
-	winRate: number;
-	type: StatType;
-	distribution: ScoreDistribution;
-	onClick: () => void;
+	onClose: () => void;
+	path: string;
 };
 
-const Statistics = ({
-	currentStreak,
-	longestStreak,
-	gamesPlayed,
-	winCount,
-	winRate,
-	type,
-	distribution,
-	onClick,
-}: StatisticsProps) => {
+const Statistics = ({ onClose, path }: StatisticsProps) => {
+	const {data: userStats} = useUserStatistics();
+
+	if (!userStats) return <p>Loading...</p>
+
+	const type = path === "/" ? "original" : "daily";
+	const modeStats = type === "original" ? userStats.original : userStats.daily;
 	const stats = {
-		gamesPlayed: gamesPlayed,
-		winCount: winCount,
-		lostCount: gamesPlayed - winCount,
+		gamesPlayed: modeStats.gamesPlayed,
+		winCount: modeStats.winCount,
+		lostCount: modeStats.gamesPlayed - modeStats.winCount,
 	};
 
 	return (
 		<div className="relative bg-neutral-950 flex flex-col py-12 items-center rounded-3xl px-12 gap-4 w-5xl">
-			<button onClick={onClick}>
+			<button onClick={onClose}>
 				<CloseIcon className="absolute top-6 right-6 w-8 h-8 text-neutral-50 cursor-pointer" />
 			</button>
 			<span className="dm-sans-400 text-5xl text-primary-500 font-bold">
@@ -51,7 +41,7 @@ const Statistics = ({
 						{/* Circle Stuff */}
 						<WinRateCircle
 							size={128}
-							winRate={winRate}
+							winRate={modeStats.winPercentage}
 							fontColor="text-accent-300"
 							bgColor="text-neutral-950"
 							lineColor="text-primary-500"
@@ -65,7 +55,7 @@ const Statistics = ({
 								<div className="flex items-center justify-around">
 									<FireIcon className="w-7 h-8 text-accent-500" />
 									<span className="dm-sans-400 font-bold text-4xl text-neutral-50">
-										{currentStreak}
+										{modeStats.currentStreak}
 									</span>
 								</div>
 								Current Streak
@@ -74,7 +64,7 @@ const Statistics = ({
 								<div className="flex items-center justify-around">
 									<FireIcon className="w-7 h-8 text-accent-300" />
 									<span className="dm-sans-400 font-bold text-4xl text-neutral-50">
-										{longestStreak}
+										{modeStats.currentStreak}
 									</span>
 								</div>
 								Longest Streak
@@ -94,7 +84,7 @@ const Statistics = ({
 						</div>
 					</div>
 				</div>
-				<DailyDistribution distribution={distribution} />
+				<DailyDistribution distribution={modeStats.guessDistribution} />
 			</div>
 		</div>
 	);

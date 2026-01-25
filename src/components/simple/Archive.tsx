@@ -8,7 +8,11 @@ import { monthToString } from "../../utils/monthToString";
 import { isDayBeforeCurrDate } from "../../utils/isDayBeforeCurrDate";
 import dateObjToString from "../../utils/dateObjToString";
 
-const Archive = () => {
+type ArchiveProps = {
+	onClose: () => void;
+}
+
+const Archive = ({onClose}: ArchiveProps) => {
 	const [year, setYear] = useState(new Date().getFullYear());
 	const [month, setMonth] = useState(new Date().getMonth() + 1);
 	const todayDay = new Date().getDate();
@@ -47,7 +51,7 @@ const Archive = () => {
 
 	return (
 		<div className="relative flex flex-col items-center justify-center bg-neutral-950 text-neutral-50 lato-regular text-[18px] rounded-3xl w-max p-12 gap-6">
-			<button className="absolute top-6 right-6">
+			<button onClick={onClose} className="cursor-pointer absolute top-6 right-6">
 				<CloseIcon className="text-neutral-50 w-8 h-8" />
 			</button>
 			<div className="flex flex-col gap-2 items-center justify-center">
@@ -58,7 +62,7 @@ const Archive = () => {
 			</div>
 			<div className="flex items-center justify-between w-full font-bold text-neutral-50">
 				<button
-					onClick={handlePrevMonth}
+					onClick={handlePrevMonth}	
 					className="cursor-pointer bg-accent-800 rounded-full p-0.5"
 				>
 					<LeftArchiveIcon className="w-8 h-8" />
@@ -67,7 +71,11 @@ const Archive = () => {
 					{monthToString(month)} {year}
 				</div>
 				<button
-					onClick={handleNextMonth}
+					onClick={() => {
+						if (year === todayYear && month === todayMonth) return
+						handleNextMonth()
+						}
+					}
 					className="cursor-pointer bg-accent-800 rounded-full p-0.5"
 				>
 					<RightArchiveIcon className="w-8 h-8" />

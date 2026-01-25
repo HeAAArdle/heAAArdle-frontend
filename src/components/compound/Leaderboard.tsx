@@ -8,6 +8,8 @@ import OriginalIcon from "../../icons/OriginalIcon";
 import IconCircle from "../simple/IconCircle";
 import CloseIcon from "../../icons/CloseIcon";
 import StarIcon from "../../icons/StarIcon";
+import { useLeaderboardData, type LeaderboardBaseType } from "../../services/api/game/leaderboard";
+import { useAuthState } from "../../hooks/server-data/useAuthState";
 
 type LeaderboardProps = {
 	onClick: () => void;
@@ -16,16 +18,19 @@ type LeaderboardProps = {
 const Leaderboard = ({
 	onClick,
 }: LeaderboardProps) => {
+	const {data: leaderboardData} = useLeaderboardData();
+	if (!leaderboardData) return <p>Loading...</p>;
+
+	const {data: authData} = useAuthState();
+
 	const [filter, setFilter] = useState<FilterType>("Daily");
 	const [mode, setMode] = useState<ModeType>("original");
 
-	const lb = [
-		{ name: "Majeshter", score: 3 },
-		{ name: "Mahjester", score: 3 },
-		{ name: "Mahjester", score: 3 },
-		{ name: "Mahjester", score: 3 },
-		{ name: "Mahjester", score: 3 },
-	];
+	const filterState = filter.toLowerCase();
+
+	const lb = leaderboardData[mode][filterState as keyof LeaderboardBaseType];
+	const userIndex = lb.slice(0, lb.length - 2).findIndex(item => item.isUser);
+
 
 	return (
 		<div className="relative flex flex-col items-center justify-center gap-6 bg-neutral-950 rounded-3xl p-12">
@@ -34,6 +39,7 @@ const Leaderboard = ({
 			</button>
 			<div className="flex gap-4">
 				<IconCircle
+					isSelected={mode === "original" ? true : false}
 					onClick={() => {
 						setFilter("Weekly");
 						setMode("original");
@@ -42,6 +48,7 @@ const Leaderboard = ({
 					<OriginalIcon />
 				</IconCircle>
 				<IconCircle
+					isSelected={mode === "daily" ? true : false}
 					onClick={() => {
 						setFilter("Weekly");
 						setMode("daily");
@@ -63,14 +70,19 @@ const Leaderboard = ({
 					<LeaderboardSpot
 						key={index}
 						rank={index + 1}
-						name={bar.name}
-						score={bar.score}
+						name={bar.username}
+						score={bar.numberOfWins}
+						isUser={userIndex === index}
 					/>
 				))}
 				<div className="bg-neutral-800 w-full h-1 rounded-2xl my-4" />
+				{
+					authData?.isAuthenticated && userIndex > 4 && (
 				<div>
-					<LeaderboardSpot rank={99} name="Majeshter" score={1} />
+					<LeaderboardSpot rank={userIndex + 1} name={lb[userIndex].username} score={lb[userIndex].numberOfWins} isUser={true} />
 				</div>
+					)
+				}
 			</div>
 		</div>
 	);
@@ -80,11 +92,17 @@ type LeaderboardSpotProps = {
 	rank: number;
 	name: string;
 	score: number;
+	isUser: boolean
 };
 
-const LeaderboardSpot = ({ rank, name, score }: LeaderboardSpotProps) => {
+const LeaderboardSpot = ({ rank, name, score, isUser }: LeaderboardSpotProps) => {
+	const bgColor = (()=> {
+		if (isUser && rank < 5) return "bg-primary-700";
+		if (isUser) return "bg-neutral-700";
+		return "bg-neutral-900"
+	})()
 	return (
-		<div className="flex items-center justify-between w-full rounded-xl bg-neutral-900 px-6 py-3 text-primary-300 lato-bold text-xl">
+		<div className={`flex items-center justify-between w-full rounded-xl ${bgColor} px-6 py-3 text-primary-300 lato-bold text-xl`}>
 			<div className="flex items-center justify-center gap-3">
 				<LeaderboardIdentifier rank={rank} />
 				<span className="text-neutral-50 text-xl lato-bold">
