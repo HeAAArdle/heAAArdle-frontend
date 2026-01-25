@@ -1,4 +1,5 @@
-	import CloseIcon from "../../icons/CloseIcon";
+	import { useEffect } from "react";
+import CloseIcon from "../../icons/CloseIcon";
 import FireIcon from "../../icons/FireIcon";
 import { useUserStatistics } from "../../services/api/account/user-statistics";
 
@@ -10,7 +11,11 @@ type StatisticsProps = {
 };
 
 const Statistics = ({ onClose, path }: StatisticsProps) => {
-	const {data: userStats} = useUserStatistics();
+	const {data: userStats, mutate: getUserStats} = useUserStatistics();
+
+	useEffect(() => {
+		getUserStats();
+	},[])
 
 	if (!userStats) return <p>Loading...</p>
 

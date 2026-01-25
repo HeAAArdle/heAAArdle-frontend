@@ -63,12 +63,12 @@ const useHeardleGame = (mode: GameMode, date: string | null) => {
 		}
 
 		setCurrGuess(currGuess + 1);
-	}, [gameEvent]);
+	}, [gameEvent, gameResult]);
 
 	const handleCleanup = () => {
 		// if has profile
-
 		if (!isResultMode(mode)) return;
+		console.log(gameResult)
 		if (!authState?.isAuthenticated || !wsData || !gameEvent || !gameResult)
 			return;
 		// sent to backend updated
