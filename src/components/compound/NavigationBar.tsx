@@ -67,8 +67,8 @@ const NavigationBar = () => {
 					</IconCircle>
 				</Link>
 			</div>
-			{/* TODO: no settings yet */}
 			<div className="relative">
+				{/* TODO: delete is not yet tested */}
 				<IconCircle
 					isSelected={isDeleteSelected || isSettingsSelected}
 					onClick={handleSettingsClick}

@@ -20,7 +20,6 @@ function TopButtons({
 	setIsStatsOpen,
 	setIsArchiveOpen,
 }: TopButtonsProps) {
-	// TODO:
 	// Archive		- show only when at daily / archive mode
 	// Leaderboard	- show only when at original / daily
 	// Stats		- show only when at original / daily and authenticated
