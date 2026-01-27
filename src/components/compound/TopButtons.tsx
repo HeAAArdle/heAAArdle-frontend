@@ -2,6 +2,7 @@ import IconCircle from "../simple/IconCircle";
 import LeaderboardIcon from "../../icons/LeaderboardIcon";
 import StatsIcon from "../../icons/StatsIcon";
 import ArchiveIcon from "../../icons/ArchiveIcon";
+import { useState } from "react";
 
 type TopButtonsProps = {
 	isLeaderboardIconShowing: boolean;
@@ -11,6 +12,8 @@ type TopButtonsProps = {
 	setIsStatsOpen: (value: boolean) => void;
 	setIsArchiveOpen: (value: boolean) => void;
 };
+
+type ActiveButtonsType = "archive" | "leaderboard" | "stats" | null;
 
 function TopButtons({
 	isLeaderboardIconShowing,
@@ -24,6 +27,8 @@ function TopButtons({
 	// Leaderboard	- show only when at original / daily
 	// Stats		- show only when at original / daily and authenticated
 
+	const [activeButton, setActiveButton] = useState<ActiveButtonsType>(null);
+
 	const circleActiveColor = "bg-primary-500/30";
 	const circleInactiveColor = "border-primary-300/60";
 	const circleInactiveHoverColor = "hover:border-primary-500/60";
@@ -32,13 +37,9 @@ function TopButtons({
 	const iconInactiveColor = "text-primary-300";
 	const iconInactiveHoverColor = "group-hover:text-primary-500";
 
-	let isArchiveActive = false;
-	let isLeaderboardsActive = false;
-	let isStatsActive = false;
-
 	const setArchive = () => {
 		setIsArchiveOpen(true);
-		isArchiveActive = true;
+		setActiveButton("archive");
 
 		setIsLeaderboardsOpen(false);
 		setIsStatsOpen(false);
@@ -46,14 +47,14 @@ function TopButtons({
 
 	const setLeaderboards = () => {
 		setIsLeaderboardsOpen(true);
-		isLeaderboardsActive = true;
+		setActiveButton("leaderboard");
 
 		setIsArchiveOpen(false);
 		setIsStatsOpen(false);
 	};
 	const setStats = () => {
 		setIsStatsOpen(true);
-		isStatsActive = true;
+		setActiveButton("stats");
 
 		setIsLeaderboardsOpen(false);
 		setIsArchiveOpen(false);
@@ -63,7 +64,7 @@ function TopButtons({
 			<div className="flex flex-row gap-8 justify-center items-center">
 				{isArchiveIconShowing && (
 					<IconCircle
-						isSelected={isArchiveActive}
+						isSelected={activeButton === "archive"}
 						onClick={() => setArchive()}
 						circleActiveColor={circleActiveColor}
 						circleInactiveColor={circleInactiveColor}
@@ -77,7 +78,7 @@ function TopButtons({
 				)}
 				{isLeaderboardIconShowing && (
 					<IconCircle
-						isSelected={isLeaderboardsActive}
+						isSelected={activeButton === "leaderboard"}
 						onClick={() => setLeaderboards()}
 						circleActiveColor={circleActiveColor}
 						circleInactiveColor={circleInactiveColor}
@@ -91,7 +92,7 @@ function TopButtons({
 				)}
 				{isStatsIconShowing && (
 					<IconCircle
-						isSelected={isStatsActive}
+						isSelected={activeButton === "stats"}
 						onClick={() => setStats()}
 						circleActiveColor={circleActiveColor}
 						circleInactiveColor={circleInactiveColor}

@@ -2,6 +2,7 @@
 import CloseIcon from "../../icons/CloseIcon";
 import FireIcon from "../../icons/FireIcon";
 import { useUserStatistics } from "../../services/api/account/user-statistics";
+import { useUser } from "../../services/api/account/user";
 
 type ScoreDistribution = [number, number, number, number, number, number];
 
@@ -15,7 +16,7 @@ const Statistics = ({ onClose, path }: StatisticsProps) => {
 
 	useEffect(() => {
 		getUserStats();
-	},[])
+	},[getUserStats])
 
 	if (!userStats) return <p>Loading...</p>
 

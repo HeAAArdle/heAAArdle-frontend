@@ -20,6 +20,11 @@ export type WsResultType = {
 	artists: string[];
 };
 
+type UserMessage = {
+	type: string;
+	guess: string;
+}
+
 export type WsMessage = WsGuessType | WsResultType;
 
 export const useWebSocket = (
@@ -59,9 +64,9 @@ export const useWebSocket = (
 		return () => {
 			wsRef.current = null;
 		};
-	}, [wsUrl]);
+	}, [wsUrl, mode, date]);
 
-	const sendMessage = (data: any) => {
+	const sendMessage = (data: UserMessage) => {
 		if (wsRef.current?.readyState === WebSocket.OPEN) {
 			wsRef.current.send(JSON.stringify(data));
 		}

@@ -19,18 +19,17 @@ const Leaderboard = ({
 	onClick,
 }: LeaderboardProps) => {
 	const {data: leaderboardData} = useLeaderboardData();
-	if (!leaderboardData) return <p>Loading...</p>;
-
 	const {data: authData} = useAuthState();
-
+	
 	const [filter, setFilter] = useState<FilterType>("Daily");
 	const [mode, setMode] = useState<ModeType>("original");
 
+	if (!leaderboardData) return <p>Loading...</p>;
+	
 	const filterState = filter.toLowerCase();
-
 	const lb = leaderboardData[mode][filterState as keyof LeaderboardBaseType];
 	const userIndex = lb.slice(0, lb.length - 2).findIndex(item => item.isUser);
-
+	
 
 	return (
 		<div className="relative flex flex-col items-center justify-center gap-6 bg-neutral-950 rounded-3xl p-12">

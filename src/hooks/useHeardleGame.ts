@@ -47,41 +47,6 @@ const useHeardleGame = (mode: GameMode, date: string | null) => {
 	const { mutate: sendResult } = useGameSubmit();
 	const { data: gameResult } = useGameResult(mode, date);
 
-	// update game state based on ws
-	useEffect(() => {
-		if (!gameEvent || gameEvent.type !== "result") return;
-
-		setGuesses((prev) => {
-			const updated = [...prev];
-			updated[currGuess] = gameEvent.guess;
-			return updated;
-		});
-
-		if (gameEvent.done) {
-			handleCleanup();
-			return;
-		}
-
-		setCurrGuess(currGuess + 1);
-	}, [gameEvent, gameResult]);
-
-	const handleCleanup = () => {
-		// if has profile
-		if (!isResultMode(mode)) return;
-		console.log(gameResult)
-		if (!authState?.isAuthenticated || !wsData || !gameEvent || !gameResult)
-			return;
-		// sent to backend updated
-		sendResult({
-			wsGameSessionID: wsData.wsGameSessionID,
-			songID: gameResult?.songID,
-			attempts: gameEvent?.attempts,
-			date: wsData.date,
-			mode: mode,
-			won: gameEvent?.is_correct,
-		});
-	};
-
 	const handleGuess = () => {
 		if (!guessText.trim()) return;
 		sendMessage({ type: "guess", guess: guessText });
@@ -110,6 +75,41 @@ const useHeardleGame = (mode: GameMode, date: string | null) => {
 		}
 		startGame({ mode: mode, date: date });
 	};
+
+	const handleCleanup = () => {
+		// if has profile
+		if (!isResultMode(mode)) return;
+		console.log(gameResult)
+		if (!authState?.isAuthenticated || !wsData || !gameEvent || !gameResult)
+			return;
+		// sent to backend updated
+		sendResult({
+			wsGameSessionID: wsData.wsGameSessionID,
+			songID: gameResult?.songID,
+			attempts: gameEvent?.attempts,
+			date: wsData.date,
+			mode: mode,
+			won: gameEvent?.is_correct,
+		});
+	};
+
+	// update game state based on ws
+	useEffect(() => {
+		if (!gameEvent || gameEvent.type !== "result") return;
+
+		setGuesses((prev) => {
+			const updated = [...prev];
+			updated[currGuess] = gameEvent.guess;
+			return updated;
+		});
+
+		if (gameEvent.done) {
+			handleCleanup();
+			return;
+		}
+
+		setCurrGuess(prev => prev + 1);
+	}, [gameEvent, gameResult]);
 
 	return {
 		isWsPending,

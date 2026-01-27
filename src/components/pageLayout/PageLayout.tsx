@@ -31,11 +31,15 @@ const PageLayout = ({ children }: PageLayoutProps) => {
 
 	// TODO: check if need pa
 	// closes all modal if path or auth changes
-	useEffect(() => {
+	const handlePathAuthChange = () => {
 		setIsSupportOpen(false);
 		setIsLeaderboardsOpen(false);
 		setIsStatsOpen(false);
 		setIsArchiveOpen(false);
+	}
+
+	useEffect(() => {
+		handlePathAuthChange();
 	}, [path, authData]);
 
 	return (
