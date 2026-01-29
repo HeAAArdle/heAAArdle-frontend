@@ -24,7 +24,7 @@ type LeaderboardDataType = {
 };
 
 const getLeaderboardData = async (): Promise<LeaderboardDataType> => {
-	const response = await publicApi.get("/leaderboard/");
+	const response = await publicApi.get("/leaderboards/");
 	return response.data;
 };
 
