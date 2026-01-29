@@ -1,43 +1,41 @@
-type ButtonType = "primary" | "secondary" | "destructive" | "cancel";
+type ButtonType = "primary" | "secondary" | "destructive" | "cancel" | "skip";
 
 type ButtonProps = {
-	text: string;
-	onClick?: () => void;
-	type: ButtonType;
-	htmlType?: "button" | "submit";
-	full?: boolean;
+    text: string;
+    onClick?: () => void;
+    type: ButtonType;
+    htmlType?: "button" | "submit";
+    full?: boolean;
+    isDisabled?: boolean;
 };
 
 const Button = ({
-	text,
-	onClick,
-	type,
-	htmlType = "button",
-	full = false,
+    text,
+    onClick,
+    type,
+    htmlType = "button",
+    full = false,
+    isDisabled = false,
 }: ButtonProps) => {
-	const buttonClasses = (() => {
-		switch (type) {
-			case "primary":
-				return "h-13 text-neutral-950 bg-primary-300 hover:bg-primary-500 disabled:opacity-60";
-			case "secondary":
-				return "h-10 text-neutral-50 bg-accent-800 hover:bg-accent-950 disabled:opacity-60";
-			case "destructive":
-				return "h-13 text-neutral-50 bg-fail-500 hover:bg-fail-700 disabled:opacity-60";
-			default:
-				return "h-13 text-neutral-50 bg-neutral-950 border-2 border-neutral-500 hover:bg-neutral-800 disabled:opacity-60";
-		}
-	})();
+    const typeClasses: Record<ButtonType, string> = {
+        primary: "py-3 text-neutral-950 bg-primary-300 hover:bg-primary-500",
+        secondary: "py-1.5 text-neutral-50 bg-accent-800 hover:bg-accent-950",
+        destructive: "py-3 text-neutral-50 bg-fail-500 hover:bg-fail-700",
+        cancel: "py-3 text-neutral-50 bg-neutral-950 border-2 border-neutral-500 hover:bg-neutral-800",
+        skip: "px-6 py-1.5 text-neutral-50 rounded-xl bg-gradient-to-br from-[#d62cea] to-[#aa21ba] hover:from-[#aa21ba] hover:to-[#d62cea]",
+    };
 
-	// NOTES: not sure pa how to implement the width (since nagbabago depende sa usecase)
-	return (
-		<button
-			className={`px-10 rounded-4xl text-xl lato-bold cursor-pointer ${buttonClasses} ${full ? "w-full" : ""}`}
-			type={htmlType}
-			onClick={onClick}
-		>
-			{text}
-		</button>
-	);
+    return (
+        <button
+            type={htmlType}
+            onClick={onClick}
+            disabled={isDisabled}
+            aria-disabled={isDisabled}
+            className={`rounded-[64px] px-6 flex-col justify-center items-center text-xl lato-bold cursor-pointer transition-standard disabled:opacity-60 disabled:cursor-not-allowed ${typeClasses[type]} ${full ? "w-full" : ""}`}
+        >
+            {text}
+        </button>
+    );
 };
 
 export default Button;

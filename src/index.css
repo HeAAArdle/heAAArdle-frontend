@@ -124,3 +124,9 @@
     transform: scale(0.7);
   }
 }
+
+/* Other */
+
+.transition-standard {
+    @apply transition-all duration-300 ease-in-out;
+}

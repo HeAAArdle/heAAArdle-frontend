@@ -1,4 +1,4 @@
-import type { CurrentDayType } from "../components/simple/Archive";
+import type { CurrentDayType } from "../components/modals/Archive";
 
 const dateObjToString = ({ currYear, currMonth, currDay }: CurrentDayType) => {
 	const formattedMonth = currMonth < 10 ? `0${currMonth}` : currMonth;

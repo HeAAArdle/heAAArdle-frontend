@@ -4,7 +4,7 @@ import Support from "../modals/Support";
 import { useLocation } from "react-router-dom";
 import TopButtons from "../compound/TopButtons";
 import Leaderboard from "../compound/Leaderboard";
-import Archive from "../simple/Archive";
+import Archive from "../modals/Archive";
 import Statistics from "../modals/Statistics";
 import { useAuthState } from "../../hooks/server-data/useAuthState";
 

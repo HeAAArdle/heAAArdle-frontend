@@ -20,7 +20,7 @@ const DailyGame = () => {
 			<span className="dm-sans-400 font-bold text-8xl text-white mb-8">
 				{header === "Today" ? header : dateFormatter(header)}'s{" "}
 				<span className="bg-linear-to-r from-primary-500 to-accent-300 bg-clip-text text-transparent">
-					Heardle
+					HeAAArdle
 				</span>
 			</span>
 			<MusicPlayer />

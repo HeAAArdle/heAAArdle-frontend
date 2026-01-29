@@ -13,9 +13,10 @@ const PauseIcon = ({ className = "" }: IconProps) => {
 			<circle
 				cx="48"
 				cy="48"
-				r="46.5"
+				r="43.5"
+				fill="#13161b"
 				stroke="currentColor"
-				strokeWidth="3"
+				strokeWidth="6"
 			/>
 			<rect
 				x="33"
