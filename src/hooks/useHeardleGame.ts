@@ -12,119 +12,119 @@ import type { GameMode } from "../types";
 import { useGameResult } from "./server-data/useGameResult";
 
 const useHeardleGame = (mode: GameMode, date: string | null) => {
-	const { noOfGuesses } = useContext(UserContext);
-	const gameStartedRef = useRef(false);
+  const { noOfGuesses } = useContext(UserContext);
+  const gameStartedRef = useRef(false);
 
-	const [guessText, setGuessText] = useState("");
-	const [guesses, setGuesses] = useState(() =>
-		new Array(noOfGuesses).fill(null),
-	);
-	const [currGuess, setCurrGuess] = useState(0);
+  const [guessText, setGuessText] = useState("");
+  const [guesses, setGuesses] = useState<(string | null)[]>(() =>
+    new Array(noOfGuesses).fill(null),
+  );
+  const [currGuess, setCurrGuess] = useState(0);
 
-	const {
-		mutate: startGame,
-		isPending: isWsPending,
-		error: wsError,
-	} = useGameStart(mode);
+  const {
+    mutate: startGame,
+    isPending: isWsPending,
+    error: wsError,
+  } = useGameStart(mode);
 
-	const { data: wsData } = useWsData(mode, date);
-	const { data: authState } = useAuthState();
+  const { data: wsData } = useWsData(mode, date);
+  const { data: authState } = useAuthState();
 
-	// starts the game
-	useEffect(() => {
-		if (gameStartedRef.current) return;
-		gameStartedRef.current = true;
+  // starts the game
+  useEffect(() => {
+    if (gameStartedRef.current) return;
+    gameStartedRef.current = true;
 
-		if (!wsData) startGame({ mode: mode, date: date });
-	}, [startGame, mode, wsData, date]);
+    if (!wsData) startGame({ mode: mode, date: date });
+  }, [startGame, mode, wsData, date]);
 
-	// connect to websocket when we have url
-	const { sendMessage } = useWebSocket(mode, date, wsData?.wsURL);
+  // connect to websocket when we have url
+  const { sendMessage } = useWebSocket(mode, date, wsData?.wsURL);
 
-	// ws cache
-	const { data: gameEvent } = useGameEvent(mode, date);
+  // ws cache
+  const { data: gameEvent } = useGameEvent(mode, date);
 
-	const { mutate: sendResult } = useGameSubmit();
-	const { data: gameResult } = useGameResult(mode, date);
+  const { mutate: sendResult } = useGameSubmit();
+  const { data: gameResult } = useGameResult(mode, date);
 
-	const handleGuess = () => {
-		if (!guessText.trim()) return;
-		sendMessage({ type: "guess", guess: guessText });
-		setGuessText("");
-	};
+  const handleGuess = () => {
+    if (!guessText.trim()) return;
+    sendMessage({ type: "guess", guess: guessText });
+    setGuessText("");
+  };
 
-	const handleSkip = () => {
-		sendMessage({ type: "guess", guess: "" });
-		setGuessText("");
-	};
+  const handleSkip = () => {
+    sendMessage({ type: "guess", guess: "" });
+    setGuessText("");
+  };
 
-	const handleNewGame = (mode: GameMode, date: string | null = null) => {
-		setGuesses(new Array(noOfGuesses).fill(null));
-		setCurrGuess(0);
-		setGuessText("");
-		gameStartedRef.current = false;
+  const handleNewGame = (mode: GameMode, date: string | null = null) => {
+    setGuesses(new Array(noOfGuesses).fill(null));
+    setCurrGuess(0);
+    setGuessText("");
+    gameStartedRef.current = false;
 
-		if (date === null) {
-			queryClient.setQueryData(["gameResult", mode], null);
-			queryClient.setQueryData(["gameEvent", mode], null);
-			queryClient.setQueryData(["gameStart", mode], null);
-		} else {
-			queryClient.setQueryData(["gameResult", mode, date], null);
-			queryClient.setQueryData(["gameEvent", mode, date], null);
-			queryClient.setQueryData(["gameStart", mode, date], null);
-		}
-		startGame({ mode: mode, date: date });
-	};
+    if (date === null) {
+      queryClient.setQueryData(["gameResult", mode], null);
+      queryClient.setQueryData(["gameEvent", mode], null);
+      queryClient.setQueryData(["gameStart", mode], null);
+    } else {
+      queryClient.setQueryData(["gameResult", mode, date], null);
+      queryClient.setQueryData(["gameEvent", mode, date], null);
+      queryClient.setQueryData(["gameStart", mode, date], null);
+    }
+    startGame({ mode: mode, date: date });
+  };
 
-	const handleCleanup = () => {
-		// if has profile
-		if (!isResultMode(mode)) return;
-		console.log(gameResult)
-		if (!authState?.isAuthenticated || !wsData || !gameEvent || !gameResult)
-			return;
-		// sent to backend updated
-		sendResult({
-			wsGameSessionID: wsData.wsGameSessionID,
-			songID: gameResult?.songID,
-			attempts: gameEvent?.attempts,
-			date: wsData.date,
-			mode: mode,
-			won: gameEvent?.is_correct,
-		});
-	};
+  const handleCleanup = () => {
+    // if has profile
+    if (!isResultMode(mode)) return;
+    console.log(gameResult);
+    if (!authState?.isAuthenticated || !wsData || !gameEvent || !gameResult)
+      return;
+    // sent to backend updated
+    sendResult({
+      wsGameSessionID: wsData.wsGameSessionID,
+      songID: gameResult?.songID,
+      attempts: gameEvent?.attempts,
+      date: wsData.date,
+      mode: mode,
+      won: gameEvent?.is_correct,
+    });
+  };
 
-	// update game state based on ws
-	useEffect(() => {
-		if (!gameEvent || gameEvent.type !== "result") return;
+  // update game state based on ws
+  useEffect(() => {
+    if (!gameEvent || gameEvent.type !== "result") return;
 
-		setGuesses((prev) => {
-			const updated = [...prev];
-			updated[currGuess] = gameEvent.guess;
-			return updated;
-		});
+    setGuesses((prev) => {
+      const updated = [...prev];
+      updated[currGuess] = gameEvent.guess;
+      return updated;
+    });
 
-		if (gameEvent.done) {
-			handleCleanup();
-			return;
-		}
+    if (gameEvent.done) {
+      handleCleanup();
+      return;
+    }
 
-		setCurrGuess(prev => prev + 1);
-	}, [gameEvent, gameResult]);
+    setCurrGuess((prev) => prev + 1);
+  }, [gameEvent, gameResult]);
 
-	return {
-		isWsPending,
-		wsError,
-		guessText,
-		setGuessText,
-		guesses,
-		currGuess,
-		isGameDone: gameEvent?.done,
-		handleGuess,
-		handleSkip,
-		audio: wsData?.audio,
-		startAt: wsData?.audioStartAt,
-		handleNewGame,
-	};
+  return {
+    isWsPending,
+    wsError,
+    guessText,
+    setGuessText,
+    guesses,
+    currGuess,
+    isGameDone: gameEvent?.done,
+    handleGuess,
+    handleSkip,
+    audio: wsData?.audio,
+    startAt: wsData?.audioStartAt,
+    handleNewGame,
+  };
 };
 
 export default useHeardleGame;
