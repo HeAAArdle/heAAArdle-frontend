@@ -11,7 +11,7 @@ type SubmitGameInput = {
 };
 
 const getGameSubmitFn = async (payload: SubmitGameInput): Promise<void> => {
-	await authApi.post("/game/submit", payload);
+	await authApi.post("/game/submit/", payload);
 };
 
 export const useGameSubmit = () => {

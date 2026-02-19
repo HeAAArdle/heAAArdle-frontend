@@ -20,7 +20,7 @@ export type StartGameInput = {
 const getGameStartFn = async (
 	payload: StartGameInput,
 ): Promise<StartGameData> => {
-	const response = await publicApi.post("/game/start", payload);
+	const response = await publicApi.post("/game/start/", payload);
 	return response.data;
 };
 

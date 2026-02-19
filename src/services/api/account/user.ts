@@ -7,7 +7,7 @@ type UserType = {
 };
 
 const getUser = async (): Promise<UserType> => {
-	const response = await authApi.post("/user/user");
+	const response = await authApi.post("/user/");
 	return response.data;
 };
 
