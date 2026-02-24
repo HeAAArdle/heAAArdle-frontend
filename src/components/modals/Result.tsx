@@ -2,31 +2,33 @@ import CloseIcon from "../../icons/CloseIcon";
 import Button from "../simple/Button";
 
 type ResultProps = {
-	hasWon: boolean;
-	attempts: number;
-	title: string;
-	artist: string;
-	album: string;
-	videoLink: string;
-	onClick: () => void;
+  hasWon: boolean;
+  attempts: number;
+  title: string;
+  artist: string;
+  album: string;
+  videoLink: string;
+  onClick: () => void;
+  guesses: (string | null)[];
 };
 
 const Result = ({
-	hasWon,
-	attempts,
-	title,
-	artist,
-	album,
-	videoLink,
-	onClick,
+  hasWon,
+  attempts,
+  title,
+  artist,
+  album,
+  videoLink,
+  onClick,
+  guesses,
 }: ResultProps) => {
-	const [header, buttonText] = (() => {
-		if (hasWon) {
-			return ["Congratulations!", "Share Your Results"];
-		} else {
-			return ["Better luck next time.", "Share Today's Attempt"];
-		}
-	})();
+  const [header, buttonText] = (() => {
+    if (hasWon) {
+      return ["Congratulations!", "Share Your Results"];
+    } else {
+      return ["Better luck next time.", "Share Today's Attempt"];
+    }
+  })();
 
 	return (
 		<div className="absolute flex items-center justify-center z-10">
@@ -59,22 +61,26 @@ const Result = ({
 						{album}
 					</div>
 				</div>
-				<Button text={buttonText} variant="primary" />
+				<Button text={buttonText} variant="primary" onClick={() => shareString(guesses)} />
 			</div>
 		</div>
 	);
 };
 
 type Props = {
-	url: string;
+  url: string;
 };
 
 const EmbeddedVideo = ({ url }: Props) => (
-	<iframe
-		className="w-136 aspect-video rounded-lg"
-		src={url}
-		allowFullScreen
-	/>
+  <iframe className="w-136 aspect-video rounded-lg" src={url} allowFullScreen />
 );
 
 export default Result;
+
+const shareString = (guesses: (string | null)[]) => {
+	const symbols = [];
+	for (const guess of guesses){
+		if (guess === null) symbols.push("⬜️");
+		else if (guess.)
+	}
+};

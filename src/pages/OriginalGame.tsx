@@ -14,37 +14,37 @@ import dateFormatter from "../utils/dateFormatter";
 import type { GameMode } from "../types";
 
 type GameProps = {
-	mode: GameMode;
+  mode: GameMode;
 };
 
 const OriginalGame = ({ mode }: GameProps) => {
-	const { lengthOfAudio } = useContext(UserContext);
-	const { date } = useParams<{ date: string }>();
-	const header = date ?? "Today";
+  const { lengthOfAudio } = useContext(UserContext);
+  const { date } = useParams<{ date: string }>();
+  const header = date ?? "Today";
 
-	const {
-		isWsPending,
-		wsError,
-		guessText,
-		setGuessText,
-		guesses,
-		currGuess,
-		isGameDone,
-		handleGuess,
-		handleSkip,
-		audio,
-		startAt,
-		handleNewGame,
-	} = useHeardleGame(mode, date ? date : null);
+  const {
+    isWsPending,
+    wsError,
+    guessText,
+    setGuessText,
+    guesses,
+    currGuess,
+    isGameDone,
+    handleGuess,
+    handleSkip,
+    audio,
+    startAt,
+    handleNewGame,
+  } = useHeardleGame(mode, date ? date : null);
 
-	const { data: gameEvent } = useGameEvent(mode, date ? date : null);
-	const { data: gameResult } = useGameResult(mode, date ? date : null);
+  const { data: gameEvent } = useGameEvent(mode, date ? date : null);
+  const { data: gameResult } = useGameResult(mode, date ? date : null);
 
-	const attempts = gameEvent?.attempts ?? 0;
+  const attempts = gameEvent?.attempts ?? 0;
 
-	// basic err stuff
-	if (isWsPending) return <p>Starting game...</p>;
-	if (wsError) return <p>Failed to start game</p>;
+  // basic err stuff
+  if (isWsPending) return <p>Starting game...</p>;
+  if (wsError) return <p>Failed to start game</p>;
 
 	return (
 		<div className="relative h-full flex flex-col space-y-4 items-center justify-center">
