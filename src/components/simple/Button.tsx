@@ -40,7 +40,7 @@ const Button = ({
             type={htmlType}
             onClick={onClick}
             disabled={isDisabled}
-            className={`flex justify-center items-center px-6 body-l-b transition-standard cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed ${TYPE_CLASSES[variant]} ${full ? "w-full" : ""}`}
+            className={`flex justify-center items-center px-6 body-l-b transition-standard cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed ${TYPE_CLASSES[variant]} ${full === true ? "w-full" : ""}`}
         >
             {text}
         </button>

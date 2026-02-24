@@ -99,12 +99,15 @@ const useHeardleGame = (mode: GameMode, date: string | null) => {
 
     setGuesses((prev) => {
       const updated = [...prev];
-      updated[currGuess] = gameEvent.guess;
+
+      updated[currGuess] = gameEvent.guess === "" ? "SKIPPED_GUESS" : gameEvent.guess;
+
       return updated;
     });
 
     if (gameEvent.done) {
       handleCleanup();
+  
       return;
     }
 

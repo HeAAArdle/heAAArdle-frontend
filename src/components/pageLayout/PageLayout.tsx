@@ -51,15 +51,16 @@ const PageLayout = ({ children }: PageLayoutProps) => {
 			<div className="h-full w-full">{children}</div>
 
 			{/* Dev Support */}
-			<div className="absolute bottom-4 right-4 lato-regular text-neutral-50 text-[18px]">
+			<div className="absolute bottom-8 right-8 body-l-r text-neutral-50">
 				Support the{" "}
 				<span
 					onClick={() => setIsSupportOpen(true)}
-					className="lato-bold text-accent-500 cursor-pointer z-1 border-b-2 border-accent-500"
+					className="body-l-b text-accent-500 cursor-pointer z-1 border-b-2 border-accent-500"
 				>
 					Developers
 				</span>
 			</div>
+
 			{isSupportOpen && (
 				<Support onClick={() => setIsSupportOpen(false)} />
 			)}
@@ -80,7 +81,7 @@ const PageLayout = ({ children }: PageLayoutProps) => {
 					{isArchiveOpen && <Archive onClose={() => setIsArchiveOpen(false)} />}
 				</div>
 			)}
-			<div className="absolute top-0 right-0 z-0">
+			<div className="absolute top-8 right-8 z-0">
 				<TopButtons
 					isArchiveIconShowing={isArchiveIconShowing}
 					isLeaderboardIconShowing={isLeaderboardIconShowing}
