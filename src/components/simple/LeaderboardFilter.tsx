@@ -3,56 +3,66 @@ export type FilterType = "Daily" | "Weekly" | "Monthly" | "All-time";
 export type ModeType = "original" | "daily";
 
 type LeaderboardFilterProps = {
-	currMode: ModeType;
-	currFilter: FilterType;
-	onClick: (value: FilterType) => void;
+    currentMode: ModeType;
+    currentFilter: FilterType;
+    onClick: (value: FilterType) => void;
+};
+
+const DEFAULT_FILTER_BY_MODE: Record<ModeType, FilterType> = {
+    original: "Daily",
+    daily: "Weekly",
+};
+
+const FILTERS_BY_MODE: Record<ModeType, FilterType[]> = {
+    original: ["Daily", "Weekly", "Monthly", "All-time"],
+    daily: ["Weekly", "Monthly", "All-time"],
 };
 
 const LeaderboardFilter = ({
-	currMode,
-	currFilter,
-	onClick,
+    currentMode,
+    currentFilter,
+    onClick,
 }: LeaderboardFilterProps) => {
-	const filters: FilterType[] =
-		currMode === "original"
-			? ["Daily", "Weekly", "Monthly", "All-time"]
-			: ["Weekly", "Monthly", "All-time"];
-	const totalSlots = filters.length;
-	const activeIndex = filters.indexOf(currFilter);
-	return (
-		<div className="relative flex h-16 p-1 bg-neutral-900 rounded-lg w-lg">
-			<div
-				style={{
-					width: `${98.5 / totalSlots}%`,
-					transform: `translateX(${activeIndex * 100}%)`,
-				}}
-				className="absolute inset-1 flex transition-transform duration-300 ease-out"
-			>
-				<div className="w-full bg-primary-500 rounded-lg" />
-			</div>
-			{Array.from({ length: totalSlots }).map((_, i) => {
-				const filter = filters[i];
+    const filters = FILTERS_BY_MODE[currentMode];
+    const defaultFilter = DEFAULT_FILTER_BY_MODE[currentMode];
 
-				return (
-					<button
-						key={i}
-						disabled={!filter}
-						onClick={() => filter && onClick(filter)}
-						className={`relative z-10 flex-1 text-2xl lato-regular font-bold rounded-lg
-							${
-								filter
-									? currFilter === filter
-										? "text-neutral-950"
-										: "text-neutral-600"
-									: "cursor-default"
-							}`}
-					>
-						{filter ?? ""}
-					</button>
-				);
-			})}
-		</div>
-	);
+    const activeFilter = filters.includes(currentFilter)
+        ? currentFilter
+        : defaultFilter;
+
+    const activeIndex = Math.max(0, filters.indexOf(activeFilter));
+
+    const indicatorWidth = 100 / filters.length;
+
+    return (
+        <div className="relative flex h-16 w-lg p-1.5 bg-neutral-900 rounded-xl">
+            {/* Active Indicator */}
+            <div
+                className="absolute inset-1 flex transition-transform duration-300 ease-out"
+                style={{
+                    width: `${indicatorWidth}%`,
+                    transform: `translateX(${activeIndex * 100}%)`,
+                }}
+            >
+                <div className="w-full rounded-lg bg-primary-500" />
+            </div>
+
+            {filters.map((filter) => {
+                const isActive = currentFilter === filter;
+
+                return (
+                    <button
+                        key={filter}
+                        type="button"
+                        onClick={() => onClick(filter)}
+                        className={`relative flex-1 ${isActive ? "body-l-b text-neutral-950" : "body-l-r text-neutral-600"} transition-standard z-10`}
+                    >
+                        {filter}
+                    </button>
+                );
+            })}
+        </div>
+    );
 };
 
 export default LeaderboardFilter;

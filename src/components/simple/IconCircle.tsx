@@ -1,5 +1,4 @@
-import type { JSX } from "react";
-import React from "react";
+import { cloneElement, type JSX } from "react";
 
 type IconCircleProps = {
     isSelected: boolean;
@@ -27,11 +26,11 @@ const IconCircle = ({
     children,
     onClick,
 }: IconCircleProps) => {
-    const circleStateClasses = isSelected
+    const circleClasses = isSelected
         ? `border-2 border-transparent ${circleActiveColor}`
         : `border-2 ${circleInactiveColor} ${circleInactiveHoverColor}`;
 
-    const iconStateClasses = isSelected
+    const iconClasses = isSelected
         ? iconActiveColor
         : `${iconInactiveColor} ${iconInactiveHoverColor}`;
 
@@ -39,17 +38,11 @@ const IconCircle = ({
         <button
             type="button"
             onClick={onClick}
-            className={`group w-16 h-16 rounded-full relative flex items-center justify-center focus:outline-none transition-standard disabled:opacity-60 disabled:cursor-not-allowed 
-				${circleStateClasses}
-			`}
             aria-pressed={isSelected}
+            className={`relative flex items-center justify-center w-16 aspect-square rounded-full cursor-pointer transition-standard focus:outline-none disabled:opacity-60 disabled:cursor-not-allowed group ${circleClasses}`}
         >
-            {React.cloneElement(children, {
-                className: `
-					w-8 h-8 transition-standard
-					${iconStateClasses}
-					${children.props.className ?? ""}
-				`,
+            {cloneElement(children, {
+                className: `w-8 h-8 ${iconClasses} transition-standard ${children.props.className ?? ""}`,
             })}
         </button>
     );

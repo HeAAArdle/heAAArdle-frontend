@@ -59,7 +59,7 @@ const Result = ({
 						{album}
 					</div>
 				</div>
-				<Button text={buttonText} type="primary" />
+				<Button text={buttonText} variant="primary" />
 			</div>
 		</div>
 	);

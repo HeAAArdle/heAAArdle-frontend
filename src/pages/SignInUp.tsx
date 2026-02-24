@@ -90,7 +90,7 @@ const SignInUp = ({ isSignIn }: SignInUpProps) => {
 					<div className="w-full flex flex-col items-center gap-3">
 						<Button
 							text={`Sign ${isSignIn ? "In" : "Up"}`}
-							type="primary"
+							variant="primary"
 							full={true}
 							htmlType="submit"
 						/>

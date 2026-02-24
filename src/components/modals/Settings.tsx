@@ -32,7 +32,7 @@ const Settings = ({ signout, deleteAcct, isOpen }: SettingsType) => {
 							signout();
 						}}
 						full={true}
-						type="cancel"
+						variant="cancel"
 					/>
 					<Button
 						full={true}
@@ -41,7 +41,7 @@ const Settings = ({ signout, deleteAcct, isOpen }: SettingsType) => {
 							isOpen(false);
 							deleteAcct(true);
 						}}
-						type="destructive"
+						variant="destructive"
 					/>
 				</div>
 			</div>

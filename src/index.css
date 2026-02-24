@@ -2,127 +2,192 @@
 
 @import "tailwindcss";
 
+/* font */
+
 .lato-regular {
-	font-family: "Lato", sans-serif;
-	font-weight: 400;
-	font-style: normal;
+    font-family: "Lato", sans-serif;
+    font-weight: 400;
+    font-style: normal;
 }
 
 .lato-bold {
-	font-family: "Lato", sans-serif;
-	font-weight: 700;
-	font-style: normal;
+    font-family: "Lato", sans-serif;
+    font-weight: 700;
+    font-style: normal;
 }
 
 .dm-sans-400 {
-	font-family: "DM Sans", sans-serif;
-	font-optical-sizing: auto;
-	font-style: normal;
+    font-family: "DM Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
 }
 
+.display-l {
+    @apply text-8xl font-bold font-['DM_Sans'] leading-[96px];
+}
+
+.display-m {
+    @apply text-7xl font-bold font-['DM_Sans'] leading-[72px];
+}
+
+.display-s {
+    @apply text-6xl font-bold font-['DM_Sans'] leading-[60px];
+}
+
+.heading-l {
+    @apply text-5xl font-bold font-['DM_Sans'] leading-[48px];
+}
+
+.heading-m {
+    @apply text-4xl font-bold font-['DM_Sans'] leading-10;
+}
+
+.heading-s {
+    @apply text-3xl font-bold font-['DM_Sans'] leading-9;
+}
+
+.body-l-b {
+    @apply text-lg font-bold font-['Lato'] leading-7 tracking-normal;
+}
+
+.body-l-m {
+    @apply text-lg font-medium font-['Lato'] leading-7 tracking-normal;
+}
+
+.body-l-r {
+    @apply text-lg font-normal font-['Lato'] leading-7 tracking-normal;
+}
+
+.body-m-b {
+    @apply text-base font-bold font-['Lato'] leading-6 tracking-normal;
+}
+
+.body-m-m {
+    @apply text-base font-medium font-['Lato'] leading-6 tracking-normal;
+}
+
+.body-m-r {
+    @apply text-base font-normal font-['Lato'] leading-6 tracking-normal;
+}
+
+.body-s-b {
+    @apply text-sm font-bold font-['Inter'] leading-5;
+}
+
+.body-s-m {
+    @apply text-sm font-medium font-['Inter'] leading-5;
+}
+
+.body-s-r {
+    @apply text-sm font-normal font-['Inter'] leading-5;
+}
+
+/* palette */
+
 @theme {
-	--color-background: #01020b;
+    --color-background: #01020b;
 
-	/* neutral: */
-	--color-neutral-50: #f0f2f4;
-	--color-neutral-100: #e2e6ea;
-	--color-neutral-200: #c6cdd4;
-	--color-neutral-300: #aab4bf;
-	--color-neutral-400: #8f9cab;
-	--color-neutral-500: #748495;
-	--color-neutral-600: #5e6b7a;
-	--color-neutral-700: #47515e;
-	--color-neutral-800: #313842;
-	--color-neutral-900: #1d2229;
-	--color-neutral-950: #13161b;
+    /* neutral: */
+    --color-neutral-50: #f0f2f4;
+    --color-neutral-100: #e2e6ea;
+    --color-neutral-200: #c6cdd4;
+    --color-neutral-300: #aab4bf;
+    --color-neutral-400: #8f9cab;
+    --color-neutral-500: #748495;
+    --color-neutral-600: #5e6b7a;
+    --color-neutral-700: #47515e;
+    --color-neutral-800: #313842;
+    --color-neutral-900: #1d2229;
+    --color-neutral-950: #13161b;
 
-	/* primary: */
-	--color-primary-50: #eff2fe;
-	--color-primary-100: #e1e7fe;
-	--color-primary-200: #c9d2fc;
-	--color-primary-300: #a9b4f8;
-	--color-primary-400: #868df3;
-	--color-primary-500: #6a69eb;
-	--color-primary-600: #594dde;
-	--color-primary-700: #4c3ec4;
-	--color-primary-800: #3e359e;
-	--color-primary-900: #36327d;
-	--color-primary-950: #211d49;
+    /* primary: */
+    --color-primary-50: #eff2fe;
+    --color-primary-100: #e1e7fe;
+    --color-primary-200: #c9d2fc;
+    --color-primary-300: #a9b4f8;
+    --color-primary-400: #868df3;
+    --color-primary-500: #878ef3;
+    --color-primary-600: #594dde;
+    --color-primary-700: #4c3ec4;
+    --color-primary-800: #3e359e;
+    --color-primary-900: #36327d;
+    --color-primary-950: #211d49;
 
-	/* accent: */
-	--color-accent-50: #fbecfe;
-	--color-accent-100: #f7ddfd;
-	--color-accent-200: #f0b9fb;
-	--color-accent-300: #ea8ef9;
-	--color-accent-400: #e460f7;
-	--color-accent-500: #d62cea;
-	--color-accent-600: #aa21ba;
-	--color-accent-700: #80168d;
-	--color-accent-800: #5c0d65;
-	--color-accent-900: #37053d;
-	--color-accent-950: #230227;
+    /* accent: */
+    --color-accent-50: #fbecfe;
+    --color-accent-100: #f7ddfd;
+    --color-accent-200: #f0b9fb;
+    --color-accent-300: #ea8ef9;
+    --color-accent-400: #e460f7;
+    --color-accent-500: #d62cea;
+    --color-accent-600: #aa21ba;
+    --color-accent-700: #80168d;
+    --color-accent-800: #5c0d65;
+    --color-accent-900: #37053d;
+    --color-accent-950: #230227;
 
-	/* success: */
-	--color-success-50: #dcfeeb;
-	--color-success-100: #b3fed6;
-	--color-success-200: #3af6ab;
-	--color-success-300: #35e49e;
-	--color-success-400: #2fcf8f;
-	--color-success-500: #25aa75;
-	--color-success-600: #1b875c;
-	--color-success-700: #116343;
-	--color-success-800: #09442c;
-	--color-success-900: #032516;
-	--color-success-950: #01170d;
+    /* success: */
+    --color-success-50: #dcfeeb;
+    --color-success-100: #b3fed6;
+    --color-success-200: #3af6ab;
+    --color-success-300: #35e49e;
+    --color-success-400: #2fcf8f;
+    --color-success-500: #25aa75;
+    --color-success-600: #1b875c;
+    --color-success-700: #116343;
+    --color-success-800: #09442c;
+    --color-success-900: #032516;
+    --color-success-950: #01170d;
 
-	/* warning: */
-	--color-warning-50: #fef8f2;
-	--color-warning-100: #fdf2e5;
-	--color-warning-200: #fbe1c1;
-	--color-warning-300: #fad49f;
-	--color-warning-400: #f9c366;
-	--color-warning-500: #f0b84b;
-	--color-warning-600: #bb8f38;
-	--color-warning-700: #8c6a28;
-	--color-warning-800: #5d4517;
-	--color-warning-900: #342509;
-	--color-warning-950: #201604;
+    /* warning: */
+    --color-warning-50: #fef8f2;
+    --color-warning-100: #fdf2e5;
+    --color-warning-200: #fbe1c1;
+    --color-warning-300: #fad49f;
+    --color-warning-400: #f9c366;
+    --color-warning-500: #f0b84b;
+    --color-warning-600: #bb8f38;
+    --color-warning-700: #8c6a28;
+    --color-warning-800: #5d4517;
+    --color-warning-900: #342509;
+    --color-warning-950: #201604;
 
-	/* fail: */
-	--color-fail-50: #faeeee;
-	--color-fail-100: #f7e0e0;
-	--color-fail-200: #efbdbd;
-	--color-fail-300: #ea9c9c;
-	--color-fail-400: #e57878;
-	--color-fail-500: #e24a4a;
-	--color-fail-600: #b63838;
-	--color-fail-700: #8a2828;
-	--color-fail-800: #601919;
-	--color-fail-900: #3c0c0c;
-	--color-fail-950: #260606;
+    /* fail: */
+    --color-fail-50: #faeeee;
+    --color-fail-100: #f7e0e0;
+    --color-fail-200: #efbdbd;
+    --color-fail-300: #ea9c9c;
+    --color-fail-400: #e57878;
+    --color-fail-500: #e24a4a;
+    --color-fail-600: #b63838;
+    --color-fail-700: #8a2828;
+    --color-fail-800: #601919;
+    --color-fail-900: #3c0c0c;
+    --color-fail-950: #260606;
 }
 
 /* for Background */
 
 .star {
-	position: absolute;
-	background: white;
-	border-radius: 50%;
-	opacity: 0.8;
-	animation: twinkle var(--duration, 3s) infinite ease-in-out;
-	animation-delay: var(--delay, 0s);
-	will-change: transform, opacity;
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.8;
+    animation: twinkle var(--duration, 3s) infinite ease-in-out;
+    animation-delay: var(--delay, 0s);
+    will-change: transform, opacity;
 }
 
 @keyframes twinkle {
-  0%, 100% {
-    opacity: 0.8;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.3;
-    transform: scale(0.7);
-  }
+    0%,
+    100% {
+        opacity: 0.8;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.3;
+        transform: scale(0.7);
+    }
 }
 
 /* Other */

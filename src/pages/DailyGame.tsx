@@ -24,7 +24,7 @@ const DailyGame = () => {
 				</span>
 			</span>
 			<MusicPlayer />
-			<Button text="Skip" type="secondary" />
+			<Button text="Skip" variant="secondary" />
 			<div className="w-132 space-y-4">
 				<GuessHistory result={"incorrect"} text={"Taylor Swift"} />
 				<GuessHistory result={"incorrect"} text={"Taylor Swift"} />

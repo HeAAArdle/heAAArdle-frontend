@@ -9,6 +9,9 @@ type CircularPlayButtonProps = {
     color: string;
 };
 
+const ICON_CLASS =
+    "w-full h-full text-primary-500 group-hover:text-accent-500 transition-standard";
+
 const CircularPlayButton = ({
     percentage,
     isPlaying,
@@ -19,10 +22,8 @@ const CircularPlayButton = ({
     const radius = (size - strokeWidth) / 2;
     const circumference = 2 * Math.PI * radius;
     const offset = circumference * (1 - percentage / 100);
-    const iconSize = size * 0.85;
 
-    const iconClass =
-        "w-full h-full text-primary-500 group-hover:text-accent-500 transition-colors duration-300 ease-out transform";
+    const iconSize = size * 0.85;
 
     return (
         <div
@@ -36,13 +37,13 @@ const CircularPlayButton = ({
                         cx={size / 2}
                         cy={size / 2}
                         r={radius}
-                        className={`${color} stroke-current group-hover:text-accent-500 transition-all duration-300 ease-out`}
                         strokeWidth={strokeWidth}
                         fill="none"
                         strokeDasharray={circumference}
                         strokeDashoffset={offset}
                         strokeLinecap="round"
                         transform={`rotate(-90 ${size / 2} ${size / 2})`}
+                        className={`${color} stroke-current group-hover:text-accent-500`}
                         style={{
                             transitionProperty: "stroke-dashoffset",
                             transitionDuration: "0.3s",
@@ -54,13 +55,13 @@ const CircularPlayButton = ({
 
             {/* Icon */}
             <div
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                className="absolute inset-1/2 -translate-x-1/2 -translate-y-1/2"
                 style={{ width: iconSize, height: iconSize }}
             >
                 {isPlaying ? (
-                    <PauseIcon className={iconClass} />
+                    <PauseIcon className={ICON_CLASS} />
                 ) : (
-                    <PlayIcon className={iconClass} />
+                    <PlayIcon className={ICON_CLASS} />
                 )}
             </div>
         </div>

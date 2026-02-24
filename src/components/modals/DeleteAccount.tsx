@@ -23,12 +23,12 @@ const DeleteAccount = ({ isOpen, deleteAcct }: DeleteAccountType) => {
 			<div className="flex justify-end gap-3">
 				<Button
 					text="Cancel"
-					type="cancel"
+					variant="cancel"
 					onClick={() => isOpen(false)}
 				/>
 				<Button
 					text="Delete Account"
-					type="destructive"
+					variant="destructive"
 					onClick={deleteAcct}
 				/>
 			</div>

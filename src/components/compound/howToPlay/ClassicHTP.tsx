@@ -49,7 +49,7 @@ const ClassicHTP = ({ onClick }: InstructionProps) => {
 					</p>
 					<p>Skipped attempts count towards your total attempts.</p>
 				</div>
-				<Button text="Skip" type="secondary" />
+				<Button text="Skip" variant="secondary" />
 				<div>Each wrong guess or skip reveals more of the song.</div>
 				<GuessHistory
 					result="incorrect"

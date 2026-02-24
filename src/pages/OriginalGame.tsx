@@ -67,7 +67,7 @@ const OriginalGame = ({ mode }: GameProps) => {
 					clipDuration={lengthOfAudio[attempts]}
 				/>
 			)}
-			<Button text="Skip" type="skip" onClick={handleSkip} />
+			<Button text="Skip" variant="skip" onClick={handleSkip} />
 			<div className="w-132 space-y-4">
 				{guesses.map((guess, index) =>
 					index === currGuess && !isGameDone ? (

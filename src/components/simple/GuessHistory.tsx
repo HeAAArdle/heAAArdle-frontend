@@ -5,15 +5,22 @@ type GuessHistoryProps = {
     text?: string;
 };
 
-const GuessHistory = ({ result, text }: GuessHistoryProps) => {
-    const resultClasses: Record<GuessResult, string> = {
-        correct: "text-success-300 bg-success-700/40 border-success-700",
-        incorrect: "text-fail-300 bg-fail-700/40 border-fail-700",
-        unanswered: "bg-neutral-900/60 border-neutral-800",
-    };
+const RESULT_CLASSES: Record<GuessResult, string> = {
+    correct: 
+        "border-success-700 bg-success-700/40 text-success-300",
+    incorrect: 
+        "border-fail-700 bg-fail-700/40 text-fail-300",
+    unanswered: 
+        "border-neutral-800 bg-neutral-900/60",
+};
 
+const GuessHistory = ({ result, text }: GuessHistoryProps) => {
     return (
-        <div className={`flex items-center justify-start pr-1 pl-3 py-1 rounded-lg h-12 w-full border-2 lato-regular text-base ${resultClasses[result]}`}>{text}</div>
+        <div
+            className={`rounded-lg flex items-center justify-start h-12 w-full py-1 pl-3 pr-1 border-2 body-m-r ${RESULT_CLASSES[result]}`}
+        >
+            {text}
+        </div>
     );
 };
 
